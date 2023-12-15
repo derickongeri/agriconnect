@@ -160,7 +160,7 @@
 
           <div class="column q-pl-md">
             <img
-              src="~/src/assets/IDH Logo.png"
+              src="~/src/assets/IDHLogo.png"
               style="position: relative; width: 100%; height: 50px; left: -1%"
             />
           </div>
