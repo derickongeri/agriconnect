@@ -20,6 +20,7 @@ import { useSumStore } from "stores/sumdata/index.js";
 import baselayers from "./Modals/baselayers.js";
 //import { store } from "quasar/wrappers";
 // import counties_2021 from './Modals/counties_2021.js'
+import marker from "src/assets/marker.png";
 
 export default defineComponent({
   components: {},
@@ -180,8 +181,8 @@ export default defineComponent({
           const maxVal = Math.max(...choroplethValues);
           const minVal = Math.min(...choroplethValues);
 
-          highest.value = maxVal
-          lowest.value = minVal
+          highest.value = maxVal;
+          lowest.value = minVal;
 
           const classInterval =
             (Math.max(...choroplethValues) - Math.min(...choroplethValues)) / 7;
@@ -232,6 +233,13 @@ export default defineComponent({
             map.value.removeLayer(currentMapLayer.value);
           }
 
+          const customIcon = L.icon({
+            iconUrl: marker,
+            iconSize: [75, 75], // size of the icon
+            //shadowSize: [50, 64], // size of the shadow
+            //iconAnchor: [10, 35], // point of the icon which will correspond to marker's location
+          });
+
           let wfsUrl =
             "http://45.76.136.154/geoserver/agriconnect/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=agriconnect%3AHelvetas_Infrastructures&outputFormat=application%2Fjson";
 
@@ -242,9 +250,15 @@ export default defineComponent({
           console.log(geojsonData);
 
           const infrastructureLayer = L.geoJSON(geojsonData, {
+            pointToLayer: function (feature, latlng) {
+              // Use the custom icon for point features
+              return L.marker(latlng, { icon: customIcon });
+            },
             onEachFeature: function (feature, layer) {
               // Add any custom behavior or popups here
-              layer.bindPopup("<b>Feature Type:</b> " + feature.properties.TYPE);
+              layer.bindPopup(
+                "<b>Feature Type:</b> " + feature.properties.TYPE
+              );
             },
           });
 
@@ -265,8 +279,8 @@ export default defineComponent({
     };
 
     const tab = computed(() => {
-      return store.getCurrentTab
-    })
+      return store.getCurrentTab;
+    });
 
     onMounted(() => {
       setLeafletMap();
@@ -280,7 +294,7 @@ export default defineComponent({
       map,
       tab,
       highest,
-      lowest
+      lowest,
     };
   },
 });
