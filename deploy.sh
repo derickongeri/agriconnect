@@ -28,4 +28,4 @@ echo "Pushhing to github..."
 git push $REPO_URL main
 
 # deploying to dev server
-scp -r /home/derick/Desktop/Agriconnect/agriconnect-dashboard/dist/spa/* root@45.76.136.154:/usr/share/nginx/html/
+scp -r /home/derick/Desktop/Agriconnect/agriconnect-dashboard/dist/spa/* root@45.76.136.154:/usr/share/nginx/html/dashboard/

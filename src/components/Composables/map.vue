@@ -18,9 +18,11 @@ import useSupabase from "src/boot/supabase";
 import { useSumStore } from "stores/sumdata/index.js";
 
 import baselayers from "./Modals/baselayers.js";
+import markers from "./Modals/set_markers.js"
 //import { store } from "quasar/wrappers";
 // import counties_2021 from './Modals/counties_2021.js'
-import marker from "src/assets/marker.png";
+import marker from "src/assets/marker-icon-2x.png";
+import "leaflet/dist/images/marker-shadow.png";
 
 export default defineComponent({
   components: {},
@@ -59,7 +61,7 @@ export default defineComponent({
         center: center.value,
         maxBounds: bounds,
         zoom: 6.5,
-        maxZoom: 17.5,
+        maxZoom: 19,
         zoomSnap: 0.1,
         zoomAnimation: true,
         fadeAnimation: true,
@@ -102,7 +104,7 @@ export default defineComponent({
             opacity: 1,
             color: "white",
             dashArray: "1",
-            fillOpacity: 0.4,
+            fillOpacity: 0.5,
           },
         });
 
@@ -228,6 +230,9 @@ export default defineComponent({
           currentMapLayer.value = jsonLayer;
 
           currentMapLayer.value.addTo(map.value).bringToFront();
+
+          map.value.fitBounds(currentMapLayer.value.getBounds())
+
         } else {
           if (currentMapLayer.value) {
             map.value.removeLayer(currentMapLayer.value);
@@ -235,10 +240,12 @@ export default defineComponent({
 
           const customIcon = L.icon({
             iconUrl: marker,
-            iconSize: [75, 75], // size of the icon
+            //iconSize: [29, 48], // size of the icon
             //shadowSize: [50, 64], // size of the shadow
             //iconAnchor: [10, 35], // point of the icon which will correspond to marker's location
           });
+
+          const {icon1, icon2, icon3, icon4, icon5, icon6} = markers
 
           let wfsUrl =
             "http://45.76.136.154/geoserver/agriconnect/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=agriconnect%3AHelvetas_Infrastructures&outputFormat=application%2Fjson";
@@ -248,6 +255,48 @@ export default defineComponent({
           const geojsonData = response.data;
 
           console.log(geojsonData);
+
+          function processData(data) {
+            // Loop through each feature in the GeoServer JSON data
+            data.features.forEach((feature) => {
+              // Extract attributes from the feature (adjust property name accordingly)
+              var attribute = feature.properties.TYPE;
+
+              // Determine which icon to use based on the attribute value
+              var icon;
+              if (attribute === "Processing park") {
+                icon = icon1;
+              }
+              else if (attribute === "Screen houses"){
+                icon = icon3;
+              }
+              else if (attribute === "Screen houses"){
+                icon = icon3;
+              }
+              else if (attribute === "Screen houses"){
+                icon = icon3;
+              }
+              else if (attribute === "Solar driyer") {
+                icon = icon2;
+              }else {
+                icon = icon4;
+              }
+              // Add more conditions as needed
+
+              // Create a marker with the appropriate icon and add it to the map
+              L.marker(
+                [
+                  feature.geometry.coordinates[1],
+                  feature.geometry.coordinates[0],
+                ],
+                { icon: icon }
+              )
+                .addTo(map.value)
+                .bindPopup(feature.properties.TYPE); // Adjust property name for popup content
+            });
+          }
+
+          processData(geojsonData)
 
           const infrastructureLayer = L.geoJSON(geojsonData, {
             pointToLayer: function (feature, latlng) {
@@ -261,15 +310,8 @@ export default defineComponent({
               );
             },
           });
-
           currentMapLayer.value = infrastructureLayer;
-
-          currentMapLayer.value.addTo(map.value).bringToFront();
         }
-
-        // map.value.fitBounds(jsonLayer.getBounds());
-
-        //jsonLayer.bindTooltip("tool tip is shown")
 
         Loading.hide();
       } catch (error) {
@@ -284,7 +326,6 @@ export default defineComponent({
 
     onMounted(() => {
       setLeafletMap();
-      console.log("selected Tab", selectedTab.value);
       addDistrictData().then(() => {
         setVector();
       });
