@@ -10,34 +10,33 @@ import marker6 from "src/assets/marker6.png";
 
 export default {
   icon1: L.icon({
-    iconUrl: "src/assets/marker1.png",
+    iconUrl: marker1,
     iconSize: [28, 38], // size of the icon
     // iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
   }),
   icon2: L.icon({
-    iconUrl: "src/assets/marker2.png",
+    iconUrl: marker2,
     iconSize: [28, 38], // size of the icon
     // iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
   }),
   icon3: L.icon({
-    iconUrl: "src/assets/marker3.png",
+    iconUrl: marker3,
     iconSize: [28, 38], // size of the icon
     // iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
   }),
   icon4: L.icon({
-    iconUrl: "src/assets/marker4.png",
+    iconUrl: marker4,
     iconSize: [28, 38], // size of the icon
     // iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
   }),
   icon5: L.icon({
-    iconUrl: "src/assets/marker5.png",
+    iconUrl: marker5,
     iconSize: [28, 38], // size of the icon
     // iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
   }),
   icon6: L.icon({
-    iconUrl: "src/assets/marker6.png",
+    iconUrl: marker6,
     iconSize: [28, 38], // size of the icon
     // iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
   }),
 };
-
