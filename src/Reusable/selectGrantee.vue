@@ -1,5 +1,5 @@
 <template>
-  <q-select filled v-model="model" :options="options" :dense="dense" :options-dense="denseOpts">
+  <q-select outlined v-model="model" :options="options" :dense="dense" :options-dense="denseOpts">
     <template v-slot:prepend>
       <div>
         <img :src="currentLogo" style="width: 56px" />

@@ -7,27 +7,21 @@
         </div>
         <div
           class="column bg-none q-mt-none q-mr-xl"
-          style="min-width: 65%; flex: 1"
+          style="min-width: 65%; flex: 1; border-radius: 2px; border-color: grey;"
           v-if="selectedTab === 'pirs'"
         >
-          <div class="row item-center" style="width: 100%; height: 8%">
-            <!-- <q-toolbar>
-          <q-toolbar-title style="font-weight: bolder; margin-left: 8vw;" class>
-            <img src="~/src/assets/LOGO.png" style="width:300px"/>
-
-          </q-toolbar-title>
-        </q-toolbar> -->
-          </div>
           <div
             class="row bg-white items-center"
-            style="width: 100%; height: 8%"
+            style="width: 100%; height: 8%;"
           >
             <div
               class="bg-white indicator-selection q-pa-none q-ma-sm"
-              style="position: absolute; width: 30%; z-index: 1000"
+              style="position: absolute; width: 25%; z-index: 1000"
             >
               <q-select
                 class="bg-white"
+                outlined
+                dense
                 v-model="model"
                 :options="options"
                 options-cover
@@ -50,10 +44,10 @@
               <q-btn
                 class="q-px-lg"
                 outline
-                rounded
-                icon="mdi-export"
+                icon-right="mdi-cloud-download"
                 color="grey-6"
                 label="Export"
+                no-caps
               />
             </div>
           </div>
@@ -102,14 +96,6 @@
           style="min-width: 65%; flex: 1"
           v-if="selectedTab === 'infrastructure'"
         >
-          <div class="row item-center" style="width: 100%; height: 8%">
-            <!-- <q-toolbar>
-          <q-toolbar-title style="font-weight: bolder; margin-left: 8vw;" class>
-            <img src="~/src/assets/LOGO.png" style="width:300px"/>
-
-          </q-toolbar-title>
-        </q-toolbar> -->
-          </div>
           <div
             class="row bg-white items-center"
             style="width: 100%; height: 10%"
@@ -236,8 +222,8 @@ onMounted(() => {
 .page-body {
   display: flex;
   flex-direction: column;
-  height: 100vh; /* Set the height of the page to the full viewport height */
-  background: #f0f2f8; /* url("~/src/assets/3387682.jpg") no-repeat center; */
+  height: 85vh; /* Set the height of the page to the full viewport height */
+  background: #ffffff; /* url("~/src/assets/3387682.jpg") no-repeat center; */
   background-size: cover;
   overflow: hidden;
 }

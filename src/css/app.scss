@@ -1,1 +1,14 @@
 // app global css in SCSS form
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+.page-bg {
+  background-image: url("src/assets/bgImg2.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.login-outer {
+  background-color: #026a37;
+}

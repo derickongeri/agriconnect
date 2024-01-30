@@ -1,9 +1,9 @@
 <template>
-  <div class="text-h5 q-mb-md">Sustainable Unified Monitoring</div>
+  <div class="text-subtitle2 q-mb-md">SUSTAINABLE UNIFIED MONITORING</div>
   <!-- <div class="text-bold q-my-md q-px-sm q-mt-sm">Select Grantee</div> -->
   <selectGrantee/>
 
-  <div class="text-bold q-mt-md q-px-sm q-mt-sm">
+  <div class="text-weight-medium q-mt-md q-px-sm q-mt-sm">
     Select Targets and Responses
   </div>
 
@@ -51,11 +51,13 @@
 
   <q-separator class="q-my-lg" style="max-width: 350px"></q-separator>
 
-  <div class="q-mb-md q-px-sm text-bold">Reporting Period</div>
+  <div class="q-mb-md q-px-sm text-weight-medium">Reporting Period</div>
 
   <div class="q-pt-sm" style="max-width: 350px">
     <q-select
       class="q-px-md"
+      outlined
+      dense
       v-model="period"
       :options="optionsPeriod"
       label="Select Year"

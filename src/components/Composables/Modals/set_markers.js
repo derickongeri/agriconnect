@@ -1,12 +1,12 @@
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 
-import marker1 from "src/assets/marker1.png";
-import marker2 from "src/assets/marker2.png";
-import marker3 from "src/assets/marker3.png";
-import marker4 from "src/assets/marker4.png";
-import marker5 from "src/assets/marker5.png";
-import marker6 from "src/assets/marker6.png";
+import marker1 from 'src/assets/marker1.png';
+import marker2 from 'src/assets/marker2.png';
+import marker3 from 'src/assets/marker3.png';
+import marker4 from 'src/assets/marker4.png';
+import marker5 from 'src/assets/marker5.png';
+import marker6 from 'src/assets/marker6.png';
 
 export default {
   icon1: L.icon({
