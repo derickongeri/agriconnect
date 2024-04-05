@@ -18,26 +18,7 @@
               class="bg-white indicator-selection q-pa-none q-ma-sm"
               style="position: absolute; width: 25%; z-index: 1000"
             >
-              <q-select
-                class="bg-white"
-                outlined
-                dense
-                v-model="model"
-                :options="options"
-                options-cover
-                label="Selected Indicator"
-              >
-                <template v-slot:option="scope">
-                  <q-item v-bind="scope.itemProps">
-                    <q-item-section>
-                      <q-item-label>{{ scope.opt.value }}</q-item-label>
-                      <q-item-label caption style="width: 350px">{{
-                        scope.opt.label
-                      }}</q-item-label>
-                    </q-item-section>
-                  </q-item>
-                </template>
-              </q-select>
+              <indicatorSelection/>
             </div>
             <q-space></q-space>
             <div class="q-pa-md">
@@ -52,10 +33,10 @@
             </div>
           </div>
           <q-separator></q-separator>
-          <div class="row" style="width: 100%; height: 47%"><mappanel /></div>
+          <div class="row" style="width: 100%; height: 50%"><mappanel /></div>
           <div
             class="bg-white"
-            style="width: 100%; height: 36%; overflow: hidden"
+            style="width: 100%; height: 30%; overflow: hidden"
           >
             <!-- <tablepirs /> -->
             <q-tabs
@@ -156,6 +137,7 @@ import mappanel from "../components/Composables/map.vue";
 import tablepirs from "../components/Composables/tablepirs.vue";
 import chartSums from "src/components/Composables/sumsChart.vue"
 import filtertabs from "../components/Filter/filtertabs.vue";
+import indicatorSelection from "src/components/Composables/indicatorselection.vue"
 import { useSumStore } from "stores/sumdata/index.js";
 
 const store = useSumStore();

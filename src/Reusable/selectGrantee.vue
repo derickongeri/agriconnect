@@ -1,5 +1,12 @@
 <template>
-  <q-select outlined v-model="model" :options="options" :dense="dense" :options-dense="denseOpts">
+  <q-select
+    outlined
+    v-model="model"
+    :options="options"
+    :dense="dense"
+    :options-dense="denseOpts"
+    @update:model-value="getselectedGrantee"
+  >
     <template v-slot:prepend>
       <div>
         <img :src="currentLogo" style="width: 56px" />
@@ -8,7 +15,7 @@
   </q-select>
 </template>
 
-<script>
+<script setup>
 import { ref, computed, watch } from "vue";
 import logoPDF from "src/assets/PDF.jpg";
 import logoHeveltas from "src/assets/HELVETAS.jpg";
@@ -20,43 +27,74 @@ import logoViagro from "src/assets/Vi_Agroforestry.png";
 
 import { useSumStore } from "src/stores/sumdata/index.js";
 
-export default {
-  setup() {
-    const model = ref("Heveltas"),
-      dense = ref(false),
-      denseOpts = ref(false);
+const store = useSumStore();
 
-    const logos = {
-      Heveltas: logoHeveltas,
-      Viagro: logoViagro,
-      Rikolto: logoRikolto,
-      Pdf: logoPDF,
-      Idh: logoIdh,
-      Trias: logoTrias,
-      Solidaridad: logoSolidaridad,
-      // Add more company logos as needed
-    };
-
-    const currentLogo = computed(() => {
-      // Use the selected company in the model to get the corresponding logo URL
-      return logos[model.value] || logoHeveltas; // Provide a default logo if needed
-    });
-
-    return {
-      model,
-      dense,
-      denseOpts,
-      currentLogo,
-      options: [
-        "Helvetas",
-        "Viagro",
-        "Rikolto",
-        "Pdf",
-        "Idh",
-        "Trias",
-        "Solidaridad",
-      ],
-    };
+const model = ref("Heveltas"),
+  options = ref([
+    {
+      label: "Helvetas",
+      value: "helvetas",
+    },
+    {
+      label: "Viagro",
+      value: "viagro",
+    },
+    {
+      label: "Rikolto",
+      value: "rikolto",
+    },
+    {
+      label: "Pdf",
+      value: "pdf",
+    },
+    {
+      label: "Idh",
+      value: "idh",
+    },
+    {
+    label: 'Trias',
+    value: 'trias'
+  },{
+    label: 'Solidaridadcert',
+    value: 'solidaridadcert'
   },
+  {
+    label: 'Solidaridadpace',
+    value: 'solidaridadpace'
+  }
+  ]),
+  // options = ref([
+  //   "Helvetas",
+  //   "Viagro",
+  //   "Rikolto",
+  //   "Pdf",
+  //   "Idh",
+  //   "Trias",
+  //   "Solidaridad",
+  // ]),
+  dense = ref(false),
+  denseOpts = ref(false);
+
+const logos = {
+  Heveltas: logoHeveltas,
+  Viagro: logoViagro,
+  Rikolto: logoRikolto,
+  Pdf: logoPDF,
+  Idh: logoIdh,
+  Trias: logoTrias,
+  Solidaridadcert: logoSolidaridad,
+  Solidaridadpace: logoSolidaridad,
+  // Add more company logos as needed
+};
+
+const currentLogo = computed(() => {
+  // Use the selected company in the model to get the corresponding logo URL
+  //console.log(model.value.label)
+  return logos[model.value.label] || logoHeveltas; // Provide a default logo if needed
+});
+
+const getselectedGrantee = (val) => {
+  //console.log(val.value)
+  store.setSelectedGrantee(val.value);
 };
 </script>

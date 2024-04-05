@@ -8,81 +8,30 @@
   </div>
 
   <div class="q-pt-sm" style="max-width: 350px">
-    <q-list>
-      <q-item tag="label" v-ripple>
-        <q-item-section>Responses</q-item-section>
-        <q-item-section avatar>
-          <q-radio
-            v-model="group"
-            checked-icon="task_alt"
-            unchecked-icon="panorama_fish_eye"
-            val="resposes"
-            color="primary"
-          />
-        </q-item-section>
-      </q-item>
-
-      <q-item tag="label" v-ripple>
-        <q-item-section>Targets</q-item-section>
-        <q-item-section avatar>
-          <q-radio
-            v-model="group"
-            checked-icon="task_alt"
-            unchecked-icon="panorama_fish_eye"
-            val="targets"
-            color="primary"
-          />
-        </q-item-section>
-      </q-item>
-      <q-item tag="label" v-ripple>
-        <q-item-section>Financial Agreement Indicators</q-item-section>
-        <q-item-section avatar>
-          <q-radio
-            v-model="group"
-            checked-icon="task_alt"
-            unchecked-icon="panorama_fish_eye"
-            val="financial"
-            color="primary"
-          />
-        </q-item-section>
-      </q-item>
-    </q-list>
+    <responseSelection/>
   </div>
 
   <q-separator class="q-my-lg" style="max-width: 350px"></q-separator>
 
-  <div class="q-mb-md q-px-sm text-weight-medium">Reporting Period</div>
+  <div class="q-mb-md q-px-sm text-weight-medium">Periodic Summaries</div>
+
+  <div class="q-pb-md" style="max-width: 350px">
+    <selectDataperiod/>
+  </div>
+
+  <!-- <div class="q-mb-md q-px-sm text-weight-medium">Reporting Period</div> -->
 
   <div class="q-pt-sm" style="max-width: 350px">
-    <q-select
-      class="q-px-md"
-      outlined
-      dense
-      v-model="period"
-      :options="optionsPeriod"
-      label="Select Year"
-    />
-    <q-list>
-      <q-item clickable v-ripple>
-        <q-item-section>January - March</q-item-section>
-      </q-item>
-
-      <q-item clickable v-ripple>
-        <q-item-section>April - June</q-item-section>
-      </q-item>
-      <q-item clickable v-ripple>
-        <q-item-section>July - September</q-item-section>
-      </q-item>
-      <q-item clickable v-ripple>
-        <q-item-section>October - December</q-item-section>
-      </q-item>
-    </q-list>
+    <selectPeriod/>
   </div>
 </template>
 
 <script setup>
 import { ref, computed, watch } from "vue";
 import selectGrantee from 'src/Reusable/selectGrantee.vue'
+import responseSelection from 'src/Reusable/selectResponse.vue'
+import selectPeriod from 'src/Reusable/selectPeriod.vue'
+import selectDataperiod from 'src/Reusable/selectDataPeriod.vue'
 
 const group = ref(null),
  period = ref(null),

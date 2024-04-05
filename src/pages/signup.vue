@@ -13,7 +13,7 @@
           style="position: relative; width: 65%; margin:auto"
         >
           <img
-            class="q-my-lg"
+            class="q-mt-xl q-pt-md"
             src="src/assets/LOGO-AGRI-CONNECT.png"
             style="width: 65%"
           />

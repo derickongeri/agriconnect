@@ -3,9 +3,9 @@
     <q-header elevated class="bg-white text-white q-py-md">
       <q-toolbar>
         <q-toolbar-title>
-          <img class="q-pl-md" src="src/assets/LOGO-AGRI-CONNECT.png" style="width: 20%" />
+          <img class="q-pl-md" src="~src/assets/LOGO-AGRI-CONNECT.png" style="width: 20%" />
           <img
-            src="src/assets/sponsors.svg"
+            src="~src/assets/sponsors.svg"
             class="q-pl-md q-pb-xs"
             style="width: 20%"
           />

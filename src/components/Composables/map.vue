@@ -1,8 +1,16 @@
 <template>
   <div class="q-pa-xs" id="mapid" style="height: 100%; width: 100%">
-    <div v-if="tab === 'pirs'" class="gradient-rect">
-      <span class="start">{{ lowest }}</span>
-      <span class="end">{{ highest }}</span>
+    <div v-if="tab === 'pirs'" class="legend-rect">
+      <div class="gradient-rect">
+        <!-- <span class="start">{{ lowest }}</span> -->
+        <!-- <span class="end">{{ highest }}</span> -->
+      </div>
+      <span class="start text-white text-weight-bolder  bg-primary q-px-sm">{{ lowest }}</span>
+      <span class="end text-white text-weight-bolder bg-primary q-px-sm">{{ highest }}</span>
+    </div>
+
+    <div class="radio-rect">
+      <selectAgreggate />
     </div>
   </div>
 </template>
@@ -15,25 +23,35 @@ import { axios } from "src/boot/axios";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import useSupabase from "src/boot/supabase";
+
+import { storeToRefs } from "pinia";
 import { useSumStore } from "stores/sumdata/index.js";
 
 import baselayers from "./Modals/baselayers.js";
-import markers from "./Modals/set_markers.js"
-//import { store } from "quasar/wrappers";
-// import counties_2021 from './Modals/counties_2021.js'
+import markers from "./Modals/set_markers.js";
 import marker from "src/assets/marker-icon-2x.png";
 import "leaflet/dist/images/marker-shadow.png";
 
+import setSelectedVect from "./Modals/createChoropleth";
+
+import selectAgreggate from "src/Reusable/selectAggregate.vue";
+
 export default defineComponent({
-  components: {},
+  components: {
+    selectAgreggate: selectAgreggate,
+  },
 
   setup() {
     const { supabase } = useSupabase();
     const store = useSumStore();
+    const { selectedGrantee } = storeToRefs(useSumStore);
+
+    const { createChoroplethSums } = setSelectedVect();
 
     const map = ref(null),
       center = ref([-5.7, 34]),
       baseMaps = ref([]),
+      districtLayer = ref(null),
       currentMapLayer = ref(null),
       selectedTab = ref(store.currentTab),
       highest = ref(null),
@@ -91,11 +109,13 @@ export default defineComponent({
         });
 
         let wfsUrl =
-          "http://45.76.136.154/geoserver/agriconnect/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=agriconnect%3ATanzania_Districts&outputFormat=application%2Fjson";
+          "http://139.84.235.200/geoserver/agriconnect/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=agriconnect%3ADistricts&outputFormat=application%2Fjson";
 
         let response = await axios.get(wfsUrl);
 
         const geojsonData = response.data;
+
+        store.setDistrictData(geojsonData);
 
         const jsonLayer = L.geoJSON(geojsonData, {
           style: {
@@ -118,6 +138,8 @@ export default defineComponent({
       }
     };
 
+    // const addChoropleth = function () {};
+
     const setVector = async function () {
       try {
         Loading.show({
@@ -131,54 +153,9 @@ export default defineComponent({
             map.value.removeLayer(currentMapLayer.value);
           }
 
-          const indicatorCode = "code11";
+          let jsonLayerJoined = await createChoroplethSums();
 
-          const { data: sumsData, error: sumsError } = await supabase.from(
-            "SpatialIndicatorsDummy"
-          ).select(`
-            district,
-            adult_male: ${indicatorCode}->Adult_Male,
-            adult_female: ${indicatorCode}->Adult_Female,
-            youth_male: ${indicatorCode}->Youth_Male,
-            youth_female: ${indicatorCode}->Youth_Female,
-            reference: ${indicatorCode}->Reference,
-            total: ${indicatorCode}->Total_Exl_Referece,
-            total_ex_ref: ${indicatorCode}->Total_Inc_Referece
-          `);
-
-          let wfsUrl =
-            "http://45.76.136.154/geoserver/agriconnect/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=agriconnect%3ATanzania_Districts&outputFormat=application%2Fjson";
-
-          let response = await axios.get(wfsUrl);
-
-          const geojsonData = response.data;
-
-          // Example: Assuming 'district' is the common attribute in both datasets
-          const joinedData = geojsonData.features.map((geoFeature) => {
-            const matchingFeature = sumsData.find(
-              (sumsFeature) =>
-                sumsFeature.district === geoFeature.properties.District
-            );
-
-            if (matchingFeature) {
-              // Merge properties from  and GeoJSON features
-              return {
-                ...geoFeature,
-                properties: {
-                  ...geoFeature.properties,
-                  ...matchingFeature,
-                },
-              };
-            }
-          });
-
-          const newJsonData = joinedData.filter((obj) => obj !== undefined);
-
-          let choroplethValues = [];
-
-          newJsonData.forEach((d) => {
-            choroplethValues.push(d.properties.youth_male);
-          });
+          let choroplethValues = jsonLayerJoined.layervalues;
 
           const maxVal = Math.max(...choroplethValues);
           const minVal = Math.min(...choroplethValues);
@@ -187,29 +164,37 @@ export default defineComponent({
           lowest.value = minVal;
 
           const classInterval =
-            (Math.max(...choroplethValues) - Math.min(...choroplethValues)) / 7;
+            (Math.max(...choroplethValues) - Math.min(...choroplethValues)) / 5;
+
+          console.log(highest.value, lowest.value, classInterval);
 
           function getColor(d) {
-            return d > maxVal
-              ? "#364958"
-              : d > minVal + classInterval * 5
-              ? "#3B6064"
-              : d > minVal + classInterval * 4
-              ? "#55828B"
-              : d > minVal + classInterval * 3
-              ? "#87BBA2"
-              : d > minVal + classInterval * 2
-              ? "#C9E4CA"
-              : d > minVal + classInterval * 1
-              ? "#b3cde0"
-              : d > minVal
-              ? "#b3cde0"
-              : "#b3cde0";
+            return d > minVal + classInterval * 5 && d <= maxVal
+              ? "#1a3a1c"
+              : d > minVal + classInterval * 4 &&
+                d <= minVal + classInterval * 5
+              ? "#3d583c"
+              : d > minVal + classInterval * 3 &&
+                d <= minVal + classInterval * 4
+              ? "#607760"
+              : d > minVal + classInterval * 2 &&
+                d <= minVal + classInterval * 3
+              ? "#869785"
+              : d > minVal + classInterval * 1 &&
+                d <= minVal + classInterval * 2
+              ? "#adb9ac"
+              : d > minVal && d <= minVal + classInterval * 1
+              ? "#d5dbd5"
+              : d > 0 && d <= minVal
+              ? "#245333"
+              : "#dae0dc00";
           }
 
           function style(feature) {
             return {
-              fillColor: getColor(feature.properties.youth_male),
+              fillColor: getColor(
+                feature.properties[store.userSelection.aggregate]
+              ),
               weight: 2,
               opacity: 1,
               color: "white",
@@ -219,10 +204,14 @@ export default defineComponent({
           }
 
           function popup(feature, layer) {
-            feature = layer.bindPopup();
+            layer.bindPopup(
+              `${feature.properties.District}: ${
+                feature.properties[store.userSelection.aggregate]
+              }`
+            );
           }
 
-          const jsonLayer = L.geoJSON(newJsonData, {
+          const jsonLayer = L.geoJSON(jsonLayerJoined.geoJsonLayer, {
             style: style,
             onEachFeature: popup,
           });
@@ -231,8 +220,7 @@ export default defineComponent({
 
           currentMapLayer.value.addTo(map.value).bringToFront();
 
-          map.value.fitBounds(currentMapLayer.value.getBounds())
-
+          map.value.fitBounds(currentMapLayer.value.getBounds());
         } else {
           if (currentMapLayer.value) {
             map.value.removeLayer(currentMapLayer.value);
@@ -245,10 +233,10 @@ export default defineComponent({
             //iconAnchor: [10, 35], // point of the icon which will correspond to marker's location
           });
 
-          const {icon1, icon2, icon3, icon4, icon5, icon6} = markers
+          const { icon1, icon2, icon3, icon4, icon5, icon6 } = markers;
 
           let wfsUrl =
-            "http://45.76.136.154/geoserver/agriconnect/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=agriconnect%3AHelvetas_Infrastructures&outputFormat=application%2Fjson";
+            "http://139.84.235.200/geoserver/agriconnect/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=agriconnect%3ADistricts&outputFormat=application%2Fjson";
 
           let response = await axios.get(wfsUrl);
 
@@ -266,19 +254,15 @@ export default defineComponent({
               var icon;
               if (attribute === "Processing park") {
                 icon = icon1;
-              }
-              else if (attribute === "Screen houses"){
+              } else if (attribute === "Screen houses") {
                 icon = icon3;
-              }
-              else if (attribute === "Screen houses"){
+              } else if (attribute === "Screen houses") {
                 icon = icon3;
-              }
-              else if (attribute === "Screen houses"){
+              } else if (attribute === "Screen houses") {
                 icon = icon3;
-              }
-              else if (attribute === "Solar driyer") {
+              } else if (attribute === "Solar driyer") {
                 icon = icon2;
-              }else {
+              } else {
                 icon = icon4;
               }
               // Add more conditions as needed
@@ -296,7 +280,7 @@ export default defineComponent({
             });
           }
 
-          processData(geojsonData)
+          processData(geojsonData);
 
           const infrastructureLayer = L.geoJSON(geojsonData, {
             pointToLayer: function (feature, latlng) {
@@ -329,6 +313,10 @@ export default defineComponent({
       addDistrictData().then(() => {
         setVector();
       });
+    });
+
+    watch(store.userSelection, () => {
+      setVector();
     });
 
     return {
@@ -379,28 +367,44 @@ export default defineComponent({
 }
 
 .gradient-rect {
+  right: 0%;
   width: 10px;
   height: 200px;
   background: linear-gradient(to top, #c9e4ca, #364958);
   position: absolute;
-  z-index: 10000;
-  right: 2%;
-  bottom: 2%;
+  z-index: 800;
   color: white;
   text-align: center;
   line-height: 40px;
   font-size: 16px;
 }
 
+.legend-rect {
+  width: 70px;
+  height: 200px;
+  position: absolute;
+  z-index: 800;
+  right: 2%;
+  bottom: 2%;
+}
+
+.radio-rect {
+  position: absolute;
+  z-index: 800;
+  left: 1%;
+  top: 2%;
+}
+
 .start {
   position: absolute;
-  bottom: -10%;
-  right: 150%;
+  bottom: 0%;
+  right: 25%;
 }
 
 .end {
+  background-color: solid, rgba(0, 0, 0, 0.021);
   position: absolute;
-  top: -10%;
-  right: 150%;
+  top: 0%;
+  right: 25%;
 }
 </style>
