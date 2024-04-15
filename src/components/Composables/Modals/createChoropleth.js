@@ -5,6 +5,7 @@ import useSupabase from "src/boot/supabase";
 export default function setSelectedVect() {
   const store = useSumStore();
   const { supabase } = useSupabase();
+  const url = "http://127.0.0.1:3000/";
 
   const createChoroplethSums = async function () {
     const { userSelection, districts, tableType } = useSumStore();
@@ -24,6 +25,14 @@ export default function setSelectedVect() {
           `);
 
       sumsData = tableData;
+      // const response = await axios.post(url + `cumulative_totals`, {
+      //   grantee: userSelection.grantee,
+      //   year: userSelection.year,
+      //   code: userSelection.code,
+      //   aggregate: userSelection.aggregate,
+      // });
+
+      // sumsData = response.data;
     } else if (tableType == "at") {
       tableName = `at_${userSelection.grantee}_${userSelection.year}`;
 
@@ -54,9 +63,19 @@ export default function setSelectedVect() {
           `);
 
       sumsData = tableData;
+      // const data = await axios.post(url+`sums`, {
+      //   grantee: userSelection.grantee,
+      //   quota: userSelection.quota,
+      //   year: userSelection.year,
+      //   code: userSelection.code,
+      // });
+
+      // console.log(data.data);
+
+      // sumsData = data.data;
     }
 
-    console.log(sumsData)
+    console.log(sumsData);
 
     const joinedData = districts.features.map((geoFeature) => {
       const matchingFeature = sumsData.find(
@@ -77,7 +96,7 @@ export default function setSelectedVect() {
 
     const newJsonData = joinedData.filter((obj) => obj !== undefined);
 
-    store.setCTtable(sumsData)
+    store.setCTtable(sumsData);
 
     let choroplethValues = [];
 

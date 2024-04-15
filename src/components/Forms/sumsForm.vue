@@ -4,7 +4,7 @@
   <selectGrantee/>
 
   <div class="text-weight-medium q-mt-md q-px-sm q-mt-sm">
-    Select Targets and Responses
+    Targets and Responses
   </div>
 
   <div class="q-pt-sm" style="max-width: 350px">

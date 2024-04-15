@@ -156,7 +156,7 @@
             <q-card-section>
               <div class="column items-center q-gutter-y-md">
                 <div class="row">
-                  <img src="src/assets/icon_1.png" style=""/>
+                  <img src="~src/assets/icon_1.png" style=""/>
                 </div>
                 <div class="row text-center text-weight-bold" style="font-size: 21px;">
                 1. Behaviour change for good nutrition practices
@@ -172,7 +172,7 @@
             <q-card-section>
               <div class="column items-center q-gutter-y-md">
                 <div class="row">
-                  <img src="src/assets/icon_2.png" style=""/>
+                  <img src="~src/assets/icon_2.png" style=""/>
                 </div>
                 <div class="row text-center text-weight-bold" style="font-size: 21px;">
                 2. Improving production, processing and marketing
@@ -188,7 +188,7 @@
             <q-card-section>
               <div class="column items-center q-gutter-y-md">
                 <div class="row">
-                  <img src="src/assets/icon_3.png" style=""/>
+                  <img src="~src/assets/icon_3.png" style=""/>
                 </div>
                 <div class="row text-center text-weight-bold" style="font-size: 21px;">
                 3. Promoting women and youth employment and climate smart agriculture
@@ -204,7 +204,7 @@
             <q-card-section>
               <div class="column items-center q-gutter-y-md">
                 <div class="row">
-                  <img src="src/assets/icon_4.png" style=""/>
+                  <img src="~src/assets/icon_4.png" style=""/>
                 </div>
                 <div class="row text-center text-weight-bold" style="font-size: 21px;">
                 4. Supporting better policies for an enabling environment
@@ -220,7 +220,7 @@
             <q-card-section>
               <div class="column items-center q-gutter-y-md">
                 <div class="row">
-                  <img src="src/assets/icon_5.png" style=""/>
+                  <img src="~src/assets/icon_5.png" style=""/>
                 </div>
                 <div class="row text-center text-weight-bold" style="font-size: 21px;">
                5. Connecting farmers to markets
@@ -236,7 +236,7 @@
             <q-card-section>
               <div class="column items-center q-gutter-y-md">
                 <div class="row">
-                  <img src="src/assets/icon_6.png" style=""/>
+                  <img src="~src/assets/icon_6.png" style=""/>
                 </div>
                 <div class="row text-center text-weight-bold" style="font-size: 21px;">
                6. More investment by SMEs

@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import useSupabase from "src/boot/supabase";
+import { axios } from "src/boot/axios";
 
 const { supabase } = useSupabase();
 
@@ -48,8 +49,15 @@ export const useSumStore = defineStore({
       this.districts = response;
     },
 
-    setDistrictData(val) {
-      this.districts = val;
+    async setDistrictData() {
+      let wfsUrl =
+        "http://139.84.235.200/geoserver/agriconnect/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=agriconnect%3AOP_DISTRICTS&maxFeatures=50&outputFormat=application%2Fjson";
+
+      let response = await axios.get(wfsUrl);
+
+      this.districts = response.data;
+
+      //this.districts = val;
     },
 
     async fetchSumsIndicators() {

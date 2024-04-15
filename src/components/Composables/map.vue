@@ -5,8 +5,12 @@
         <!-- <span class="start">{{ lowest }}</span> -->
         <!-- <span class="end">{{ highest }}</span> -->
       </div>
-      <span class="start text-white text-weight-bolder  bg-primary q-px-sm">{{ lowest }}</span>
-      <span class="end text-white text-weight-bolder bg-primary q-px-sm">{{ highest }}</span>
+      <span class="start text-white text-weight-bolder bg-primary q-px-sm">{{
+        lowest
+      }}</span>
+      <span class="end text-white text-weight-bolder bg-primary q-px-sm">{{
+        highest
+      }}</span>
     </div>
 
     <div class="radio-rect">
@@ -16,7 +20,7 @@
 </template>
 
 <script>
-import { computed, defineComponent, onMounted, ref, watch } from "vue";
+import { computed, defineComponent, onBeforeMount, onMounted, ref, watch } from "vue";
 import { Loading, QSpinnerFacebook, QSpinnerIos, QSpinnerOval } from "quasar";
 import { axios } from "src/boot/axios";
 
@@ -109,13 +113,11 @@ export default defineComponent({
         });
 
         let wfsUrl =
-          "http://139.84.235.200/geoserver/agriconnect/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=agriconnect%3ADistricts&outputFormat=application%2Fjson";
+          "http://139.84.235.200/geoserver/agriconnect/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=agriconnect%3Adistricts&outputFormat=application%2Fjson";
 
         let response = await axios.get(wfsUrl);
 
         const geojsonData = response.data;
-
-        store.setDistrictData(geojsonData);
 
         const jsonLayer = L.geoJSON(geojsonData, {
           style: {
@@ -236,7 +238,7 @@ export default defineComponent({
           const { icon1, icon2, icon3, icon4, icon5, icon6 } = markers;
 
           let wfsUrl =
-            "http://139.84.235.200/geoserver/agriconnect/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=agriconnect%3ADistricts&outputFormat=application%2Fjson";
+            "http://139.84.235.200/geoserver/agriconnect/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=agriconnect%3AMerged_Agriconnect_Infrastructure&outputFormat=application%2Fjson";
 
           let response = await axios.get(wfsUrl);
 
@@ -248,19 +250,27 @@ export default defineComponent({
             // Loop through each feature in the GeoServer JSON data
             data.features.forEach((feature) => {
               // Extract attributes from the feature (adjust property name accordingly)
-              var attribute = feature.properties.TYPE;
+              var attribute = feature.properties.Class2;
 
               // Determine which icon to use based on the attribute value
               var icon;
-              if (attribute === "Processing park") {
+              if (attribute === "Farm Equipment") {
                 icon = icon1;
-              } else if (attribute === "Screen houses") {
+              } else if (attribute === "Water/ Irrigation") {
+                icon = icon2;
+              } else if (attribute === "Plant/ Machinery") {
                 icon = icon3;
-              } else if (attribute === "Screen houses") {
+              } else if (attribute === "Processing/ Sort/ Preservation/ Storage") {
+                icon = icon4;
+              } else if (attribute === "Market") {
+                icon = icon5;
+              } else if (attribute === "Cooperative/ Project Office") {
+                icon = icon6;
+              } else if (attribute === "Nursery") {
                 icon = icon3;
-              } else if (attribute === "Screen houses") {
+              } else if (attribute === "Learning Center") {
                 icon = icon3;
-              } else if (attribute === "Solar driyer") {
+              } else if (attribute === "Weather Station") {
                 icon = icon2;
               } else {
                 icon = icon4;
@@ -276,7 +286,7 @@ export default defineComponent({
                 { icon: icon }
               )
                 .addTo(map.value)
-                .bindPopup(feature.properties.TYPE); // Adjust property name for popup content
+                .bindPopup(feature.properties.Class2); // Adjust property name for popup content
             });
           }
 
@@ -307,6 +317,10 @@ export default defineComponent({
     const tab = computed(() => {
       return store.getCurrentTab;
     });
+
+    onBeforeMount(()=>{
+      store.setDistrictData()
+    })
 
     onMounted(() => {
       setLeafletMap();
@@ -368,7 +382,7 @@ export default defineComponent({
 
 .gradient-rect {
   right: 0%;
-  width: 10px;
+  width: 15px;
   height: 200px;
   background: linear-gradient(to top, #c9e4ca, #364958);
   position: absolute;

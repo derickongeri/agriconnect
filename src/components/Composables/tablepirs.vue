@@ -18,12 +18,12 @@
         class="scroll-area"
         type="table"
         flat
-        style="max-height: 28vh"
+        style="max-height: 25vh"
         :thumb-style="thumbStyle"
         :bar-style="barStyle"
-        :virtual-scroll-item-size="28"
-        :virtual-scroll-sticky-size-start="28"
-        :virtual-scroll-sticky-size-end="32"
+        :virtual-scroll-item-size="25"
+        :virtual-scroll-sticky-size-start="20"
+        :virtual-scroll-sticky-size-end="25"
         :items="tableData"
         v-slot="{ item: row, index }"
       >
@@ -71,7 +71,7 @@
         class="scroll-area"
         type="table"
         flat
-        style="max-height: 28vh"
+        style="max-height: 25vh"
         :thumb-style="thumbStyle"
         :bar-style="barStyle"
         :virtual-scroll-item-size="28"
@@ -127,12 +127,12 @@
         class="scroll-area"
         type="table"
         flat
-        style="max-height: 28vh"
+        style="max-height: 25vh"
         :thumb-style="thumbStyle"
         :bar-style="barStyle"
-        :virtual-scroll-item-size="28"
-        :virtual-scroll-sticky-size-start="28"
-        :virtual-scroll-sticky-size-end="32"
+        :virtual-scroll-item-size="25"
+        :virtual-scroll-sticky-size-start="20"
+        :virtual-scroll-sticky-size-end="25"
         :items="tableData"
         v-slot="{ item: row, index }"
       >
