@@ -15,10 +15,19 @@
             style="width: 100%; height: 8%;"
           >
             <div
+              v-if="sumsTab === 'responses'"
               class="bg-white indicator-selection q-pa-none q-ma-sm"
               style="position: absolute; width: 25%; z-index: 1000"
             >
               <indicatorSelection/>
+            </div>
+
+            <div
+              v-if="sumsTab === 'faindicators'"
+              class="bg-white indicator-selection q-pa-none q-ma-sm"
+              style="position: absolute; width: 25%; z-index: 1000;"
+            >
+              <faIndicatorSelection/>
             </div>
             <q-space></q-space>
             <div class="q-pa-md">
@@ -119,6 +128,7 @@ import tablepirs from "../components/Composables/tablepirs.vue";
 import chartSums from "src/components/Composables/sumsChart.vue"
 import filtertabs from "../components/Filter/filtertabs.vue";
 import indicatorSelection from "src/components/Composables/indicatorselection.vue"
+import faIndicatorSelection from "src/components/Composables/faindicatorselection.vue"
 import { useSumStore } from "stores/sumdata/index.js";
 
 const store = useSumStore();
@@ -129,9 +139,15 @@ const selectedTab = computed(() => {
   return store.getCurrentTab;
 });
 
+const sumsTab = computed(()=>{
+  return store.getSumsTab
+})
+
 onMounted(() => {
   selectedTab.value = store.getCurrentTab;
+  sumsTab.value = store.sumsTab
 });
+
 </script>
 
 <style scoped>

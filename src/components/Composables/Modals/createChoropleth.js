@@ -8,10 +8,10 @@ export default function setSelectedVect() {
   const url = "http://127.0.0.1:3000/";
 
   const createChoroplethSums = async function () {
-    const { userSelection, districts, tableType } = useSumStore();
+    const { userSelection, districts, tableType, sumsTab } = useSumStore();
     let tableName = null;
     let sumsData = null;
-    if (tableType == "ct") {
+    if (tableType == "ct" && sumsTab == "responses") {
       tableName = `ct_${userSelection.grantee}_${userSelection.year}`;
 
       const { data: tableData, error: sumsError } = await supabase.from(
@@ -33,7 +33,7 @@ export default function setSelectedVect() {
       // });
 
       // sumsData = response.data;
-    } else if (tableType == "at") {
+    } else if (tableType == "at" && sumsTab == "responses") {
       tableName = `at_${userSelection.grantee}_${userSelection.year}`;
 
       const { data: tableData, error: sumsError } = await supabase.from(
@@ -48,7 +48,7 @@ export default function setSelectedVect() {
           `);
 
       sumsData = tableData;
-    } else {
+    } else if (tableType == "sums" && sumsTab == "responses") {
       tableName = `sums_${userSelection.grantee}_${userSelection.quota}_${userSelection.year}`;
       const { data: tableData, error: sumsError } = await supabase.from(
         tableName
@@ -73,6 +73,25 @@ export default function setSelectedVect() {
       // console.log(data.data);
 
       // sumsData = data.data;
+    } else {
+      tableName = `fa_indicators_2023`;
+      const { data: tableData, error: sumsError } = await supabase.from(
+        tableName
+      ).select(`
+            district,
+            idh: ${userSelection.faCode}->IDH,
+            pdf: ${userSelection.faCode}->PDF,
+            total: ${userSelection.faCode}->Total,
+            trias: ${userSelection.faCode}->Trias,
+            value: ${userSelection.faCode}->Value,
+            viagro: ${userSelection.faCode}->Viagro,
+            rikolto: ${userSelection.faCode}->Rikolto,
+            helvetas: ${userSelection.faCode}->Helvetas,
+            solidaridadcert: ${userSelection.faCode}->SoliCERT,
+            solidaridadpace: ${userSelection.faCode}->SoliPACE
+          `);
+
+      sumsData = tableData;
     }
 
     console.log(sumsData);
@@ -101,7 +120,11 @@ export default function setSelectedVect() {
     let choroplethValues = [];
 
     newJsonData.forEach((d) => {
-      choroplethValues.push(d.properties[userSelection.aggregate]);
+      if (sumsTab == "responses") {
+        choroplethValues.push(d.properties[userSelection.aggregate]);
+      } else {
+        choroplethValues.push(d.properties[userSelection.faGrantee]);
+      }
     });
 
     return {

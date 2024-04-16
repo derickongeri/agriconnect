@@ -10,17 +10,21 @@ export const useSumStore = defineStore({
     userSelection: {
       grantee: "helvetas",
       code: "code11",
+      faGrantee: "total",
+      faCode: "id1",
       year: "20202023",
       quota: "aprjun",
-      aggregate: "ct"
+      aggregate: "ct",
     },
     atYears: {
-      at_year1: '2022',
-      at_year2: "2023"
+      at_year1: "2022",
+      at_year2: "2023",
     },
     tableType: "ct",
     currentTab: "pirs",
+    sumsTab: "faindicators",
     sumsIndicators: null,
+    faIndicators: null,
     selectedGrantee: "helvetas",
     selectedIndicatorCode: "code11",
     selectedYear: "2020",
@@ -32,12 +36,14 @@ export const useSumStore = defineStore({
     getCurrentTab: (state) => state.currentTab,
     getUserSelection: (state) => state.userSelection,
     getSumsIndicators: (state) => state.sumsIndicators,
+    getfaIndicators: (state) => state.faIndicators,
     getSelectedGrantee: (state) => state.selectedGrantee,
     getSelectedYear: (state) => state.selectedYear,
     getSelectedQuota: (state) => state.selectedQuota,
     getSelectedTable: (state) => state.tableType,
     getctTable: (state) => state.ctTable,
     getAtYear: (state) => state.atYears,
+    getSumsTab: (state) => state.sumsTab,
   },
   actions: {
     async fetchDistrictData() {
@@ -71,13 +77,26 @@ export const useSumStore = defineStore({
       }
     },
 
+    async fetchfaIndicators() {
+      try {
+        let { data: codes_fa_indicators, error } = await supabase
+          .from("codes_fa_indicators")
+          .select("id,sumsstopgapcode,faindicators");
+
+        console.log(codes_fa_indicators);
+        this.faIndicators = codes_fa_indicators;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
     setCurrentTab(value) {
       this.currentTab = value;
       console.log(this.currentTab);
     },
 
     setTableType(value) {
-      this.tableType =value
+      this.tableType = value;
     },
 
     setSelectedIndicatorCode(value) {
@@ -85,9 +104,19 @@ export const useSumStore = defineStore({
       console.log(this.selectedIndicatorCode);
     },
 
+    setSelectedfaIndicatorCode(value) {
+      this.userSelection.faCode = value;
+      console.log(this.selectedIndicatorCode);
+    },
+
     setSelectedGrantee(value) {
       this.userSelection.grantee = value;
-      console.log(this.selectedGrantee);
+      // console.log(this.selectedGrantee);
+    },
+
+    setSelectedfaGrantee(value) {
+      this.userSelection.faGrantee = value;
+      // console.log(this.selectedGrantee);
     },
 
     setSelectedYear(value) {
@@ -99,20 +128,24 @@ export const useSumStore = defineStore({
     },
 
     setSelectedAggregate(value) {
-      this.userSelection.aggregate = value
+      this.userSelection.aggregate = value;
     },
 
     setDefaultUserSelection(value) {
-      this.userSelection.year = value.year
-      this.userSelection.aggregate = value.aggregate
+      this.userSelection.year = value.year;
+      this.userSelection.aggregate = value.aggregate;
     },
 
     setCTtable(value) {
-      this.ctTable=value
+      this.ctTable = value;
     },
 
-    setATyears(value){
-      this.atYears = value
-    }
+    setATyears(value) {
+      this.atYears = value;
+    },
+
+    setSumsTab(value) {
+      this.sumsTab = value;
+    },
   },
 });

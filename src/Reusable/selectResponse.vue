@@ -7,7 +7,7 @@
           v-model="group"
           checked-icon="task_alt"
           unchecked-icon="panorama_fish_eye"
-          val="financial"
+          val="faindicators"
           color="primary"
         />
       </q-item-section>
@@ -19,7 +19,7 @@
           v-model="group"
           checked-icon="task_alt"
           unchecked-icon="panorama_fish_eye"
-          val="resposes"
+          val="responses"
           color="primary"
         />
       </q-item-section>
@@ -29,8 +29,19 @@
 
 <script setup>
 import { ref, computed, watch } from "vue";
+import { useSumStore } from "stores/sumdata/index.js";
 
-const group = ref("resposes")
+const store = useSumStore();
+
+const group = ref(store.sumsTab)
+
+const selectedSumsTab = computed(()=>{
+  return group.value
+})
+
+watch(selectedSumsTab, (val)=>{
+  store.setSumsTab(val)
+})
 
 
 </script>

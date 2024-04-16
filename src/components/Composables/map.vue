@@ -20,7 +20,14 @@
 </template>
 
 <script>
-import { computed, defineComponent, onBeforeMount, onMounted, ref, watch } from "vue";
+import {
+  computed,
+  defineComponent,
+  onBeforeMount,
+  onMounted,
+  ref,
+  watch,
+} from "vue";
 import { Loading, QSpinnerFacebook, QSpinnerIos, QSpinnerOval } from "quasar";
 import { axios } from "src/boot/axios";
 
@@ -46,9 +53,7 @@ export default defineComponent({
   },
 
   setup() {
-    const { supabase } = useSupabase();
     const store = useSumStore();
-    const { selectedGrantee } = storeToRefs(useSumStore);
 
     const { createChoroplethSums } = setSelectedVect();
 
@@ -154,6 +159,7 @@ export default defineComponent({
           if (currentMapLayer.value) {
             map.value.removeLayer(currentMapLayer.value);
           }
+          let aggregate = null;
 
           let jsonLayerJoined = await createChoroplethSums();
 
@@ -192,11 +198,15 @@ export default defineComponent({
               : "#dae0dc00";
           }
 
+          if (store.getSumsTab == "faindicators") {
+            aggregate = store.userSelection.faGrantee;
+          } else {
+            aggregate = store.userSelection.aggregate;
+          }
+
           function style(feature) {
             return {
-              fillColor: getColor(
-                feature.properties[store.userSelection.aggregate]
-              ),
+              fillColor: getColor(feature.properties[aggregate]),
               weight: 2,
               opacity: 1,
               color: "white",
@@ -207,9 +217,7 @@ export default defineComponent({
 
           function popup(feature, layer) {
             layer.bindPopup(
-              `${feature.properties.District}: ${
-                feature.properties[store.userSelection.aggregate]
-              }`
+              `${feature.properties.District}: ${feature.properties[aggregate]}`
             );
           }
 
@@ -260,7 +268,9 @@ export default defineComponent({
                 icon = icon2;
               } else if (attribute === "Plant/ Machinery") {
                 icon = icon3;
-              } else if (attribute === "Processing/ Sort/ Preservation/ Storage") {
+              } else if (
+                attribute === "Processing/ Sort/ Preservation/ Storage"
+              ) {
                 icon = icon4;
               } else if (attribute === "Market") {
                 icon = icon5;
@@ -318,9 +328,13 @@ export default defineComponent({
       return store.getCurrentTab;
     });
 
-    onBeforeMount(()=>{
-      store.setDistrictData()
-    })
+    const sumsTab = computed(() => {
+      return store.getSumsTab;
+    });
+
+    onBeforeMount(() => {
+      store.setDistrictData();
+    });
 
     onMounted(() => {
       setLeafletMap();
@@ -330,6 +344,10 @@ export default defineComponent({
     });
 
     watch(store.userSelection, () => {
+      setVector();
+    });
+
+    watch(sumsTab, () => {
       setVector();
     });
 

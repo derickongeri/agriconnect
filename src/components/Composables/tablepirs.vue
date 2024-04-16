@@ -1,5 +1,5 @@
 <template>
-  <div v-if="showTable == 'ct'">
+  <div v-if="showTable == 'ct' && sumsTab == 'responses'">
     <div class="q-pa-none" style="width: 100%">
       <div class="row q-px-md q-pt-sm text-grey-8" style="font-weight: 700">
         <!-- <div class="col-1 ">Code</div> -->
@@ -54,7 +54,7 @@
       </q-virtual-scroll>
     </div>
   </div>
-  <div v-if="showTable == 'at'">
+  <div v-if="showTable == 'at' && sumsTab == 'responses'">
     <div class="q-pa-none" style="width: 100%">
       <div class="row q-px-md q-pt-sm text-grey-8" style="font-weight: 700">
         <!-- <div class="col-1 ">Code</div> -->
@@ -63,7 +63,9 @@
         <div class="col text-center">{{ atYears.at_year1 }}<br />Oct-Dec</div>
         <div class="col text-center">{{ atYears.at_year2 }}<br />Jan-Mar</div>
         <div class="col text-center">{{ atYears.at_year2 }}<br />Apr-Jun</div>
-        <div class="col text-center">Total {{ atYears.at_year1 }}/{{ atYears.at_year2 }}</div>
+        <div class="col text-center">
+          Total {{ atYears.at_year1 }}/{{ atYears.at_year2 }}
+        </div>
       </div>
     </div>
     <div class="" style="width: 100%">
@@ -110,7 +112,7 @@
       </q-virtual-scroll>
     </div>
   </div>
-  <div v-if="showTable == 'sums'">
+  <div v-if="showTable == 'sums' && sumsTab == 'responses'">
     <div class="q-pa-none" style="width: 100%">
       <div class="row q-px-md q-pt-sm text-grey-8" style="font-weight: 700">
         <!-- <div class="col-1 ">Code</div> -->
@@ -166,6 +168,76 @@
       </q-virtual-scroll>
     </div>
   </div>
+  <div v-if="sumsTab == 'faindicators'">
+    <div class="q-pa-none" style="width: 100%">
+      <div class="row q-px-md q-pt-sm text-grey-8" style="font-weight: 700">
+        <!-- <div class="col-1 ">Code</div> -->
+        <div class="col-4">District</div>
+        <div class="col text-center">Helvetas</div>
+        <div class="col text-center">IDH</div>
+        <div class="col text-center">Rikolto</div>
+        <div class="col text-center">Solidaridad <br />CERT</div>
+        <div class="col text-center">Solidaridad <br />PACE</div>
+        <div class="col text-center">Trias</div>
+        <div class="col text-center">Viagro</div>
+        <div class="col text-center">Total</div>
+        <div class="col text-center">Value</div>
+      </div>
+    </div>
+    <div class="" style="width: 100%">
+      <q-virtual-scroll
+        class="scroll-area"
+        type="table"
+        flat
+        style="max-height: 25vh"
+        :thumb-style="thumbStyle"
+        :bar-style="barStyle"
+        :virtual-scroll-item-size="25"
+        :virtual-scroll-sticky-size-start="20"
+        :virtual-scroll-sticky-size-end="25"
+        :items="tableData"
+        v-slot="{ item: row, index }"
+      >
+        <div
+          class="row q-px-md q-py-sm text-grey-8 items-center"
+          :class="index % 2 === 0 ? 'even-row' : 'odd-row'"
+          :key="index"
+        >
+          <!-- <div class="col-1 text-start q-px-md" style="font-weight: 700;">{{ index }}</div> -->
+          <div class="col-4 q-ma-none q-px-none" style="font-weight: 400">
+            {{ row.district }}
+          </div>
+          <div class="col text-center">
+            {{ row.helvetas }}
+          </div>
+          <div class="col text-center">
+            {{ row.idh }}
+          </div>
+          <div class="col text-center">
+            {{ row.rikolto }}
+          </div>
+          <div class="col text-center">
+            {{ row.solidaridadcert }}
+          </div>
+          <div class="col text-center">
+            {{ row.solidaridadpace }}
+          </div>
+          <div class="col text-center">
+            {{ row.trias }}
+          </div>
+          <div class="col text-center">
+            {{ row.viagro }}
+          </div>
+          <div class="col text-center">
+            {{ row.total }}
+          </div>
+          <div class="col text-center">
+            {{ row.value }}
+          </div>
+        </div>
+      </q-virtual-scroll>
+    </div>
+  </div>
 </template>
 
 <script setup>
@@ -173,9 +245,13 @@ import { ref, computed, watch, onMounted } from "vue";
 import { useSumStore } from "stores/sumdata/index.js";
 const store = useSumStore();
 
-const showTable = computed(()=>{
-  return store.getSelectedTable
+const showTable = computed(() => {
+  return store.getSelectedTable;
 });
+
+const sumsTab = computed(()=>{
+  return store.getSumsTab
+})
 
 const atYears = ref(store.getAtYear);
 
@@ -197,9 +273,9 @@ const setAtyears = computed(() => {
   return store.getAtYear;
 });
 
-watch(setAtyears, (val)=>{
-  atYears.value = val
-})
+watch(setAtyears, (val) => {
+  atYears.value = val;
+});
 
 // onMounted(
 //   showTable.value = store.getSelectedTable

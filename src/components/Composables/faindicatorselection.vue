@@ -5,8 +5,8 @@
     dense
     v-model="model"
     :options="options"
-    option-value="Code"
-    option-label="Indicator"
+    option-value="id"
+    option-label="faindicators"
     @filter="filterFn1"
     @update:model-value="getselectedIndicator"
     label="Selected Indicator"
@@ -18,10 +18,10 @@
       <q-item v-bind="scope.itemProps">
         <q-item-section>
           <q-item-label caption style="max-width: 350px">{{
-            scope.opt.OriginalCode
+            scope.opt.sumsstopgapcode
           }}</q-item-label>
           <q-item-label style="max-width: 450px">{{
-            scope.opt.Indicator
+            scope.opt.faindicators
           }}</q-item-label>
         </q-item-section>
       </q-item>
@@ -43,12 +43,16 @@ import { useSumStore } from "stores/sumdata/index.js";
 
 const store = useSumStore();
 
-const model = ref("Persons Reached");
+const model = ref({
+  id: "id1",
+  sumsstopgapcode: "SUMS REF, 1.1, 1.2, 1.3, 1.4",
+  faindicators: "Number of farmers supported by this Action",
+});
 
-const options = ref(store.getSumsIndicators);
+const options = ref(store.getfaIndicators);
 
 const indicatorList = computed(() => {
-  return store.getSumsIndicators;
+  return store.getfaIndicators;
 });
 
 const filterFn1 = function (val, update) {
@@ -61,15 +65,10 @@ const filterFn1 = function (val, update) {
 
 onBeforeMount(() => {
   store.fetchfaIndicators();
-  store.fetchSumsIndicators();
 });
 
-// onMounted(()=>{
-//   model.value = indicatorList.value[0]
-// })
-
 const getselectedIndicator = function (val) {
-  store.setSelectedIndicatorCode(val.Code);
+  store.setSelectedfaIndicatorCode(val.id);
 };
 </script>
 
