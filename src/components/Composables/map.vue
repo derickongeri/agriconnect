@@ -171,37 +171,69 @@
       </div>
     </div>
 
-    <div v-if="showAttributeCard" class="attribute-card" style="max-width: 50%;">
+    <div v-if="showAttributeCard" class="attribute-card" style="min-width: 50%">
       <div class="q-pa-none row items-start q-gutter-md">
-        <q-card class="my-card" flat bordered>
+        <q-card class="my-card" flat bordered style="min-width: 650px">
           <q-card-section horizontal>
-            <q-card-section class="col-5 flex flex-center">
-              <q-img
-                class="rounded-borders"
-                src="https://cdn.quasar.dev/img/parallax2.jpg"
-              />
-            </q-card-section>
-            <q-card-section class="q-pt-xs">
+            <div class="col-5">
+              <div class="column q-pa-md justify-center">
+                <q-img
+                  class="rounded-borders"
+                  src="https://cdn.quasar.dev/img/parallax2.jpg"
+                />
+              </div>
+            </div>
+
+            <q-card-section class="col-7 q-pt-xs">
               <div class="row">
                 <q-space />
-                <q-btn icon="close" size="sm" flat round dense @click="showAttributeCard = !showAttributeCard" />
+                <q-btn
+                  icon="close"
+                  size="sm"
+                  flat
+                  round
+                  dense
+                  @click="closeCard()"
+                />
               </div>
-              <div class="text-overline">Overline</div>
-              <div class="text-h5 q-mt-sm q-mb-xs">Title</div>
-              <div class="text-caption text-grey">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua.
+
+              <!-- <div class="text-overline">Grantee</div> -->
+
+              <div class="text-h5 q-mt-sm q-mb-xs">
+                {{ featureAtributes.name }}
+              </div>
+              <div class="text-overline">by {{ featureAtributes.grantee }}</div>
+              <div class="text-caption text-grey q-mb-xs">
+                {{ featureAtributes.Function }}
+              </div>
+              <q-separator />
+              <div class="text-subtitle1 q-mt-sm q-mb-xs">
+                <q-icon color="grey-7" name="mdi-sprout" />
+                <span class="text-caption"
+                  >{{ featureAtributes.grantee }} ・</span
+                >
+                <q-icon color="grey-7" name="mdi-cash-multiple" />
+                <span class="text-caption"
+                  >{{ featureAtributes.costTZ }}TZS ・</span
+                >
+                <q-icon color="grey-7" name="mdi-map-marker-radius-outline" />
+                <span class="text-caption">{{
+                  featureAtributes.District
+                }}</span>
               </div>
             </q-card-section>
           </q-card-section>
 
-          <q-separator />
+          <!-- <q-separator />
 
-          <q-card-actions>
-            <q-btn flat round icon="event" />
-            <q-btn flat> 7:30PM </q-btn>
-            <q-btn flat color="primary"> Reserve </q-btn>
-          </q-card-actions>
+          <q-card-section class="q-pt-none">
+            <div class="text-subtitle1">
+              <q-icon color="grey-7" name="mdi-sprout" /> <span class="text-caption">value chain ・</span>
+              <q-icon color="grey-7" name="mdi-cash-multiple" /> <span class="text-caption">TZS ・</span>
+              <q-icon color="grey-7" name="mdi-map-marker-radius-outline" /> <span class="text-caption">District,Ward</span>
+            </div>
+
+          </q-card-section> -->
         </q-card>
       </div>
     </div>
@@ -225,7 +257,7 @@ import {
 import { Loading, QSpinnerFacebook, QSpinnerIos, QSpinnerOval } from "quasar";
 import { axios } from "src/boot/axios";
 
-import L from "leaflet";
+import L, { bounds } from "leaflet";
 import "leaflet/dist/leaflet.css";
 import useSupabase from "src/boot/supabase";
 
@@ -260,9 +292,11 @@ export default defineComponent({
 
     const map = ref(null),
       center = ref([-5.7, 34]),
+      Layerbounds = ref(null),
       baseMaps = ref([]),
       districtLayer = ref(null),
       currentMapLayer = ref(null),
+      clickedMarker = ref(null),
       selectedTab = ref(store.currentTab),
       highest = ref(null),
       lowest = ref(null),
@@ -270,6 +304,19 @@ export default defineComponent({
       showBaseMapList = ref(false),
       showAttributeCard = ref(false),
       currentBaseLayer = ref(null);
+
+    const featureAtributes = computed(() => {
+      return {
+        name: clickedMarker.value.feature.properties.Class4,
+        grantee: clickedMarker.value.feature.properties.Grantee,
+        costTZ: clickedMarker.value.feature.properties.CostTDTZS,
+        Region: clickedMarker.value.feature.properties.Region,
+        District: clickedMarker.value.feature.properties.District,
+        Ward: clickedMarker.value.feature.properties.Ward,
+        Village: clickedMarker.value.feature.properties.Village,
+        Function: clickedMarker.value.feature.properties.Function,
+      };
+    });
 
     const setLeafletMap = async function () {
       const { osmTiles, darkMap, satellite } = baselayers;
@@ -397,7 +444,7 @@ export default defineComponent({
             map.value.removeLayer(currentMapLayer.value);
           }
           if (showAttributeCard.value) {
-            showAttributeCard.value = !showAttributeCard.value
+            showAttributeCard.value = !showAttributeCard.value;
           }
           let aggregate = null;
 
@@ -482,10 +529,9 @@ export default defineComponent({
           map.value.fitBounds(currentMapLayer.value.getBounds());
         } else {
           if (currentMapLayer.value) {
-            showAttributeCard.value = false
+            showAttributeCard.value = false;
             map.value.removeLayer(currentMapLayer.value);
           }
-
 
           const {
             waterIcon,
@@ -555,7 +601,17 @@ export default defineComponent({
               },
             });
 
-            // Add popup content
+            // var customPopup =
+            //   "<b>My office</b><br/><img src='http://netdna.webdesignerdepot.com/uploads/2014/05/workspace_06_previo.jpg' alt='maptime logo gif' width='150px'/>";
+
+            // // specify popup options
+            // var customOptions = {
+            //   maxWidth: "400",
+            //   width: "200",
+            //   className: "popupCustom",
+            // };
+
+            // // Add popup content
             // geoJsonLayer.bindPopup(function (layer) {
             //   return `<b>Infrustructure Category</b>: ${layer.feature.properties.Class3}<br/>
             //     <b>Grantee</b>: ${layer.feature.properties.Grantee}<br/>
@@ -564,12 +620,11 @@ export default defineComponent({
 
             // Add click event listener to each GeoJSON point feature
             geoJsonLayer.on("click", function (event) {
-              showAttributeCard.value = true;
+              showAttributeCard.value = !showAttributeCard.value;
 
               // Get the clicked feature
-              var feature = event.layer.feature;
-
-              console.log(feature.id);
+              // Store the reference to the clicked marker
+              clickedMarker.value = event.layer;
 
               // Get the coordinates of the clicked feature
               var latlng = event.latlng;
@@ -593,8 +648,10 @@ export default defineComponent({
               // Set custom icon for the selected marker
               event.layer.setIcon(clickedIcon);
 
+              showAttributeCard.value = true;
+
               // Fly to the clicked marker's location with smooth animation
-              map.value.flyTo(latlng, 17); // You can adjust the zoom level (15 is just an example)
+              map.value.flyTo(latlng, 10); // You can adjust the zoom level (15 is just an example)
             });
 
             // Listen for popup close event
@@ -626,7 +683,9 @@ export default defineComponent({
 
           currentMapLayer.value.addTo(map.value).bringToFront();
 
-          map.value.fitBounds(currentMapLayer.value.getBounds());
+          Layerbounds.value = currentMapLayer.value.getBounds();
+
+          map.value.fitBounds(Layerbounds.value);
         }
 
         Loading.hide();
@@ -634,6 +693,38 @@ export default defineComponent({
         console.log(error);
         Loading.hide();
       }
+    };
+
+    // Function to close the attribute card and reset the marker icon
+    const closeCard = () => {
+      Loading.show({
+        spinner: QSpinnerFacebook,
+        spinnerSize: "xl",
+        message: "Creating Map layer...",
+      });
+      showAttributeCard.value = false;
+      var marker = clickedMarker.value;
+      if (!marker) return; // Check if a marker was clicked
+
+      let attribute;
+      if (
+        infrastructureFilter.value === "" ||
+        infrastructureFilter.value === "all"
+      ) {
+        attribute = marker.feature.properties.Class3;
+      } else {
+        attribute = marker.feature.properties.Class4;
+      }
+      var defaultMarkerIcon = selectIcon(attribute);
+      marker.setIcon(defaultMarkerIcon);
+
+      map.value.setZoom(10);
+
+      //map.value.fitBounds(Layerbounds.value);
+
+      // Clear the clickedMarker reference
+      clickedMarker.value = null;
+      Loading.hide();
     };
 
     const tab = computed(() => {
@@ -684,6 +775,8 @@ export default defineComponent({
       baseMaps,
       currentBaseLayer,
       showAttributeCard,
+      closeCard,
+      featureAtributes,
     };
   },
 });
@@ -781,7 +874,9 @@ export default defineComponent({
   left: 25%;
 }
 
-.leaflet-popup {
+/* css to customize Leaflet default styles  */
+.popupCustom .leaflet-popup-tip,
+.popupCustom .leaflet-popup-content-wrapper {
   display: none;
 }
 </style>
