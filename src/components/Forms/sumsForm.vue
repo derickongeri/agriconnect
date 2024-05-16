@@ -45,7 +45,7 @@ const sumsTab = computed(() => {
   return store.getSumsTab;
 });
 
-onMounted(() => {
-  sumsTab.value = store.sumsTab;
-});
+// onMounted(() => {
+//   sumsTab.value = store.sumsTab;
+// });
 </script>

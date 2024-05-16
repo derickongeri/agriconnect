@@ -43,10 +43,18 @@ import { useSumStore } from "stores/sumdata/index.js";
 
 const store = useSumStore();
 
-const model = ref({
-  id: "id1",
-  sumsstopgapcode: "SUMS REF, 1.1, 1.2, 1.3, 1.4",
-  faindicators: "Number of farmers supported by this Action",
+const model = ref(null);
+
+// const model = computed(()=>{
+//   return store.faIndicators.find((obj) => obj.id == store.userSelection.faCode)
+// });
+
+const selectedfaIndicator = computed(() => {
+  return store.userSelection.faCode;
+});
+
+watch(selectedfaIndicator, (val) => {
+  model.value = store.faIndicators.find((obj) => obj.id === val);
 });
 
 const options = ref(store.getfaIndicators);
@@ -64,12 +72,20 @@ const filterFn1 = function (val, update) {
 };
 
 onBeforeMount(() => {
-  store.fetchfaIndicators();
+  store.fetchSumsIndicators();
 });
 
 const getselectedIndicator = function (val) {
   store.setSelectedfaIndicatorCode(val.id);
 };
+
+onMounted(() => {
+  store.fetchfaIndicators().then(() => {
+    model.value = store.faIndicators.find(
+      (obj) => obj.id == store.userSelection.faCode
+    );
+  });
+});
 </script>
 
 <style>

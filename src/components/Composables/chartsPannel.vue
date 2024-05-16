@@ -1,5 +1,5 @@
 <template>
-  <div v-if="showTable == 'sct' && sumsTab == 'responses'">
+  <div v-if="showTable == 'ct' && sumsTab == 'responses'">
     <div class="q-pa-none" style="width: 100%">
       <div class="row q-px-md q-pt-sm text-grey-8" style="font-weight: 700">
         <!-- <div class="col-1 ">Code</div> -->
@@ -19,6 +19,8 @@
         type="table"
         flat
         style="max-height: 25vh"
+        :thumb-style="thumbStyle"
+        :bar-style="barStyle"
         :virtual-scroll-item-size="25"
         :virtual-scroll-sticky-size-start="20"
         :virtual-scroll-sticky-size-end="25"
@@ -52,7 +54,6 @@
       </q-virtual-scroll>
     </div>
   </div>
-  <genderTable v-if="showTable == 'ct' && sumsTab == 'responses'" />
   <div v-if="showTable == 'at' && sumsTab == 'responses'">
     <div class="q-pa-none" style="width: 100%">
       <div class="row q-px-md q-pt-sm text-grey-8" style="font-weight: 700">
@@ -73,6 +74,8 @@
         type="table"
         flat
         style="max-height: 25vh"
+        :thumb-style="thumbStyle"
+        :bar-style="barStyle"
         :virtual-scroll-item-size="28"
         :virtual-scroll-sticky-size-start="28"
         :virtual-scroll-sticky-size-end="32"
@@ -112,6 +115,7 @@
   <div v-if="showTable == 'sums' && sumsTab == 'responses'">
     <div class="q-pa-none" style="width: 100%">
       <div class="row q-px-md q-pt-sm text-grey-8" style="font-weight: 700">
+        <!-- <div class="col-1 ">Code</div> -->
         <div class="col-4">District</div>
         <div class="col text-center">Adult Male<br />Male</div>
         <div class="col text-center">Adult Female<br />Female</div>
@@ -126,6 +130,8 @@
         type="table"
         flat
         style="max-height: 25vh"
+        :thumb-style="thumbStyle"
+        :bar-style="barStyle"
         :virtual-scroll-item-size="25"
         :virtual-scroll-sticky-size-start="20"
         :virtual-scroll-sticky-size-end="25"
@@ -185,6 +191,8 @@
         type="table"
         flat
         style="max-height: 25vh"
+        :thumb-style="thumbStyle"
+        :bar-style="barStyle"
         :virtual-scroll-item-size="25"
         :virtual-scroll-sticky-size-start="20"
         :virtual-scroll-sticky-size-end="25"
@@ -239,17 +247,15 @@
 <script setup>
 import { ref, computed, watch, onMounted } from "vue";
 import { useSumStore } from "stores/sumdata/index.js";
-import genderTable from "src/Reusable/sumsGenderTable.vue";
-
 const store = useSumStore();
 
 const showTable = computed(() => {
   return store.getSelectedTable;
 });
 
-const sumsTab = computed(() => {
-  return store.getSumsTab;
-});
+const sumsTab = computed(()=>{
+  return store.getSumsTab
+})
 
 const atYears = ref(store.getAtYear);
 

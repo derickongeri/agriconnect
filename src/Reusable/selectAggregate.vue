@@ -46,16 +46,15 @@ watch(group, (val) => {
   store.setSelectedAggregate(val);
 });
 
-const selectedTable = computed(()=>{
-  return store.getSelectedTable
-})
+const showRadioButtons = computed(() => {
+  return store.getSumsTab === "responses" && store.getCurrentTab === "pirs";
+});
 
-watch(selectedTable, (val)=>{
-  if (val == 'sums'){
-    showOpnGroup.value = true
-  } else {
-    showOpnGroup.value = false
-  }
-}, {deep: true})
-
+watch(
+  showRadioButtons,
+  (val) => {
+    showOpnGroup.value = val
+  },
+  { deep: true }
+);
 </script>

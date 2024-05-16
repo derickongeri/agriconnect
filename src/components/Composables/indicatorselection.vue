@@ -43,11 +43,18 @@ import { useSumStore } from "stores/sumdata/index.js";
 
 const store = useSumStore();
 
-const model = ref("Persons Reached");
+const model = ref(null);
+
+// const model = computed(() => {
+//   return store.sumsIndicators.find(
+//     (obj) => obj.Code === store.userSelection.code
+//   );
+// });
 
 const options = ref(store.getSumsIndicators);
 
 const indicatorList = computed(() => {
+  console.log(store.getSumsIndicators);
   return store.getSumsIndicators;
 });
 
@@ -64,9 +71,11 @@ onBeforeMount(() => {
   store.fetchSumsIndicators();
 });
 
-// onMounted(()=>{
-//   model.value = indicatorList.value[0]
-// })
+onMounted(() => {
+  model.value = store.sumsIndicators.find(
+    (obj) => obj.Code === store.userSelection.code
+  );
+});
 
 const getselectedIndicator = function (val) {
   store.setSelectedIndicatorCode(val.Code);

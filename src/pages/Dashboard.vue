@@ -59,24 +59,24 @@
             >
               <q-tab name="mails" label="Table" icon="mdi-table"/>
               <q-tab name="alarms" label="Charts" icon="mdi-chart-pie"/>
-              <!-- <q-tab name="movies" label="Movies" /> -->
+              <!-- <q-tab name="movies" label="Description" /> -->
             </q-tabs>
 
-            <q-separator />
+            <!-- <q-separator /> -->
 
             <q-tab-panels v-model="tab" animated>
               <q-tab-panel name="mails">
                 <tablepirs/>
               </q-tab-panel>
 
-              <q-tab-panel name="alarms">
+              <q-tab-panel class="q-pa-none" name="alarms">
                 <chartSums/>
               </q-tab-panel>
 
-              <q-tab-panel name="movies">
-                <div class="text-h6">Movies</div>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              </q-tab-panel>
+              <!-- <q-tab-panel class="q-pa-none" name="alarms">
+                <chartSums/>
+              </q-tab-panel> -->
+
             </q-tab-panels>
           </div>
         </div>
@@ -108,11 +108,11 @@
             </div>
           </div>
           <q-separator></q-separator>
-          <div class="row" style="width: 100%; height: 79%"><mappanel /></div>
-          <div
-            class="row bg-white"
-            style="width: 100%; height: 1%; overflow: hidden"
-          ></div>
+          <div class="row" style="width: 100%; height: 79%"><mappanel/></div>
+          <!-- <div
+            class="absolute "
+            style="z-index:1000; bottom:3%; width: 100%; overflow: hidden"
+          ><infdialog/></div> -->
         </div>
       </div>
     </div>
@@ -123,6 +123,7 @@
 import { computed, defineComponent, onMounted, ref } from "vue";
 
 //import pirstable from "../components/Composables/pirstable.vue";
+import infdialog from "src/Reusable/infrustructuredialog.vue"
 import mappanel from "../components/Composables/map.vue";
 import tablepirs from "../components/Composables/tablepirs.vue";
 import chartSums from "src/components/Composables/sumsChart.vue"
@@ -143,10 +144,10 @@ const sumsTab = computed(()=>{
   return store.getSumsTab
 })
 
-onMounted(() => {
-  selectedTab.value = store.getCurrentTab;
-  sumsTab.value = store.sumsTab
-});
+// onMounted(() => {
+//   selectedTab.value = store.getCurrentTab;
+//   sumsTab.value = store.sumsTab
+// });
 
 </script>
 

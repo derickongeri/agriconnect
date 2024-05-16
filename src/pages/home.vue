@@ -277,8 +277,8 @@
                         caption
                         lines="2"
                       >
-                        C/o P.O.Box LG 99, Legon<br />Accra, GHANA<br />(+233)
-                        244671350<br />rmc@ug.edu.gh
+                        P.O.Box 2182<br />Dodoma, Tanzania<br/> agriconnect@locateit.co.ke <br/>
+                        <a class="text-primary" href="https://agri-connect-tz.com/">https://agri-connect-tz.com/</a>
                       </div>
                     </q-item-section>
                   </q-item>

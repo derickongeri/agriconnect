@@ -12,9 +12,9 @@ export const useSumStore = defineStore({
       code: "code11",
       faGrantee: "total",
       faCode: "id1",
-      year: "20202023",
+      year: "20202024",
       quota: "aprjun",
-      aggregate: "ct",
+      aggregate: "total",
     },
     atYears: {
       at_year1: "2022",
@@ -83,7 +83,6 @@ export const useSumStore = defineStore({
           .from("codes_fa_indicators")
           .select("id,sumsstopgapcode,faindicators");
 
-        console.log(codes_fa_indicators);
         this.faIndicators = codes_fa_indicators;
       } catch (error) {
         console.log(error);

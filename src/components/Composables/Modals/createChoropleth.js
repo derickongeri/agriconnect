@@ -11,18 +11,26 @@ export default function setSelectedVect() {
     const { userSelection, districts, tableType, sumsTab } = useSumStore();
     let tableName = null;
     let sumsData = null;
+    let districtsData = null;
     if (tableType == "ct" && sumsTab == "responses") {
-      tableName = `ct_${userSelection.grantee}_${userSelection.year}`;
+      tableName = `dag_ct_${userSelection.grantee}_${userSelection.year}`;
 
       const { data: tableData, error: sumsError } = await supabase.from(
         tableName
       ).select(`
             district,
-            at_y1: ${userSelection.code}->AnnualTotalY1,
-            at_y2: ${userSelection.code}->AnnualTotalY2,
-            at_y3: ${userSelection.code}->AnnualTotalY3,
-            ct: ${userSelection.code}->CummulativeTotal
+            adult_male: ${userSelection.code}->Adult_Male,
+            adult_female: ${userSelection.code}->Adult_Female,
+            youth_male: ${userSelection.code}->Youth_Male,
+            youth_female: ${userSelection.code}->Youth_Female,
+            reference: ${userSelection.code}->Reference,
+            total: ${userSelection.code}->Total
           `);
+
+      // at_y1: ${userSelection.code}->AnnualTotalY1,
+      // at_y2: ${userSelection.code}->AnnualTotalY2,
+      // at_y3: ${userSelection.code}->AnnualTotalY3,
+      // ct: ${userSelection.code}->CummulativeTotal
 
       sumsData = tableData;
       // const response = await axios.post(url + `cumulative_totals`, {
@@ -74,7 +82,7 @@ export default function setSelectedVect() {
 
       // sumsData = data.data;
     } else {
-      tableName = `fa_indicators_2023`;
+      tableName = `fa`;
       const { data: tableData, error: sumsError } = await supabase.from(
         tableName
       ).select(`
@@ -94,7 +102,7 @@ export default function setSelectedVect() {
       sumsData = tableData;
     }
 
-    console.log(sumsData);
+    // console.log(sumsData);
 
     const joinedData = districts.features.map((geoFeature) => {
       const matchingFeature = sumsData.find(
@@ -113,15 +121,36 @@ export default function setSelectedVect() {
       }
     });
 
-    const newJsonData = joinedData.filter((obj) => obj !== undefined);
+    let newJsonData = joinedData.filter(
+      (obj) => obj !== undefined && obj.properties.total !== 0
+    );
 
-    store.setCTtable(sumsData);
+    if (newJsonData.length === 0) {
+      // If the filtered array is empty, create a new array
+      const newData = joinedData.filter((obj) => obj !== undefined);
+      // Assign the new array to newJsonData
+      newJsonData = newData;
+    }
+
+    console.log("Joined Data",newJsonData)
+
+    let table = sumsData.filter((obj) => obj !== undefined && obj.total !== 0);
+    if (table.length === 0) {
+      const newTable = sumsData;
+      table = newTable;
+    }
+
+    store.setCTtable(table);
 
     let choroplethValues = [];
 
     newJsonData.forEach((d) => {
       if (sumsTab == "responses") {
-        choroplethValues.push(d.properties[userSelection.aggregate]);
+        try {
+          choroplethValues.push(d.properties[userSelection.aggregate]);
+        } catch (error) {
+          choroplethValues = [0, 0];
+        }
       } else {
         choroplethValues.push(d.properties[userSelection.faGrantee]);
       }

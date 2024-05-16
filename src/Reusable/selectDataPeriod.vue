@@ -24,25 +24,25 @@ const table = ref({ label: "Cumulative Total", value: "ct" }),
   ]);
 
 const setTable = (val) => {
-  let defaultSelection = {}
+  let defaultSelection = {};
   if (val.value == "ct") {
-   defaultSelection = {
-      year: '20202023',
-      aggregate: 'ct'
-    }
+    defaultSelection = {
+      year: "20202024",
+      aggregate: "ct",
+    };
   } else if (val.value == "at") {
     defaultSelection = {
-      year: '20222023',
-      aggregate: 'at'
-    }
+      year: "20222023",
+      aggregate: "at",
+    };
   } else {
     defaultSelection = {
-      year: '2021',
-      aggregate: 'total'
-    }
+      year: "2021",
+      aggregate: "total",
+    };
   }
 
   store.setTableType(val.value);
-  store.setDefaultUserSelection(defaultSelection)
+  store.setDefaultUserSelection(defaultSelection);
 };
 </script>

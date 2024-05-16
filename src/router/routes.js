@@ -1,11 +1,10 @@
-
 const routes = [
   {
     path: "/",
     component: () => import("layouts/Dashboard.vue"),
     children: [
       { path: "", component: () => import("pages/home.vue") },
-      { path: "/dashboard", component: () => import("pages/Dashboard.vue") },
+      { path: "/dashboard", component: () => import("pages/Dashboard.vue") }
     ],
   },
 
@@ -13,8 +12,21 @@ const routes = [
     path: "/User",
     component: () => import("layouts/Login.vue"),
     children: [
-      { path: "login", name:'loginPage', component: () => import("pages/login.vue") },
-      { path: "signup", name: 'signupPage', component: () => import("pages/signup.vue") },
+      {
+        path: "login",
+        name: "loginPage",
+        component: () => import("pages/login.vue"),
+      },
+      {
+        path: "signup",
+        name: "signupPage",
+        component: () => import("pages/signup.vue"),
+      },
+      {
+        path: "upload",
+        name: "uploadPage",
+        component: () => import("pages/dataupload.vue"),
+      },
     ],
   },
 
@@ -26,4 +38,4 @@ const routes = [
   },
 ];
 
-export default routes
+export default routes;
