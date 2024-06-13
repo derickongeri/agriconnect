@@ -56,11 +56,11 @@ const options = ref([
       value: "trias",
     },
     {
-      label: "Solidaridadcert",
+      label: "SolidaridadCERT",
       value: "solidaridadcert",
     },
     {
-      label: "Solidaridadpace",
+      label: "SolidaridadPACE",
       value: "solidaridadpace",
     },
   ]),

@@ -57,7 +57,6 @@
         @click="onClick(currentLayer.value)"
       />
     </div>
-
     <div class="col">
       <div class="q-px-md">
         <div v-if="selectedInf === 'all'" class="q-gutter-xs">
@@ -136,10 +135,14 @@ const store = useSumStore();
 const { infGroups, fetchChip } = chipConfig;
 
 const model = ref("two");
-const selectedInf = ref("all");
+// const selectedInf = ref("all");
 const selectedInf_class4 = ref(null);
 
 const infrastructureList = ref(infGroups);
+
+// const selectedInf_class4 = computed(() => {
+//   return store.getClassfilter.setClass4filter
+// })
 
 const class3List = computed(() => {
   let infFeatures = infrastructureStore.getFeatures;
@@ -181,9 +184,9 @@ const currentLayer = computed(() => {
   );
 });
 
-// const selectedInf = computed(() => {
-//   return infrastructureStore.getClassfilter.class3filter;
-// });
+const selectedInf = computed(() => {
+  return infrastructureStore.getClassfilter.class3filter;
+});
 
 const infrastructureListInner = computed(() => {
   const fullList = fetchChip(selectedInf.value);
@@ -216,6 +219,10 @@ const onClickInner = (val) => {
 const showOpnGroup = computed(() => {
   return store.getCurrentTab === "infrastructure";
 });
+
+onMounted(() => {
+  selectedInf_class4.value = infrastructureStore.getClassfilter.class4filter
+})
 
 watch(currentLayer, (val) => {
   if (!val) {
