@@ -136,7 +136,7 @@ const { login } = userAuthUser();
         await login(form.value);
         notifySuccess("Login successfully!");
         router.push({
-          name: "dashboard",
+          name: "home",
         });
       } catch (error) {
         notifyError(error);

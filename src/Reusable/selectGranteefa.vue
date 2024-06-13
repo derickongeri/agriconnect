@@ -1,6 +1,7 @@
 <template>
   <q-select
     outlined
+    bottom-slots
     v-model="model"
     :options="options"
     :dense="dense"
@@ -12,9 +13,65 @@
         <img :src="currentLogo" style="width: 56px" />
       </div>
     </template>
+
+    <template v-slot:after>
+      <q-btn
+        round
+        outline
+        dense
+        size="sm"
+        icon="mdi-information-variant"
+        color="primary"
+        @click="toolbar = true"
+      />
+    </template>
+
+    <template v-slot:hint
+      ><div class="row items-center q-gutter-x-sm">
+        <div class="text-weight-medium">Value Chain:</div>
+        <div>
+          <q-avatar
+            size="24px"
+            color="white"
+            text-color="primary"
+            icon="mdi-fruit-cherries"
+          />
+          {{ currentText.valueChain }}
+        </div>
+      </div></template
+    >
   </q-select>
 
-  <q-card flat bordered class="q-my-md" style="border-color: #8bcc00">
+  <q-dialog v-model="toolbar">
+    <q-card>
+      <q-toolbar>
+        <div>
+          <img :src="currentLogo" style="width: 56px" />
+        </div>
+
+        <q-toolbar-title
+          ><span class="text-weight-bold">{{selectedGrantee.label}}</span>
+          </q-toolbar-title
+        >
+
+        <q-btn flat size="12px" round dense icon="close" v-close-popup />
+      </q-toolbar>
+
+      <q-card-section>
+        {{ currentText.text }}
+      </q-card-section>
+    </q-card>
+  </q-dialog>
+
+  <!-- <div class="row items-center q-px-sm">
+    <div class="text-weight-medium">Value Chain:</div>
+    <div>
+      <q-avatar color="white" text-color="primary" icon="mdi-fruit-cherries" />
+      {{ currentText.valueChain }}
+    </div>
+  </div> -->
+
+  <!-- <q-card flat class="q-my-md" style="border-color: #8bcc00">
     <q-card-section>
       <div class="row">
         <div class="col">
@@ -31,12 +88,13 @@
             class="text-caption q-pa-xs text-grey-9 text-justify"
             style="line-height: 1.2"
           >
-            {{ currentText.text }}
+          <q-chip square icon="event">Add to calendar</q-chip>
+            {{ currentText.valueChain }}
           </div>
         </div>
       </div>
     </q-card-section>
-  </q-card>
+  </q-card> -->
 </template>
 
 <script setup>
@@ -54,9 +112,11 @@ import { useSumStore } from "src/stores/sumdata/index.js";
 
 const store = useSumStore();
 
-const selectedGrantee = computed(()=>{
-  return options.value.find((obj)=> obj.value === store.getUserSelection.faGrantee)
-})
+const selectedGrantee = computed(() => {
+  return options.value.find(
+    (obj) => obj.value === store.getUserSelection.faGrantee
+  );
+});
 
 const model = ref(selectedGrantee),
   options = ref([
@@ -97,39 +157,33 @@ const model = ref(selectedGrantee),
       value: "solidaridadpace",
     },
   ]),
-  // options = ref([
-  //   "Helvetas",
-  //   "Viagro",
-  //   "Rikolto",
-  //   "Pdf",
-  //   "Idh",
-  //   "Trias",
-  //   "Solidaridad",
-  // ]),
   dense = ref(false),
+  toolbar = ref(false),
   denseOpts = ref(false);
 
 const logos = {
-  All: logoAgriconnect,
-  Helvetas: logoHeveltas,
-  Viagro: logoViagro,
-  Rikolto: logoRikolto,
-  Pdf: logoPDF,
-  Idh: logoIdh,
-  Trias: logoTrias,
-  Solidaridadcert: logoSolidaridad,
-  Solidaridadpace: logoSolidaridad,
+  total: logoAgriconnect,
+  helvetas: logoHeveltas,
+  viagro: logoViagro,
+  rikolto: logoRikolto,
+  pdf: logoPDF,
+  idh: logoIdh,
+  trias: logoTrias,
+  solidaridadcert: logoSolidaridad,
+  solidaridadpace: logoSolidaridad,
   // Add more company logos as needed
 };
 
 const aboutGrantee = {
   All: {
-    text: "AGRI-CONNECT is an EU-funded programme, contributing towards inclusive economic job creation in the agricultural sector, and towards increasing food and nutrition security in Tanzania.",
+    text: "Tea Coffee Horticulture",
     link: "",
+    valueChain: "Tea Coffee Horticulture",
   },
   Helvetas: {
-    text: "The project aims to foster inclusive economic growth by promoting private sector development and job creation in the horticulture sector, within the broader agricultural domain. It spans from 2020 to 2024.",
+    text: `The project aims to foster inclusive economic growth by promoting private sector development and job creation in the horticulture sector, within the broader agricultural domain. It spans from 2020 to 2024.`,
     link: "",
+    valueChain: "Horticulture",
   },
   Viagro: {
     text: "The project contributes to the inclusive and sustainable development of the coffee value chain in the Southern Highlands of Tanzania. Its aim is to improve the incomes and nutrition status of smallholder farmers, with a special focus on women and youth. The project operates from 2020 to 2024",
@@ -165,7 +219,7 @@ const aboutGrantee = {
 const currentLogo = computed(() => {
   // Use the selected company in the model to get the corresponding logo URL
   //console.log(model.value.label)
-  return logos[model.value.label] || logoAgriconnect; // Provide a default logo if needed
+  return logos[model.value.value] || logoAgriconnect; // Provide a default logo if needed
 });
 
 const currentText = computed(() => {

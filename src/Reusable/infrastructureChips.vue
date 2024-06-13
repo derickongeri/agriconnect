@@ -1,40 +1,63 @@
 <template>
-  <div class="row" v-if="showOpnGroup">
-    <div v-if="selectedInf !== ''" class="">
-      <div>
-        <q-btn-toggle
-          v-model="model"
-          class="my-custom-toggle bg-white"
-          no-caps
-          dense
-          rounded
-          size="12px"
-          unelevated
-          toggle-color="primary"
-          color="white"
-          text-color="primary"
-          :options="[
-            { value: 'one', slot: 'one' },
-            { value: 'two', slot: 'two' },
-          ]"
-        >
-          <template v-slot:one>
-            <div class="row text-bold text-primary items-center no-wrap">
-              <q-icon left name="mdi-chevron-left" />
-              <div class="text-center q-pr-sm">All Infrastructure</div>
-            </div>
-          </template>
-
-          <template v-slot:two>
-            <div class="row text-bold items-center no-wrap">
-
-              <div class="text-center q-px-sm">{{ currentLayer.name }}</div>
-              <q-icon left name="mdi-dots-vertical" />
-            </div>
-          </template>
-        </q-btn-toggle>
-      </div>
+  <div class="row items-start" v-if="showOpnGroup">
+    <div v-if="selectedInf !== 'all' && !selectedInf_class4">
+      <q-btn-dropdown
+        dense
+        class="bg-white"
+        split
+        color="white"
+        text-color="primary"
+        outline
+        unelevated
+        rounded
+        no-caps
+        icon="mdi-chevron-left"
+        icon-right="mdi-map"
+        :label="currentLayer.name"
+        @click="onClick('all')"
+      >
+        <q-list>
+          <q-item clickable v-close-popup @click="onClick('all')">
+            <q-item-section>
+              <q-item-label>All Infrustructue</q-item-label>
+            </q-item-section>
+          </q-item>
+          <q-item
+            v-for="(infrastructure, key) in infrastructureList.filter(
+              (item) => item !== currentLayer
+            )"
+            :key="key"
+            clickable
+            v-close-popup
+            @click="onClick(infrastructure.value)"
+          >
+            <q-item-section>
+              <q-item-label>{{ infrastructure.name }}</q-item-label>
+            </q-item-section>
+            <q-item-section side>
+              <q-icon :name="infrastructure.icon" color="primary" />
+            </q-item-section>
+          </q-item>
+        </q-list>
+      </q-btn-dropdown>
     </div>
+    <div v-if="selectedInf !== 'all' && selectedInf_class4">
+      <q-btn
+        unelevated
+        no-caps
+        outline
+        rounded
+        dense
+        align="between"
+        class="bg-grey-1 q-px-md"
+        color="grey-1"
+        text-color="primary"
+        :label="currentLayer.name"
+        icon="mdi-chevron-left"
+        @click="onClick(currentLayer.value)"
+      />
+    </div>
+
     <div class="col">
       <div class="q-px-md">
         <div v-if="selectedInf === 'all'" class="q-gutter-xs">
@@ -56,13 +79,16 @@
             {{ infrastructure.name }}
           </q-chip>
         </div>
-        <div v-if="selectedInf !== 'all'" class="q-gutter-xs">
+        <div
+          v-else-if="selectedInf !== 'all' && !selectedInf_class4"
+          class="q-gutter-xs"
+        >
           <q-chip
             v-for="(infrastructure, key) in infrastructureListInner"
             :key="key"
             size="12px"
             clickable
-            @click="onClick(infrastructure.value)"
+            @click="onClickInner(infrastructure.value)"
             :color="infrastructure.color"
             text-color="white"
           >
@@ -73,6 +99,23 @@
               text-color="grey-7"
             />
             {{ infrastructure.name }}
+          </q-chip>
+        </div>
+        <div v-else class="q-gutter-xs">
+          <q-chip
+            size="12px"
+            clickable
+            @click="onClickInner(class4infrastructure.value)"
+            :color="class4infrastructure.color"
+            text-color="white"
+          >
+            <q-avatar
+              :icon="class4infrastructure.icon"
+              color="white"
+              size="md"
+              text-color="grey-7"
+            />
+            {{ class4infrastructure.name }}
           </q-chip>
         </div>
       </div>
@@ -90,54 +133,60 @@ const infrastructureStore = useInfrastructureStore();
 
 const store = useSumStore();
 
-const {
-  infGroups,
-  // Digital,
-  // Equipment,
-  // Learning,
-  // Market,
-  // Nursery,
-  // Office,
-  // Processing,
-  // Water,
-  fetchChip,
-} = chipConfig;
+const { infGroups, fetchChip } = chipConfig;
 
 const model = ref("two");
-const currentLayer = computed(() => {
-  if (model.value === "two") {
-    return infrastructureList.value.find(
-      (item) => item.value === selectedInf.value
-    );
-  } else return null;
-});
-const selectedInf = computed(()=>{
-  return infrastructureStore.getClassfilter
-});
+const selectedInf = ref("all");
+const selectedInf_class4 = ref(null);
 const infrastructureList = ref(infGroups);
+
+const class4infrastructure = computed(() => {
+  return infrastructureListInner.value.find(
+    (item) => item.value === selectedInf_class4.value
+  );
+});
+
+const currentLayer = computed(() => {
+  return infrastructureList.value.find(
+    (item) => item.value === selectedInf.value
+  );
+});
+
+// const selectedInf = computed(() => {
+//   return infrastructureStore.getClassfilter.class3filter;
+// });
+
 const infrastructureListInner = computed(() => {
   return fetchChip(selectedInf.value);
 });
+
 const showToggleBtn = computed(() => {
   return selectedInf.value === "all";
 });
 
 // const showOpnGroup = ref(false);
 const onClick = (val) => {
-  model.value = "two";
+  //model.value = "two";
   selectedInf.value = val;
-  infrastructureStore.setClassfilter(val);
+  selectedInf_class4.value = null;
+  infrastructureStore.setClass3filter(val);
+  infrastructureStore.setClass4filter(null);
+};
+
+const onClickInner = (val) => {
+  //model.value = "two";
+  selectedInf_class4.value = val;
+  infrastructureStore.setClass4filter(val);
 };
 
 // const infrastructureList = ref(infGroups);
-
 const showOpnGroup = computed(() => {
   return store.getCurrentTab === "infrastructure";
 });
 
 watch(currentLayer, (val) => {
   if (!val) {
-    infrastructureStore.setClassfilter("");
+    infrastructureStore.setClass3filter("all");
   }
 });
 </script>

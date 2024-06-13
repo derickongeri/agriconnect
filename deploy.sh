@@ -31,3 +31,6 @@ git push $REPO_URL main
 # ssh root@139.84.235.200 "rm -rf /var/www/html/agriconnect/"
 
 scp -r /home/derick/Desktop/Agriconnect/agriconnect-dashboard/dist/spa/* root@139.84.235.200:/var/www/html/agriconnect-app
+
+
+

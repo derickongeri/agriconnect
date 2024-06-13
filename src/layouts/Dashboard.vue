@@ -1,6 +1,6 @@
 <template>
   <q-layout view="hHh lpR fFf">
-    <q-header elevated class="bg-white text-white q-py-md">
+    <q-header elevated class="bg-white my-font text-white q-py-md">
       <q-toolbar>
         <q-toolbar-title>
           <img
@@ -25,10 +25,17 @@
           <q-route-tab to="/dashboard" label="Dashboard" />
         </q-tabs>
 
-        <q-btn class="q-mr-xl" unelevated round color="primary" label="DO">
+        <q-btn
+          v-if="user"
+          class="q-mr-xl"
+          unelevated
+          round
+          color="primary"
+          :label="getInitials(user.firstName,user.lastName)"
+        >
           <q-menu anchor="bottom end" self="top right" :offset="[0, 12]">
             <q-list>
-              <q-item clickable v-close-popup to="/upload">
+              <q-item v-if="user.grantee" clickable v-close-popup to="/user/upload">
                 <q-item-section>
                   <q-item-label>Upload Data</q-item-label>
                 </q-item-section>
@@ -48,7 +55,8 @@
           </q-menu>
         </q-btn>
 
-        <!-- <q-btn
+        <q-btn
+          v-else
           class="q-mr-xl"
           unelevated
           round
@@ -69,29 +77,99 @@
               </q-item>
             </q-list>
           </q-menu>
-        </q-btn> -->
+        </q-btn>
       </q-toolbar>
     </q-header>
 
-    <q-page-container>
+    <q-page-container class="my-font">
       <router-view />
     </q-page-container>
   </q-layout>
 </template>
 
 <script>
-import { ref, onMounted, onBeforeMount } from "vue";
+import { computed, defineComponent, ref, onBeforeMount } from "vue";
+
+import userAuthUser from "src/composables/userAuthdjango";
+import { useRouter } from "vue-router";
+import { useQuasar } from "quasar";
+import { useI18n } from "vue-i18n";
 
 export default {
   setup() {
-    
-    const leftDrawerOpen = ref(false);
+    const $q = useQuasar();
+
+    const router = useRouter();
+
+    const { logout, user } = userAuthUser();
+
+    const { locale } = useI18n({ useScope: "global" });
+
+    //const locale = ref($q.lang.getLocale())
+
+    const rightDrawerOpen = ref(false);
+
+    const matchMediaDesktop = ref(false),
+      matchMediaMobile = ref(false);
+
+    onBeforeMount(() => {
+      matchMediaMobile.value = window.matchMedia("(max-width: 768px)").matches;
+      matchMediaDesktop.value = window.matchMedia("(min-width: 768px)").matches;
+    });
+
+    const handleLogout = async () => {
+      $q.dialog({
+        title: "Logout",
+        message: "Do you really want to leave?",
+        cancel: true,
+        persistent: true,
+      }).onOk(async () => {
+        await logout();
+        router.replace({ name: "home" });
+      });
+    };
+
+    const getInitials = (first, last) => {
+      const name = first + ` ` + last;
+
+      // Split the name into parts based on spaces
+      const nameParts = name.split(" ");
+
+      // Initialize an empty string to store the initials
+      let initials = "";
+
+      // Iterate through each part of the name
+      nameParts.forEach((part) => {
+        // Take the first character of each part and add it to the initials string
+        initials += part.charAt(0);
+      });
+
+      // Return the initials in uppercase
+      return initials.toUpperCase();
+    };
 
     return {
-      leftDrawerOpen,
-      toggleLeftDrawer() {
-        leftDrawerOpen.value = !leftDrawerOpen.value;
+      currentPath: ref(router.currentRoute.value.path),
+      handleLogout,
+      user,
+      rightDrawerOpen,
+      toggleRightDrawer() {
+        rightDrawerOpen.value = !rightDrawerOpen.value;
+        console.log(router.currentRoute.value.path);
       },
+      link: ref("inbox"),
+      toggleSettings: ref(false),
+      locale,
+      localeOptions: [
+        { value: "en-US", label: "English" },
+        { value: "fr", label: "French" },
+        // { value: "es-ES", label: "Spanish" },
+        // { value: "sw", label: "Swahili" },
+      ],
+      tab: ref("images"),
+      matchMediaDesktop,
+      matchMediaMobile,
+      getInitials
     };
   },
 };

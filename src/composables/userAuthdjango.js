@@ -1,15 +1,17 @@
 import { ref } from "vue";
 import axios from "axios";
 
-const user = ref({
-  email: "derickongeri@gmail.com",
-  user_metadata: {
-    firstName: "Derick",
-    lastName: "Ongeri",
-    role: "project manager",
-    grantee: "helvetas",
-  },
-});
+// {
+//   email: "derickongeri@gmail.com",
+//   user_metadata: {
+//     firstName: "Derick",
+//     lastName: "Ongeri",
+//     role: "project manager",
+//     grantee: "helvetas",
+//   },
+// }
+
+const user = ref();
 
 export default function userAuth() {
   const baseUrl = "http://139.84.235.200/auth";
@@ -54,28 +56,15 @@ export default function userAuth() {
     return !!user.value;
   };
 
-  const register = async ({
-    firstName,
-    lastName,
-    email,
-    sector,
-    role,
-    otherRoles,
-    organization,
-    password,
-  }) => {
+  const register = async ({ firstName, lastName, email, role, password }) => {
     console.log(firstName);
     await axios
       .post(baseUrl + `/signup/`, {
         first_name: firstName,
         last_name: lastName,
         email: email,
-        sector: sector,
         role: role,
-        other_roles: otherRoles,
-        institution: organization,
         password: password,
-        country: "kenya",
       })
       .then((res) => {
         user.value = res.data.user;

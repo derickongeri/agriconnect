@@ -238,6 +238,301 @@
       </div>
     </div>
 
+    <div
+      v-if="showRoadAttributeCard"
+      class="road-attribute-card"
+      id="map-card"
+      style=""
+      @mouseover="map.dragging.disable(), map.scrollWheelZoom.disable()"
+      @mouseleave="map.dragging.enable(), map.scrollWheelZoom.enable()"
+      @mouseup = "map.dragging.enable(), map.scrollWheelZoom.enable()"
+    >
+      <q-card
+        @mouseover="map.dragging.disable(), map.scrollWheelZoom.disable()"
+        @mouseleave="map.dragging.enable(), map.scrollWheelZoom.enable()"
+        class="my-card"
+        flat
+        bordered
+        style="width: 400px"
+      >
+        <q-card-section class="q-pa-xs">
+          <div class="row items-center">
+            <q-item-label header class="text-weight-bold text-grey-9"
+              >Road Attributes</q-item-label
+            >
+            <q-space />
+            <q-btn
+              class="q-mx-md"
+              icon="close"
+              size="sm"
+              flat
+              round
+              dense
+              @click="closeCard()"
+            />
+          </div>
+        </q-card-section>
+        <q-separator inset />
+        <q-scroll-area style="height: 50vh"
+          ><q-card-section class="q-py-none">
+            <q-item-label header class="text-weight-bold text-grey-9"
+              >General Information</q-item-label
+            >
+            <q-item>
+              <q-item-section avatar top>
+                <q-avatar
+                  size="32px"
+                  icon="mdi-road"
+                  color="primary"
+                  text-color="white"
+                />
+              </q-item-section>
+
+              <q-item-section>
+                <div class="row items-center">
+                  <div class="q-pr-sm">
+                    <q-item-label caption>Road Class:</q-item-label>
+                  </div>
+
+                  <q-item-label lines="1">{{
+                    roadFeatureAttributes.roadclass
+                  }}</q-item-label>
+                </div>
+              </q-item-section>
+            </q-item>
+            <q-item>
+              <q-item-section avatar top>
+                <q-avatar
+                  size="32px"
+                  icon="mdi-cash"
+                  color="secondary"
+                  text-color="white"
+                />
+              </q-item-section>
+
+              <q-item-section>
+                <div class="row items-center">
+                  <div class="q-pr-sm">
+                    <q-item-label caption>Funds:</q-item-label>
+                  </div>
+
+                  <q-item-label lines="1">{{
+                    roadFeatureAttributes.program
+                  }}</q-item-label>
+                </div>
+              </q-item-section>
+            </q-item>
+            <!-- <q-separator class="q-ma-sm" inset /> -->
+            <div class="row items-center q-my-sm">
+              <div class="column q-gutter-sm q-mx-md">
+                <div class="col">
+                  <q-icon
+                    size="xs"
+                    name="mdi-circle-outline"
+                    color="secondary"
+                  ></q-icon>
+                </div>
+                <div class="col">
+                  <q-icon size="xs" name="mdi-dots-vertical"></q-icon>
+                </div>
+                <div class="col">
+                  <q-icon
+                    size="xs"
+                    name="mdi-map-marker-outline"
+                    color="primary"
+                  ></q-icon>
+                </div>
+              </div>
+              <div class="col">
+                <div class="q-px-sm" style="max-width: 350px">
+                  <q-list class="q-gutter-y-sm">
+                    <q-item>
+                      <q-item-section>
+                        <q-item-label>Start</q-item-label>
+                        <q-item-label caption
+                          >[{{ roadFeatureAttributes.from_lat }},
+                          {{ roadFeatureAttributes.from_long }}]</q-item-label
+                        >
+                      </q-item-section>
+                    </q-item>
+
+                    <q-item>
+                      <q-item-section>
+                        <q-item-label>end</q-item-label>
+                        <q-item-label caption
+                          >[{{ roadFeatureAttributes.to_lat }},
+                          {{ roadFeatureAttributes.to_long }}]</q-item-label
+                        >
+                      </q-item-section>
+                    </q-item>
+                  </q-list>
+                </div>
+              </div>
+              <div class="column">
+                <q-icon size="md" name="mdi-compare-vertical"></q-icon>
+              </div>
+            </div>
+            <q-separator inset />
+            <q-item-label header class="text-weight-bold text-grey-9"
+              >Surface Information</q-item-label
+            >
+            <div class="row justify-between q-mx-md q-gutter-x-sm">
+              <div class="column items-center">
+                <q-avatar
+                  size="32px"
+                  class="q-mb-sm"
+                  color="secondary"
+                  text-color="grey-9"
+                  icon="mdi-arrow-expand-left"
+                />
+                <q-item-label lines="1">Left Shoulder</q-item-label>
+                <q-item-label caption
+                  >Type:
+                  <span class="text-grey-10" style="font-weight: 700">{{
+                    roadFeatureAttributes.lshoulder_surface
+                  }}</span></q-item-label
+                >
+                <q-item-label caption
+                  >Width:
+                  <span class="text-grey-10" style="font-weight: 700"
+                    >{{ roadFeatureAttributes.lshoulder_width }}m</span
+                  ></q-item-label
+                >
+              </div>
+              <div class="column items-center">
+                <q-avatar
+                  size="32px"
+                  class="q-mb-sm"
+                  color="primary"
+                  text-color="grey-9"
+                  icon="mdi-road-variant"
+                />
+                <q-item-label lines="1">Pavement</q-item-label>
+                <q-item-label caption>
+                  <span class="text-grey-10" style="font-weight: 700">{{
+                    roadFeatureAttributes.pavementType
+                  }}</span></q-item-label
+                >
+                <q-item-label caption>Subgrade: </q-item-label>
+                <span class="text-grey-10 q-mb-xs" style="font-weight: 700">{{
+                  roadFeatureAttributes.subsurfaceType
+                }}</span>
+                <q-item-label caption
+                  >Width:
+                  <span class="text-grey-10" style="font-weight: 700"
+                    >{{ roadFeatureAttributes.pave_width }}m</span
+                  ></q-item-label
+                >
+                <q-item-label caption
+                  >Lanes:
+                  <span class="text-grey-10" style="font-weight: 700">{{
+                    roadFeatureAttributes.lanes
+                  }}</span></q-item-label
+                >
+                <q-item-label caption
+                  >Depth:
+                  <span class="text-grey-10" style="font-weight: 700"
+                    >{{ roadFeatureAttributes.pave_depth }}mm</span
+                  ></q-item-label
+                >
+              </div>
+              <div class="column items-center">
+                <q-avatar
+                  size="32px"
+                  class="q-mb-sm"
+                  color="secondary"
+                  text-color="grey-9"
+                  icon="mdi-arrow-expand-right"
+                />
+                <q-item-label lines="1">Right Shoulder</q-item-label>
+                <q-item-label caption
+                  >Type:
+                  <span class="text-grey-10" style="font-weight: 700">{{
+                    roadFeatureAttributes.rshoulder_surface
+                  }}</span></q-item-label
+                >
+                <q-item-label caption
+                  >Width:
+                  <span class="text-grey-10" style="font-weight: 700"
+                    >{{ roadFeatureAttributes.rshoulder_width }}m</span
+                  ></q-item-label
+                >
+              </div>
+            </div>
+          </q-card-section>
+
+          <q-card-section> </q-card-section
+        ></q-scroll-area>
+      </q-card>
+    </div>
+
+    <div
+      v-if="selectedTab === 'tarura'"
+      class="roads-legend bg-white q-pa-sm"
+      style="min-width: 15%"
+    >
+      <div class="row">
+        <q-item>
+          <q-item-section avatar>
+            <div class="row items-center q-gutter-x-sm">
+              <div class="road-symbol bg-red"></div>
+              <q-item-label>Concrete</q-item-label>
+            </div>
+          </q-item-section>
+        </q-item>
+        <q-item>
+          <q-item-section avatar>
+            <div class="row items-center q-gutter-x-sm">
+              <div class="road-symbol" style="background-color: #f2ccd2"></div>
+              <q-item-label>DBST</q-item-label>
+            </div>
+          </q-item-section>
+        </q-item>
+        <q-item>
+          <q-item-section avatar>
+            <div class="row items-center q-gutter-x-sm">
+              <div
+                class="road-symbol"
+                style="
+                  background-color: #c0ca34;
+                  height: 6px;
+                  border-top: solid 1px;
+                  border-bottom: solid 1px;
+                "
+              ></div>
+              <q-item-label>Gravel</q-item-label>
+            </div>
+          </q-item-section>
+        </q-item>
+        <q-item>
+          <q-item-section avatar>
+            <div class="row items-center q-gutter-x-sm">
+              <div
+                class="road-symbol"
+                style="
+                  background-color: #607d8b;
+                  border-top: 0px;
+                  border-bottom: 0px;
+                  height: 6px;
+                  width: 35px;
+                "
+              ></div>
+              <q-item-label>Earthened</q-item-label>
+            </div>
+          </q-item-section>
+        </q-item>
+
+        <q-item>
+          <q-item-section avatar>
+            <div class="row items-center q-gutter-x-sm">
+              <div class="dotted-line"></div>
+              <q-item-label>Non Engineered</q-item-label>
+            </div>
+          </q-item-section>
+        </q-item>
+      </div>
+    </div>
+
     <div class="radio-rect">
       <selectAgreggate />
       <infrastructure />
@@ -264,6 +559,7 @@ import useSupabase from "src/boot/supabase";
 import { storeToRefs } from "pinia";
 import { useSumStore } from "stores/sumdata/index.js";
 import { useInfrastructureStore } from "src/stores/infrustructue";
+import { useRoadStore } from "src/stores/roads/index.js";
 
 import baselayers from "./Modals/baselayers.js";
 import markers from "./Modals/set_markers.js";
@@ -275,6 +571,7 @@ import setSelectedVect from "./Modals/createChoropleth";
 import selectAgreggate from "src/Reusable/selectAggregate.vue";
 import infrastructure from "src/Reusable/infrastructureChips.vue";
 import setSelectedInfrastructure from "src/components/Composables/Modals/fetchInfrustructure.js";
+import setSelectedRoads from "src/components/Composables/Modals/fetchRoads.js";
 
 export default defineComponent({
   components: {
@@ -285,10 +582,14 @@ export default defineComponent({
   setup() {
     const store = useSumStore();
     const infStore = useInfrastructureStore();
+    const roadStore = useRoadStore();
 
     const { createChoroplethSums } = setSelectedVect();
     const { selectedVect, selectIcon, selectIconfiltered } =
       setSelectedInfrastructure();
+
+    const { selectedRoadVect, setRoadSymbol, roadOutlineSymbol } =
+      setSelectedRoads();
 
     const map = ref(null),
       center = ref([-5.7, 34]),
@@ -297,12 +598,17 @@ export default defineComponent({
       districtLayer = ref(null),
       currentMapLayer = ref(null),
       clickedMarker = ref(null),
+      clickedRoad = ref(null),
+      clickedRoadStart = ref(null),
+      clickedRoadEnd = ref(null),
+      roadOutline = ref(null),
       selectedTab = ref(store.currentTab),
       highest = ref(null),
       lowest = ref(null),
       current_top_base_layer = ref(null),
       showBaseMapList = ref(false),
       showAttributeCard = ref(false),
+      showRoadAttributeCard = ref(false),
       currentBaseLayer = ref(null);
 
     const featureAtributes = computed(() => {
@@ -315,6 +621,26 @@ export default defineComponent({
         Ward: clickedMarker.value.feature.properties.Ward,
         Village: clickedMarker.value.feature.properties.Village,
         Function: clickedMarker.value.feature.properties.Function,
+      };
+    });
+
+    const roadFeatureAttributes = computed(() => {
+      return {
+        roadclass: clickedRoad.value.feature.properties.RoadClass,
+        program: clickedRoad.value.feature.properties.iprogram,
+        from_lat: clickedRoad.value.feature.properties.from_lat.toFixed(6),
+        from_long: clickedRoad.value.feature.properties.from_long.toFixed(6),
+        to_lat: clickedRoad.value.feature.properties.to_lat.toFixed(6),
+        to_long: clickedRoad.value.feature.properties.to_long.toFixed(6),
+        lshoulder_surface: clickedRoad.value.feature.properties.left_shou0,
+        rshoulder_surface: clickedRoad.value.feature.properties.right_sho0,
+        lshoulder_width: clickedRoad.value.feature.properties.left_shoul,
+        rshoulder_width: clickedRoad.value.feature.properties.right_shou,
+        pavementType: clickedRoad.value.feature.properties.pave_type,
+        subsurfaceType: clickedRoad.value.feature.properties.subgrade_t,
+        pave_width: clickedRoad.value.feature.properties.pave_width,
+        lanes: clickedRoad.value.feature.properties.no_lanes,
+        pave_depth: clickedRoad.value.feature.properties.right_shou,
       };
     });
 
@@ -344,6 +670,8 @@ export default defineComponent({
         zoomSnap: 0.1,
         zoomAnimation: true,
         fadeAnimation: true,
+        scrollWheelZoom: true,
+        // smoothWheelZoom: true,
         // layers: [darkMap, osm, mapbox, mapboxSatellite]
         //layers: [satellite],
       });
@@ -364,6 +692,7 @@ export default defineComponent({
         "leaflet-control-layers"
       );
       layerControl[0].style.visibility = "hidden";
+
     };
 
     const zoom_in = function () {
@@ -375,7 +704,9 @@ export default defineComponent({
     };
 
     const resetZoomLevel = () => {
-      map.value.fitBounds(currentMapLayer.value.getBounds());
+      map.value.flyToBounds(currentMapLayer.value.getBounds(), {
+        padding: [100, 100],
+      });
     };
 
     const handle_base_layers = function () {
@@ -420,7 +751,7 @@ export default defineComponent({
         });
 
         jsonLayer.addTo(map.value);
-        // map.value.fitBounds(jsonLayer.getBounds());
+        // map.value.flyToBounds(jsonLayer.getBounds());
 
         Loading.hide();
       } catch (error) {
@@ -501,20 +832,28 @@ export default defineComponent({
           }
 
           function popup(feature, layer) {
-            layer.bindPopup(
-              `<b>${feature.properties.District}</b><br/>` +
-                "Total:" +
-                `<b>${feature.properties["total"]}</b><br/>` +
-                "Adult Male:" +
-                `<b>${feature.properties["adult_female"]}</b><br/>` +
-                "Youth Female:" +
-                `<b>${feature.properties["adult_male"]}</b><br/>` +
-                "Youth Male:" +
-                `<b>${feature.properties["youth_female"]}</b><br/>` +
-                "Youth Male:" +
-                `<b>${feature.properties["youth_male"]}</b><br/>` +
-                "<button id='pop-up-selector' class='pop-up-btn'>Analyze</button>"
-            );
+            if (store.sumsTab == "faindicators") {
+              layer.bindPopup(
+                `<b>${feature.properties.District}</b>: ${
+                  feature.properties[store.userSelection.faGrantee]
+                }<br/>`
+              );
+            } else {
+              layer.bindPopup(
+                `<b>${feature.properties.District}</b><br/>` +
+                  "Total:" +
+                  `<b>${feature.properties["total"]}</b><br/>` +
+                  "Adult Male:" +
+                  `<b>${feature.properties["adult_female"]}</b><br/>` +
+                  "Youth Female:" +
+                  `<b>${feature.properties["adult_male"]}</b><br/>` +
+                  "Youth Male:" +
+                  `<b>${feature.properties["youth_female"]}</b><br/>` +
+                  "Youth Male:" +
+                  `<b>${feature.properties["youth_male"]}</b><br/>` +
+                  "<button id='pop-up-selector' class='pop-up-btn'>Analyze</button>"
+              );
+            }
           }
 
           const jsonLayer = L.geoJSON(jsonLayerJoined.geoJsonLayer, {
@@ -526,55 +865,170 @@ export default defineComponent({
 
           currentMapLayer.value.addTo(map.value).bringToFront();
 
-          map.value.fitBounds(currentMapLayer.value.getBounds());
+          map.value.flyToBounds(currentMapLayer.value.getBounds());
+        } else if (selectedTab.value === "tarura") {
+          showRoadAttributeCard.value = false;
+          if (currentMapLayer.value && roadOutline.value) {
+            map.value.removeLayer(currentMapLayer.value);
+            map.value.removeLayer(roadOutline.value);
+          }
+          if (clickedRoad.value) {
+            clickedRoadStart.value.removeFrom(map.value);
+            clickedRoadEnd.value.removeFrom(map.value);
+          }
+          const geojsonData = await selectedRoadVect();
+
+          const layerInfForLines = (data) => {
+            // Create an empty GeoJSON layer
+            var geoJsonLayer = L.geoJSON(null, {
+              style: function (feature) {
+                // Extract attributes from the feature
+                let attribute = feature.properties.pave_type;
+                // Determine style based on the attribute value
+                var color = roadOutlineSymbol(attribute);
+                return color;
+              },
+              onEachFeature: function (feature, layer) {
+                // Add click event listener to each GeoJSON line feature
+                layer.on("click", function (event) {
+                  showRoadAttributeCard.value = true;
+                  if (clickedRoad.value) {
+                    clickedRoadStart.value.removeFrom(map.value);
+                    clickedRoadEnd.value.removeFrom(map.value);
+                  }
+
+                  // Store the reference to the clicked line
+                  clickedRoad.value = event.target;
+
+                  let nodes = {
+                    from_lat:
+                      clickedRoad.value.feature.properties.from_lat.toFixed(6),
+                    from_long:
+                      clickedRoad.value.feature.properties.from_long.toFixed(6),
+                    to_lat:
+                      clickedRoad.value.feature.properties.to_lat.toFixed(6),
+                    to_long:
+                      clickedRoad.value.feature.properties.to_long.toFixed(6),
+                  };
+
+                  let endMaker = L.divIcon({
+                    className: "custom-div-icon",
+                    html: "<div style='background-color:#c50101;' class='marker-pin'></div><i class='material-icons' style='font-size: 18px; color: grey'>sports_score</i>",
+                    iconSize: [30, 42],
+                    iconAnchor: [15, 42],
+                  });
+
+                  let startMaker = L.divIcon({
+                    className: "custom-div-icon-circle",
+                    html: "<div style='' class='circle-pin'></div><i class='material-icons' style='font-size: 18px; color: white'></i>",
+                    iconSize: [30, 42],
+                    iconAnchor: [15, 21],
+                  });
+
+                  clickedRoadStart.value = L.marker(
+                    [nodes.from_lat, nodes.from_long],
+                    {
+                      icon: startMaker,
+                    }
+                  );
+                  clickedRoadEnd.value = L.marker(
+                    [nodes.to_lat, nodes.to_long],
+                    {
+                      icon: endMaker,
+                    }
+                  );
+
+                  // Get the coordinates of the clicked feature
+                  var latlng = event.latlng;
+
+                  // Reset style for all lines
+                  geoJsonLayer.eachLayer(function (layer) {
+                    let attribute = layer.feature.properties.pave_type;
+
+                    var defaultStyle = roadOutlineSymbol(attribute);
+                    layer.setStyle(defaultStyle); // Set default style for all lines
+                  });
+
+                  // // Set custom style for the selected line
+                  // var selectedStyle = {
+                  //   color: "#FFFF0000", // Highlight color for selected line
+                  //   weight: 4,
+                  //   opacity: 1,
+                  // };
+
+                  // event.target.setStyle(selectedStyle);
+
+                  //showRoadAttributeCard.value = true;
+
+                  clickedRoadEnd.value.addTo(map.value);
+                  clickedRoadStart.value.addTo(map.value);
+                  let bounds = clickedRoad.value.getBounds();
+                  // Fly to the clicked line's location with smooth animation
+                  //map.value.flyTo(latlng, 12); // You can adjust the zoom level
+
+                  map.value.flyToBounds(bounds, { padding: [0, 100] });
+                });
+              },
+            });
+
+            // Listen for popup close event
+            map.value.on("popupclose", function (event) {
+              showRoadAttributeCard.value = !showRoadAttributeCard.value;
+              var layer = event.popup._source;
+              let attribute = layer.feature.properties.pave_type;
+
+              var defaultStyle = {
+                color: selectColor(attribute),
+                weight: 2,
+                opacity: 1,
+              };
+              layer.setStyle(defaultStyle);
+            });
+
+            // Add data to the GeoJSON layer
+            geoJsonLayer.addData(data);
+
+            // Return the GeoJSON layer
+            return geoJsonLayer;
+          };
+
+          const outline = (data) => {
+            // Create an empty GeoJSON layer
+            var geoJsonLayer = L.geoJSON(null, {
+              style: function (feature) {
+                // Extract attributes from the feature
+                let attribute = feature.properties.pave_type;
+                // Determine style based on the attribute value
+                var color = setRoadSymbol(attribute);
+                return color;
+              },
+            });
+
+            // Add data to the GeoJSON layer
+            geoJsonLayer.addData(data);
+
+            // Return the GeoJSON layer
+            return geoJsonLayer;
+          };
+
+          // Example usage with your geojsonData
+          currentMapLayer.value = layerInfForLines(geojsonData);
+          roadOutline.value = outline(geojsonData);
+
+          roadOutline.value.addTo(map.value).bringToFront();
+
+          currentMapLayer.value.addTo(map.value).bringToFront();
+
+          Layerbounds.value = currentMapLayer.value.getBounds();
+
+          map.value.flyToBounds(Layerbounds.value, { padding: [100, 100] });
         } else {
           if (currentMapLayer.value) {
             showAttributeCard.value = false;
             map.value.removeLayer(currentMapLayer.value);
           }
 
-          const {
-            waterIcon,
-            weatherIcon,
-            schoolIcon,
-            nurseryIcon,
-            officeIcon,
-            farmIcon,
-            machineryIcon,
-            processingIcon,
-            marketIcon,
-            digitalIcon,
-            clickedIcon,
-            icon6,
-          } = markers;
-
-          // // Function to select icon based on attribute value
-          // function selectIcon(attribute) {
-          //   switch (attribute) {
-          //     case "Equipment":
-          //       return farmIcon;
-          //     case "Water":
-          //       return waterIcon;
-          //     case "Machinery":
-          //       return machineryIcon;
-          //     case "Processing":
-          //       return processingIcon;
-          //     case "Market":
-          //       return marketIcon;
-          //     case "Office":
-          //       return officeIcon;
-          //     case "Nursery":
-          //       return nurseryIcon;
-          //     case "Learning":
-          //       return schoolIcon;
-          //     case "Weather":
-          //       return weatherIcon;
-          //     case "Digital":
-          //       return digitalIcon;
-          //     default:
-          //       return defaultIcon; // Default icon
-          //   }
-          // }
+          const { clickedIcon } = markers;
 
           const geojsonData = await selectedVect();
 
@@ -585,8 +1039,8 @@ export default defineComponent({
                 // Extract attributes from the feature
                 let attribute;
                 if (
-                  infrastructureFilter.value === "" ||
-                  infrastructureFilter.value === "all"
+                  infrastructureFilter.value.class3filter === "" ||
+                  infrastructureFilter.value.class3filter === "all"
                 ) {
                   attribute = feature.properties.Class3;
                 } else {
@@ -601,23 +1055,6 @@ export default defineComponent({
               },
             });
 
-            // var customPopup =
-            //   "<b>My office</b><br/><img src='http://netdna.webdesignerdepot.com/uploads/2014/05/workspace_06_previo.jpg' alt='maptime logo gif' width='150px'/>";
-
-            // // specify popup options
-            // var customOptions = {
-            //   maxWidth: "400",
-            //   width: "200",
-            //   className: "popupCustom",
-            // };
-
-            // // Add popup content
-            // geoJsonLayer.bindPopup(function (layer) {
-            //   return `<b>Infrustructure Category</b>: ${layer.feature.properties.Class3}<br/>
-            //     <b>Grantee</b>: ${layer.feature.properties.Grantee}<br/>
-            //     <b>Infrastructure</b>: ${layer.feature.properties.Class4}<br/>`;
-            // });
-
             // Add click event listener to each GeoJSON point feature
             geoJsonLayer.on("click", function (event) {
               showAttributeCard.value = !showAttributeCard.value;
@@ -626,6 +1063,8 @@ export default defineComponent({
               // Store the reference to the clicked marker
               clickedMarker.value = event.layer;
 
+              console.log(clickedMarker.value);
+
               // Get the coordinates of the clicked feature
               var latlng = event.latlng;
 
@@ -633,8 +1072,8 @@ export default defineComponent({
               geoJsonLayer.eachLayer(function (layer) {
                 let attribute;
                 if (
-                  infrastructureFilter.value === "" ||
-                  infrastructureFilter.value === "all"
+                  infrastructureFilter.value.class3filter === "" ||
+                  infrastructureFilter.value.class3filter === "all"
                 ) {
                   attribute = layer.feature.properties.Class3;
                 } else {
@@ -660,8 +1099,8 @@ export default defineComponent({
               var marker = event.popup._source;
               let attribute;
               if (
-                infrastructureFilter.value === "" ||
-                infrastructureFilter.value === "all"
+                infrastructureFilter.value.class3filter === "" ||
+                infrastructureFilter.value.class3filter === "all"
               ) {
                 attribute = marker.feature.properties.Class3;
               } else {
@@ -669,7 +1108,7 @@ export default defineComponent({
               }
               var defaultMarkerIcon = selectIcon(attribute);
               marker.setIcon(defaultMarkerIcon);
-              //map.value.fitBounds(currentMapLayer.value.getBounds());
+              //map.value.flyToBounds(currentMapLayer.value.getBounds());
             });
 
             // Add data to the GeoJSON layer
@@ -684,8 +1123,11 @@ export default defineComponent({
           currentMapLayer.value.addTo(map.value).bringToFront();
 
           Layerbounds.value = currentMapLayer.value.getBounds();
+          console.log(Layerbounds.value);
 
-          map.value.fitBounds(Layerbounds.value);
+          map.value.flyToBounds(Layerbounds.value, { padding: [100, 100] });
+
+          // map.value.setZoom(map.value.getZoom() - 0.1);
         }
 
         Loading.hide();
@@ -697,34 +1139,50 @@ export default defineComponent({
 
     // Function to close the attribute card and reset the marker icon
     const closeCard = () => {
-      Loading.show({
-        spinner: QSpinnerFacebook,
-        spinnerSize: "xl",
-        message: "Creating Map layer...",
-      });
-      showAttributeCard.value = false;
-      var marker = clickedMarker.value;
-      if (!marker) return; // Check if a marker was clicked
+      if (selectedTab.value === "tarura") {
+        showRoadAttributeCard.value = false;
+        clickedRoadStart.value.removeFrom(map.value);
+        clickedRoadEnd.value.removeFrom(map.value);
 
-      let attribute;
-      if (
-        infrastructureFilter.value === "" ||
-        infrastructureFilter.value === "all"
-      ) {
-        attribute = marker.feature.properties.Class3;
+        var marker = clickedRoad.value;
+        if (!marker) return;
+
+        let attribute = marker.feature.properties.pave_type;
+
+        var defaultStyle = roadOutlineSymbol(attribute);
+        marker.setStyle(defaultStyle);
+
+        map.value.flyToBounds(Layerbounds.value);
       } else {
-        attribute = marker.feature.properties.Class4;
+        Loading.show({
+          spinner: QSpinnerFacebook,
+          spinnerSize: "xl",
+          message: "Creating Map layer...",
+        });
+        showAttributeCard.value = false;
+        var marker = clickedMarker.value;
+        if (!marker) return; // Check if a marker was clicked
+
+        let attribute;
+        if (
+          infrastructureFilter.value.class3filter === "" ||
+          infrastructureFilter.value.class3filter === "all"
+        ) {
+          attribute = marker.feature.properties.Class3;
+        } else {
+          attribute = marker.feature.properties.Class4;
+        }
+        var defaultMarkerIcon = selectIcon(attribute);
+        marker.setIcon(defaultMarkerIcon);
+
+        map.value.setZoom(10);
+
+        //map.value.flyToBounds(Layerbounds.value);
+
+        // Clear the clickedMarker reference
+        clickedMarker.value = null;
+        Loading.hide();
       }
-      var defaultMarkerIcon = selectIcon(attribute);
-      marker.setIcon(defaultMarkerIcon);
-
-      map.value.setZoom(10);
-
-      //map.value.fitBounds(Layerbounds.value);
-
-      // Clear the clickedMarker reference
-      clickedMarker.value = null;
-      Loading.hide();
     };
 
     const tab = computed(() => {
@@ -739,6 +1197,18 @@ export default defineComponent({
       return infStore.getClassfilter;
     });
 
+    const roadFilter = computed(() => {
+      return roadStore.getRoadPhase;
+    });
+
+    const roadFilterStatus = computed(() => {
+      return roadStore.getRoadFilters.filterStatus;
+    });
+
+    const infFilterStatus = computed(() => {
+      return infStore.getInfFilters.filterStatus
+    });
+
     onBeforeMount(() => {
       store.setDistrictData();
     });
@@ -750,11 +1220,35 @@ export default defineComponent({
       });
     });
 
-    watch(infrastructureFilter, () => {
+    watch(
+      roadFilterStatus,
+      () => {
+        setVector();
+      },
+      { deep: true }
+    );
+
+    watch(
+      infFilterStatus,
+      () => {
+        setVector();
+      },
+      { deep: true }
+    );
+
+    watch(
+      infrastructureFilter,
+      () => {
+        setVector();
+      },
+      { deep: true }
+    );
+
+    watch(store.userSelection, () => {
       setVector();
     });
 
-    watch(store.userSelection, () => {
+    watch(roadFilter, () => {
       setVector();
     });
 
@@ -775,14 +1269,17 @@ export default defineComponent({
       baseMaps,
       currentBaseLayer,
       showAttributeCard,
+      showRoadAttributeCard,
       closeCard,
       featureAtributes,
+      selectedTab,
+      roadFeatureAttributes,
     };
   },
 });
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 #mapid {
   /* position: relative;
   top: 0%;
@@ -847,6 +1344,13 @@ export default defineComponent({
   bottom: 2%;
 }
 
+.road-attribute-card {
+  position: absolute;
+  z-index: 800;
+  right: 2%;
+  top: 2%;
+}
+
 .zoom-controls {
   position: absolute;
   z-index: 800;
@@ -859,6 +1363,14 @@ export default defineComponent({
   z-index: 800;
   left: 1%;
   top: 2%;
+}
+
+.roads-legend {
+  position: absolute;
+  z-index: 800;
+  left: 1%;
+  bottom: 2%;
+  border-radius: 5px;
 }
 
 .start {
@@ -878,5 +1390,18 @@ export default defineComponent({
 .popupCustom .leaflet-popup-tip,
 .popupCustom .leaflet-popup-content-wrapper {
   display: none;
+}
+
+.road-symbol {
+  border-top: solid 2px black;
+  border-bottom: solid 2px black;
+  width: 35px;
+  height: 8px;
+}
+
+.dotted-line {
+  border: 2px dotted red;
+  width: 35px;
+  height: 0;
 }
 </style>

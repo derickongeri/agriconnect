@@ -2,12 +2,12 @@
   <q-page class="page-body">
     <div class="row" style="flex: 1">
       <div class="content" style="flex: 1; display: flex">
-        <div class="column q-mt-none q-mr-lg" style="max-width: 35%; flex: 1">
+        <div class="column q-mt-none" style="max-width: 35%; flex: 1">
           <filtertabs />
         </div>
         <div
-          class="column bg-none q-mt-none q-mr-xl"
-          style="min-width: 65%; flex: 1; border-radius: 2px; border-color: grey;"
+          class="column bg-none q-mt-none q-mr-md"
+          style="max-width: 65%; flex: 1; border-radius: 2px; border-color: grey;"
           v-if="selectedTab === 'pirs'"
         >
           <div
@@ -17,7 +17,7 @@
             <div
               v-if="sumsTab === 'responses'"
               class="bg-white indicator-selection q-pa-none q-ma-sm"
-              style="position: absolute; width: 25%; z-index: 1000"
+              style="position: absolute; width: 35%; z-index: 1000"
             >
               <indicatorSelection/>
             </div>
@@ -25,7 +25,7 @@
             <div
               v-if="sumsTab === 'faindicators'"
               class="bg-white indicator-selection q-pa-none q-ma-sm"
-              style="position: absolute; width: 25%; z-index: 1000;"
+              style="position: absolute; width: 35%; z-index: 1000;"
             >
               <faIndicatorSelection/>
             </div>
@@ -81,8 +81,8 @@
           </div>
         </div>
         <div
-          class="column q-mt-none q-mr-xl"
-          style="min-width: 65%; flex: 1"
+          class="column q-mt-none q-mr-sm"
+          style="max-width: 65%; flex: 1"
           v-if="selectedTab === 'infrastructure'"
         >
           <div
@@ -93,7 +93,41 @@
               class="bg-white indicator-selection q-pa-none q-ma-sm"
               style="position: absolute; width: 30%; z-index: 1000"
             >
-              <div class="text-h6">Helvetas Infrastructure</div>
+              <div class="text-h6">Infrastructure by {{ grantee }}</div>
+            </div>
+            <q-space></q-space>
+            <div class="q-pa-md">
+              <q-btn
+                class="q-px-lg"
+                outline
+                rounded
+                icon="mdi-export"
+                color="grey-6"
+                label="Export"
+              />
+            </div>
+          </div>
+          <!-- <q-separator></q-separator> -->
+          <div class="row" style="width: 100%; height: 79%"><mappanel/></div>
+          <!-- <div
+            class="absolute "
+            style="z-index:1000; bottom:3%; width: 100%; overflow: hidden"
+          ><infdialog/></div> -->
+        </div>
+        <div
+          class="column q-mt-none q-mr-md"
+          style="max-width: 65%; flex: 1"
+          v-if="selectedTab === 'tarura'"
+        >
+          <div
+            class="row bg-white items-center"
+            style="width: 100%; height: 10%"
+          >
+            <div
+              class="bg-white indicator-selection q-pa-none q-ma-sm"
+              style="position: absolute; width: 30%; z-index: 1000"
+            >
+              <div class="text-h6">Roads</div>
             </div>
             <q-space></q-space>
             <div class="q-pa-md">
@@ -142,6 +176,37 @@ const selectedTab = computed(() => {
 
 const sumsTab = computed(()=>{
   return store.getSumsTab
+})
+
+const grantee = computed(() => {
+    switch (store.getUserSelection.faGrantee) {
+    case "helvetas":
+      return "Helvetas";
+      break;
+    case "idh":
+      return "IDH";
+      break;
+    case "pdf":
+      return "PDF";
+      break;
+    case "rikolto":
+      return "Rikolto";
+      break;
+    case "solidaridadcert":
+      return "SolidaridadCERT";
+      break;
+    case "solidaridadpace":
+      return "SolidaridadPACE";
+      break;
+    case "trias":
+      return "Trias";
+      break;
+    case "viagro":
+      return "Viagroforestry";
+      break;
+    default:
+      return "All Grantees";
+  }
 })
 
 // onMounted(() => {

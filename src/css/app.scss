@@ -1,6 +1,6 @@
 // app global css in SCSS form
 
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
 .page-bg {
   background-image: url("src/assets/bgImg2.png");
@@ -14,11 +14,45 @@
 }
 
 .my-font {
-  font-family: "Montserrat", sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 
 .body {
-  font-family: "Montserrat", sans-serif;
+  font-family: "Poppins", sans-serif;
+}
+
+.circle-pin {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: #f78da7;
+  position: absolute;
+  transform: rotate(0deg);
+  left: 50%;
+  top: 50%;
+  margin: -15px 0 0 -15px;
+}
+
+/* // to draw white circle */
+.circle-pin::after {
+  content: "";
+  width: 18px;
+  height: 18px;
+  margin: 3px 0 0 3px;
+  background-color: #fff;
+  position: absolute;
+  border-radius: 50%;
+}
+
+/* // to align icon */
+.custom-div-icon-circle i {
+  position: absolute;
+  width: 22px;
+  font-size: 22px;
+  left: 0;
+  right: 0;
+  margin: 12px auto;
+  text-align: center;
 }
 
 .marker-pin {
@@ -35,7 +69,7 @@
 
 // to draw white circle
 .marker-pin::after {
-  content: '';
+  content: "";
   width: 24px;
   height: 24px;
   margin: 3px 0 0 3px;
@@ -55,6 +89,17 @@
   text-align: center;
 }
 
+// to align icon
+.custom-div-icon span {
+  position: absolute;
+  width: 24px;
+  font-size: 22px;
+  left: 0;
+  right: 0;
+  margin: 6px auto;
+  text-align: center;
+}
+
 .marker-pin-selected {
   width: 30px;
   height: 30px;
@@ -69,7 +114,7 @@
 
 // to draw white circle
 .marker-pin-selected::after {
-  content: '';
+  content: "";
   width: 24px;
   height: 24px;
   margin: 3px 0 0 3px;
@@ -91,7 +136,7 @@
 
 // to draw white circle
 .marker-pin-select::after {
-  content: '';
+  content: "";
   width: 24px;
   height: 24px;
   margin: 3px 0 0 3px;

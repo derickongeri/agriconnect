@@ -16,7 +16,7 @@
 </template>
 
 <script setup>
-import { ref, computed, watch } from "vue";
+import { ref, computed, watch, onBeforeMount } from "vue";
 import logoPDF from "src/assets/PDF.jpg";
 import logoHeveltas from "src/assets/HELVETAS.jpg";
 import logoRikolto from "src/assets/RIKOLTO.jpg";
@@ -29,10 +29,10 @@ import { useSumStore } from "src/stores/sumdata/index.js";
 
 const store = useSumStore();
 
-const model = ref("Heveltas"),
-  options = ref([
+// const model = ref(selectedGrantee.value),
+const options = ref([
     {
-      label: "Helvetas",
+      label: "Heveltas",
       value: "helvetas",
     },
     {
@@ -52,26 +52,18 @@ const model = ref("Heveltas"),
       value: "idh",
     },
     {
-    label: 'Trias',
-    value: 'trias'
-  },{
-    label: 'Solidaridadcert',
-    value: 'solidaridadcert'
-  },
-  {
-    label: 'Solidaridadpace',
-    value: 'solidaridadpace'
-  }
+      label: "Trias",
+      value: "trias",
+    },
+    {
+      label: "Solidaridadcert",
+      value: "solidaridadcert",
+    },
+    {
+      label: "Solidaridadpace",
+      value: "solidaridadpace",
+    },
   ]),
-  // options = ref([
-  //   "Helvetas",
-  //   "Viagro",
-  //   "Rikolto",
-  //   "Pdf",
-  //   "Idh",
-  //   "Trias",
-  //   "Solidaridad",
-  // ]),
   dense = ref(false),
   denseOpts = ref(false);
 
@@ -87,14 +79,28 @@ const logos = {
   // Add more company logos as needed
 };
 
+const model = computed(() => {
+  if (store.getUserSelection.faGrantee == 'total') {
+    return options.value[0]
+  } else {
+    return options.value.find(
+      (obj) => obj.value === store.getUserSelection.faGrantee
+    );
+  }
+});
+
 const currentLogo = computed(() => {
   // Use the selected company in the model to get the corresponding logo URL
   //console.log(model.value.label)
-  return logos[model.value.label] || logoHeveltas; // Provide a default logo if needed
+  return logos[model.value.label] || logoHeveltas;
 });
 
 const getselectedGrantee = (val) => {
   //console.log(val.value)
   store.setSelectedGrantee(val.value);
 };
+
+// onBeforeMount(() => {
+
+// })
 </script>

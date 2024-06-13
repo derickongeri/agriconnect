@@ -5,7 +5,7 @@
   <selectGranteefa v-if="sumsTab === 'faindicators'"/>
 
 
-  <div class="text-weight-medium q-mt-md q-px-sm q-mt-sm">
+  <div class="text-weight-medium q-mt-md q-pt-lg">
     Targets and Responses
   </div>
 

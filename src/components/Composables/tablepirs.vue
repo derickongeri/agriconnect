@@ -164,9 +164,9 @@
   </div>
   <div v-if="sumsTab == 'faindicators'">
     <div class="q-pa-none" style="width: 100%">
-      <div class="row q-px-md q-pt-sm text-grey-8" style="font-weight: 700">
+      <div class="row q-px-none q-pt-sm text-grey-8" style="font-weight: 700">
         <!-- <div class="col-1 ">Code</div> -->
-        <div class="col-4">District</div>
+        <div class="col-2">District</div>
         <div class="col text-center">Helvetas</div>
         <div class="col text-center">IDH</div>
         <div class="col text-center">PDF</div>
@@ -192,12 +192,13 @@
         v-slot="{ item: row, index }"
       >
         <div
-          class="row q-px-md q-py-sm text-grey-8 items-center"
+          class="row q-px-none q-py-sm text-grey-8 items-center"
           :class="index % 2 === 0 ? 'even-row' : 'odd-row'"
           :key="index"
+
         >
           <!-- <div class="col-1 text-start q-px-md" style="font-weight: 700;">{{ index }}</div> -->
-          <div class="col-4 q-ma-none q-px-none" style="font-weight: 400">
+          <div class="col-2 q-ma-none q-px-none" style="font-weight: 400">
             {{ row.district }}
           </div>
           <div class="col text-center">

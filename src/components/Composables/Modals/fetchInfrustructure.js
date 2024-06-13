@@ -1,4 +1,5 @@
 import { useInfrastructureStore } from "src/stores/infrustructue";
+import { useSumStore } from "src/stores/sumdata/index.js";
 import markers from "./set_markers.js";
 import { axios } from "src/boot/axios";
 
@@ -49,24 +50,186 @@ const {
   WeatherStation,
 } = markers;
 
+function findMinMaxCosts(data) {
+  // Initialize variables to store the highest and lowest values
+  let minCostTDTZS = Infinity;
+  let maxCostTDTZS = -Infinity;
+  let minCostTDEUR = Infinity;
+  let maxCostTDEUR = -Infinity;
+
+  // Iterate through each feature
+  data.features.forEach((feature) => {
+    const properties = feature.properties;
+    const costTDTZS = parseFloat(properties.CostTDTZS);
+    const costTDEUR = parseFloat(properties.CostTDEUR);
+
+    // Update the minimum and maximum values for CostTDTZS
+    if (costTDTZS < minCostTDTZS) {
+      minCostTDTZS = costTDTZS;
+    }
+    if (costTDTZS > maxCostTDTZS) {
+      maxCostTDTZS = costTDTZS;
+    }
+
+    // Update the minimum and maximum values for CostTDEUR
+    if (costTDEUR < minCostTDEUR) {
+      minCostTDEUR = costTDEUR;
+    }
+    if (costTDEUR > maxCostTDEUR) {
+      maxCostTDEUR = costTDEUR;
+    }
+  });
+
+  // Return the results as an object
+  return {
+    minCostTDTZS,
+    maxCostTDTZS,
+    minCostTDEUR,
+    maxCostTDEUR,
+  };
+}
+
+function getUniqueDistricts(data) {
+  const districts = new Set();
+
+  // Iterate through each feature
+  data.features.forEach((feature) => {
+    const properties = feature.properties;
+    if (properties.District) {
+      districts.add(properties.District);
+    }
+  });
+
+  console.log(Array.from(districts));
+
+  // Convert the Set to an array and return it
+  return Array.from(districts);
+}
+
+function setGranteeValue(val) {
+  switch (val) {
+    case "helvetas":
+      return "Helvetas";
+      break;
+    case "idh":
+      return "IDH";
+      break;
+    case "pdf":
+      return "PDF";
+      break;
+    case "rikolto":
+      return "Rikolto";
+      break;
+    case "solidaridadcert":
+      return "SolidaridadCERT";
+      break;
+    case "solidaridadpace":
+      return "SolidaridadPACE";
+      break;
+    case "trias":
+      return "Trias";
+      break;
+    case "viagro":
+      return "Viagroforestry";
+      break;
+    default:
+      return "total";
+  }
+}
+
 export default function setSelectedVect() {
   const store = useInfrastructureStore();
+  const sumsStore = useSumStore();
+
+  const featureMatchesFilter = (feature, filters) => {
+    // if (
+    //   filters.roadPhase &&
+    //   feature.properties.Phase_x !== filters.roadPhase
+    // ) {
+    //   return false;
+    // }
+    if (
+      (filters.costTZSmin &&
+        filters.costTZSmax &&
+        feature.properties.CostTDTZS < filters.costTZSmin ||
+      feature.properties.CostTDTZS > filters.costTZSmax)
+    ) {
+      return false;
+    }
+    if (
+      (filters.costEURmin &&
+        filters.costEURmax &&
+        feature.properties.CostTDEUR < filters.costEURmin &&
+      feature.properties.CostTDEUR > filters.costEURmax)
+    ) {
+      return false;
+    }
+    if (
+      filters.valueChain &&
+      filters.valueChain.length > 0 &&
+      !filters.valueChain.includes(feature.properties.ValueCh)
+    ) {
+      return false;
+    }
+    if (filters.district && feature.properties.District !== filters.district) {
+      return false;
+    }
+    return true;
+  };
+
+  const applyInfFilters = (layer) => {
+    let filters = store.getInfFilters;
+
+    if (filters.filterStatus) {
+      console.log(filters);
+      const filteredFeatures = layer.features.filter((feature) =>
+        featureMatchesFilter(feature, filters)
+      );
+
+      // if (filteredFeatures.length > 0) {
+      //   // mapSuccess(`Found (${filteredFeatures.length}) features`);
+      //   store.setFilterFeatures(filteredFeatures.length);
+      // } else {
+      //   store.setFilterFeatures(filteredFeatures.length);
+      //   mapError(
+      //     `Found (0) matching features. Clear or Edit filter paramenters to view roads`
+      //   );
+      // }
+      return { ...layer, features: filteredFeatures };
+    } else {
+      console.log(filters);
+      return layer;
+    }
+  };
 
   const selectedVect = async function () {
+    let grantee = sumsStore.getUserSelection.faGrantee;
     let attribute = store.getClassfilter;
     let wfsURL;
 
-    if (attribute === "all" || attribute === "") {
+    if (attribute.class3filter === "all" && !attribute.class4filter) {
       wfsURL =
-        "http://139.84.235.200/geoserver/agriconnect/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=agriconnect%3AInfrastructure&outputFormat=application%2Fjson";
-    } else {
+        "http://139.84.235.200/geoserver/agriconnect/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=agriconnect%3AMergedInfrastructure2&outputFormat=application%2Fjson";
+    } else if (attribute.class3filter !== "all" && !attribute.class4filter) {
       const infrustructureWfsURL =
-        "http://139.84.235.200/geoserver/agriconnect/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=agriconnect%3AInfrastructure&outputFormat=application%2Fjson&";
+        "http://139.84.235.200/geoserver/agriconnect/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=agriconnect%3AMergedInfrastructure2&outputFormat=application%2Fjson&";
 
-      attribute = attribute.replace(/'/g, "%27").replace(/ /g, "%20");
+      attribute = attribute.class3filter
+        .replace(/'/g, "%27")
+        .replace(/ /g, "%20");
 
       wfsURL =
         infrustructureWfsURL + "CQL_FILTER=Class3" + "='" + attribute + "'";
+    } else {
+      const infrustructureWfsURL =
+        "http://139.84.235.200/geoserver/agriconnect/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=agriconnect%3AMergedInfrastructure2&outputFormat=application%2Fjson&";
+
+      attribute = attribute.class4filter
+        .replace(/'/g, "%27")
+        .replace(/ /g, "%20");
+
+      wfsURL =
+        infrustructureWfsURL + "CQL_FILTER=Class4" + "='" + attribute + "'";
     }
 
     console.log(wfsURL);
@@ -74,6 +237,24 @@ export default function setSelectedVect() {
     let response = await axios.get(wfsURL);
 
     let vectLayer = response.data;
+
+    let newVectLayer = () => {
+      if (grantee !== "total") {
+        let val = setGranteeValue(grantee);
+        let filterdFeatures = (vectLayer = vectLayer.features.filter(
+          (feature) => feature.properties.Grantee === val
+        ));
+        return { ...vectLayer, features: filterdFeatures };
+      } else return vectLayer;
+    };
+
+    vectLayer = newVectLayer();
+
+    vectLayer = applyInfFilters(vectLayer);
+
+    store.setDistricts(getUniqueDistricts(vectLayer));
+
+    console.log(findMinMaxCosts(vectLayer));
 
     return vectLayer;
   };
