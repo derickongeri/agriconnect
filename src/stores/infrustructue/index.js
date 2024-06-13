@@ -22,11 +22,13 @@ export const useInfrastructureStore = defineStore({
     },
     classfilter: { class3filter: "all", class4filter: null },
     districts: [],
+    filteredFeatures: []
   }),
   getters: {
     getClassfilter: (state) => state.classfilter,
     getDistricts: (state) => state.districts,
     getInfFilters: (state) => state.infFilters,
+    getFeatures: (state) => state.filteredFeatures
   },
   actions: {
     setClass3filter(val) {
@@ -61,5 +63,8 @@ export const useInfrastructureStore = defineStore({
     clearAllFilters() {
       this.infFilters.filterStatus = false;
     },
+    setFeatures(val) {
+      this.filteredFeatures = val
+    }
   },
 });

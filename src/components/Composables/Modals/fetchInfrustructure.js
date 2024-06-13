@@ -137,6 +137,19 @@ function setGranteeValue(val) {
   }
 }
 
+function getUniqueClass3Values(data) {
+  const uniqueValues = new Set();
+  // Iterate through each feature
+  data.features.forEach((feature) => {
+    const class3 = feature.properties.Class3;
+    if (class3) {
+      uniqueValues.add(class3);
+    }
+  });
+  // Convert the Set to an array and return it
+  return Array.from(uniqueValues);
+}
+
 export default function setSelectedVect() {
   const store = useInfrastructureStore();
   const sumsStore = useSumStore();
@@ -254,7 +267,7 @@ export default function setSelectedVect() {
 
     store.setDistricts(getUniqueDistricts(vectLayer));
 
-    console.log(findMinMaxCosts(vectLayer));
+    store.setFeatures(vectLayer.features)
 
     return vectLayer;
   };

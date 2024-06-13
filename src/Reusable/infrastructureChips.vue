@@ -138,7 +138,36 @@ const { infGroups, fetchChip } = chipConfig;
 const model = ref("two");
 const selectedInf = ref("all");
 const selectedInf_class4 = ref(null);
+
 const infrastructureList = ref(infGroups);
+
+const class3List = computed(() => {
+  let infFeatures = infrastructureStore.getFeatures;
+  const uniqueValues = new Set();
+  // Iterate through each feature
+  infFeatures.forEach((feature) => {
+    const class3 = feature.properties.Class3;
+    if (class3) {
+      uniqueValues.add(class3);
+    }
+  });
+  // Convert the Set to an array and return it
+  return Array.from(uniqueValues);
+});
+
+const class4List = computed(() => {
+  let infFeatures = infrastructureStore.getFeatures;
+  const uniqueValues = new Set();
+  // Iterate through each feature
+  infFeatures.forEach((feature) => {
+    const class4 = feature.properties.Class4;
+    if (class4) {
+      uniqueValues.add(class4);
+    }
+  });
+  // Convert the Set to an array and return it
+  return Array.from(uniqueValues);
+});
 
 const class4infrastructure = computed(() => {
   return infrastructureListInner.value.find(
@@ -157,7 +186,11 @@ const currentLayer = computed(() => {
 // });
 
 const infrastructureListInner = computed(() => {
-  return fetchChip(selectedInf.value);
+  const fullList = fetchChip(selectedInf.value);
+  const filteredList = fullList.filter((group) =>
+    class4List.value.includes(group.value)
+  );
+  return filteredList;
 });
 
 const showToggleBtn = computed(() => {
@@ -188,5 +221,12 @@ watch(currentLayer, (val) => {
   if (!val) {
     infrastructureStore.setClass3filter("all");
   }
+});
+
+watch(class3List, (val) => {
+  console.log(val);
+  infrastructureList.value = infGroups.filter((group) =>
+    val.includes(group.value)
+  );
 });
 </script>
