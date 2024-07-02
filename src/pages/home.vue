@@ -91,6 +91,12 @@
               style="position: relative; width: 100%; height: 70px; left: -1%"
             />
           </div>
+          <div class="column q-pl-md">
+            <img
+              src="src/assets/Vi_Agroforestry.png"
+              style="position: relative; width: 100%; height: 70px; left: -1%"
+            />
+          </div>
         </div>
       </div>
     </div>
