@@ -129,7 +129,7 @@ const model = ref(selectedGrantee),
       value: "helvetas",
     },
     {
-      label: "Vi-Agroforestry",
+      label: "Vi Agroforestry",
       value: "viagro",
     },
     {

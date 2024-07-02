@@ -47,7 +47,7 @@ const model = ref(null),
       value: "helvetas",
     },
     {
-      label: "Vi-Agroforestry",
+      label: "Vi Agroforestry",
       value: "viagro",
     },
     {
