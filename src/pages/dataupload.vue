@@ -82,14 +82,10 @@
 
 <script setup>
 import { useQuasar } from "quasar";
-import { ref, computed } from "vue";
-import userAuthUser from "src/composables/userAuthdjango.js"
+import { ref, computed, onMounted } from "vue";
+import userAuthUser from "src/composables/userAuthdjango.js";
 
-const {user} = userAuthUser()
-
-const usergrantee = computed(()=>{
-  return options.value.find(obj => obj.value === user.user_metadata.grantee)
-})
+const { user } = userAuthUser();
 
 const $q = useQuasar();
 
@@ -102,7 +98,7 @@ const onRejected = (rejectedEntries) => {
 
 const model = ref({
     label: "Helvetas",
-    value: "helvetas",
+    value: "Helvetas",
   }),
   file = ref(null),
   options = ref([
@@ -112,11 +108,11 @@ const model = ref({
     },
     {
       label: "Helvetas",
-      value: "helvetas",
+      value: "Helvetas",
     },
     {
       label: "Vi-Agroforestry",
-      value: "viagro",
+      value: "Vi-Agroforestry",
     },
     {
       label: "Rikolto",
@@ -154,4 +150,12 @@ const model = ref({
     `January - March`,
     `April - June`,
   ]);
+
+const usergrantee = computed(() => {
+  return options.value.find((obj) => obj.value === user.grantee);
+});
+
+onMounted(() => {
+  console.log(user, usergrantee.value);
+});
 </script>

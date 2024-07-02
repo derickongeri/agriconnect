@@ -16,7 +16,7 @@
 </template>
 
 <script setup>
-import { ref, computed, watch, onBeforeMount } from "vue";
+import { ref, computed, watch, onBeforeMount, onMounted } from "vue";
 import logoPDF from "src/assets/PDF.jpg";
 import logoHeveltas from "src/assets/HELVETAS.jpg";
 import logoRikolto from "src/assets/RIKOLTO.jpg";
@@ -24,19 +24,30 @@ import logoIdh from "src/assets/IDHLogo.png";
 import logoTrias from "src/assets/TRIAS.jpg";
 import logoSolidaridad from "src/assets/SOLIDARIDAD.jpg";
 import logoViagro from "src/assets/Vi_Agroforestry.png";
+import logoAgriconnect from "src/assets/LOGO-AGRI-CONNECT.png";
 
 import { useSumStore } from "src/stores/sumdata/index.js";
 
 const store = useSumStore();
 
-// const model = ref(selectedGrantee.value),
-const options = ref([
+const selectedGrantee = computed(() => {
+  return options.value.find(
+    (obj) => obj.value === store.getUserSelection.faGrantee
+  );
+});
+
+const model = ref(null),
+  options = ref([
     {
-      label: "Heveltas",
+      label: "All Grantees",
+      value: "total",
+    },
+    {
+      label: "Helvetas",
       value: "helvetas",
     },
     {
-      label: "Viagro",
+      label: "Vi-Agroforestry",
       value: "viagro",
     },
     {
@@ -44,11 +55,11 @@ const options = ref([
       value: "rikolto",
     },
     {
-      label: "Pdf",
+      label: "PDF",
       value: "pdf",
     },
     {
-      label: "Idh",
+      label: "IDH",
       value: "idh",
     },
     {
@@ -56,11 +67,11 @@ const options = ref([
       value: "trias",
     },
     {
-      label: "SolidaridadCERT",
+      label: "Solidaridad-CERT",
       value: "solidaridadcert",
     },
     {
-      label: "SolidaridadPACE",
+      label: "Solidaridad-PACE",
       value: "solidaridadpace",
     },
   ]),
@@ -68,31 +79,35 @@ const options = ref([
   denseOpts = ref(false);
 
 const logos = {
-  Heveltas: logoHeveltas,
-  Viagro: logoViagro,
-  Rikolto: logoRikolto,
-  Pdf: logoPDF,
-  Idh: logoIdh,
-  Trias: logoTrias,
-  Solidaridadcert: logoSolidaridad,
-  Solidaridadpace: logoSolidaridad,
+  total: logoAgriconnect,
+  helvetas: logoHeveltas,
+  viagro: logoViagro,
+  rikolto: logoRikolto,
+  pdf: logoPDF,
+  idh: logoIdh,
+  trias: logoTrias,
+  solidaridadcert: logoSolidaridad,
+  solidaridadpace: logoSolidaridad,
   // Add more company logos as needed
 };
 
-const model = computed(() => {
-  if (store.getUserSelection.faGrantee == 'total') {
-    return options.value[0]
-  } else {
-    return options.value.find(
-      (obj) => obj.value === store.getUserSelection.faGrantee
-    );
-  }
-});
+// const model = computed(() => {
+//   // if (store.getUserSelection.faGrantee == "total") {
+//   //   return options.value[0];
+//   // } else {
+//   //   return options.value.find(
+//   //     (obj) => obj.value === store.getUserSelection.faGrantee
+//   //   );
+//   // }
+//   return options.value.find(
+//     (obj) => obj.value === store.getUserSelection.faGrantee
+//   );
+// });
 
 const currentLogo = computed(() => {
   // Use the selected company in the model to get the corresponding logo URL
   //console.log(model.value.label)
-  return logos[model.value.label] || logoHeveltas;
+  return logos[model.value.value] || logoHeveltas;
 });
 
 const getselectedGrantee = (val) => {
@@ -100,7 +115,9 @@ const getselectedGrantee = (val) => {
   store.setSelectedGrantee(val.value);
 };
 
-// onBeforeMount(() => {
-
-// })
+onBeforeMount(() => {
+  model.value = options.value.find(
+    (obj) => obj.value === store.getUserSelection.faGrantee
+  );
+})
 </script>

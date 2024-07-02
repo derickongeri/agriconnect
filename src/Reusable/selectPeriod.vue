@@ -9,14 +9,14 @@
       label="Select Year"
       @update:model-value="getselectedYear"
     />
-    <div class="q-py-lg">
+    <!-- <div class="q-py-lg">
       <q-option-group
         v-model="atQuarter"
         :options="atQuarterOptions"
         color="primary"
         right-label
       />
-    </div>
+    </div> -->
   </div>
   <div v-if="showSumsSelection == 'ct'">
     <q-select
@@ -28,15 +28,14 @@
       label="Select Period"
       @update:model-value="getselectedYear"
     />
-    <div class="q-py-lg">
-      <!-- <div class="q-px-sm text-caption">Choose Quarter</div> -->
+    <!-- <div class="q-py-lg">
       <q-option-group
         v-model="ctQuarta"
         :options="ctQuarterOptions"
         color="primary"
         right-label
       />
-    </div>
+    </div> -->
   </div>
   <div v-if="showSumsSelection == 'sums'">
     <q-select
@@ -68,9 +67,15 @@ const store = useSumStore();
 
 const showSumsSelection = ref("ct");
 
-const ctYear = ref({ label: "2020-2023", value: "20202023" }),
+const ctYear = ref({ label: "2020-2024", value: "20202024" }),
   ctQuarta = ref("ct"),
-  ctYearOptions = ref([{ label: "2020-2023", value: "20202023" }]),
+  ctYearOptions = ref([
+    // { label: "2020-2023", value: "20202023" },
+    { label: "2020-2024", value: "20202024" },
+    { label: "2020-2023", value: "20202023" },
+    { label: "2020-2022", value: "20202022" },
+    { label: "2020-2021", value: "20202021" },
+  ]),
   ctQuarterOptions = ref([
     {
       label: "2020-2023",
@@ -117,36 +122,37 @@ const year = ref({ label: "2021", value: "2021" }),
     },
   ]);
 
-const atYear = ref({ label: "2022-2023", value: "20222023" }),
+const atYear = ref({ label: "2023-2024", value: "20232024" }),
   atYearOptions = ref([
+    { label: "2023-2024", value: "20232024" },
     { label: "2022-2023", value: "20222023" },
     { label: "2021-2022", value: "20212022" },
     { label: "2020-2021", value: "20202021" },
   ]),
-  atQuarter = ref("at"),
+  atQuarter = ref({ quarter: "at" }),
   atQuarterOptions = ref([
     {
       label: `July - September ${atYear.value.value.slice(0, 4)}`,
-      value: "total_q1",
+      value: { quarter: "julsep", year: atYear.value.value.slice(0, 4) },
     },
     {
       label: `October - December ${atYear.value.value.slice(0, 4)}`,
-      value: "total_q2",
+      value: { quarter: "octdec", year: atYear.value.value.slice(0, 4) },
     },
     {
       label: `January - March ${atYear.value.value.slice(-4)}`,
-      value: "total_q3",
+      value: { quarter: "janmar", year: atYear.value.value.slice(-4) },
     },
     {
       label: `April - June ${atYear.value.value.slice(-4)}`,
-      value: "total_q4",
+      value: { quarter: "aprjun", year: atYear.value.value.slice(-4) },
     },
     {
       label: `Total ${atYear.value.value.slice(
         0,
         4
       )} - ${atYear.value.value.slice(-4)}`,
-      value: "at",
+      value: { quarter: "at" },
     },
   ]);
 
@@ -160,12 +166,19 @@ watch(quarter, (val) => {
 });
 
 watch(atQuarter, (val) => {
-  store.setSelectedAggregate(val);
+  // if(val.)
+  // console.log("at selection", val.quarter, val.year);
+  if (val.quarter !== "at") {
+    console.log("at selection", val.quarter, val.year);
+    store.setSelectedYear(val.year);
+    store.setSelectedQuota(val.quarter);
+    store.setTableType("sums");
+  }
 });
 
-watch(ctQuarta, (val) => {
-  store.setSelectedAggregate(val);
-});
+// watch(ctQuarta, (val) => {
+//   store.setSelectedAggregate(val);
+// });
 
 const selectedTable = computed(() => {
   return store.getSelectedTable;
@@ -185,7 +198,7 @@ watch(atYear, (val) => {
     at_year2: val.value.slice(-4),
   };
 
-  store.setATyears(years)
+  store.setATyears(years);
 
   atQuarterOptions.value = [
     {

@@ -12,7 +12,7 @@ export const infGroups = [
     value: "Equipment",
   },
   {
-    icon: "eco",
+    icon: "mdi-sprout",
     name: "Nursery",
     color: "light-green-14",
     value: "Nursery",

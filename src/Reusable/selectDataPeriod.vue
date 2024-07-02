@@ -28,12 +28,12 @@ const setTable = (val) => {
   if (val.value == "ct") {
     defaultSelection = {
       year: "20202024",
-      aggregate: "ct",
+      aggregate: "total",
     };
   } else if (val.value == "at") {
     defaultSelection = {
-      year: "20222023",
-      aggregate: "at",
+      year: "20232024",
+      aggregate: "total",
     };
   } else {
     defaultSelection = {

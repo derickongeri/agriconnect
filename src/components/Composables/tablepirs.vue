@@ -56,15 +56,12 @@
   <div v-if="showTable == 'at' && sumsTab == 'responses'">
     <div class="q-pa-none" style="width: 100%">
       <div class="row q-px-md q-pt-sm text-grey-8" style="font-weight: 700">
-        <!-- <div class="col-1 ">Code</div> -->
         <div class="col-4">District</div>
-        <div class="col text-center">{{ atYears.at_year1 }}<br />Jul-Sep</div>
-        <div class="col text-center">{{ atYears.at_year1 }}<br />Oct-Dec</div>
-        <div class="col text-center">{{ atYears.at_year2 }}<br />Jan-Mar</div>
-        <div class="col text-center">{{ atYears.at_year2 }}<br />Apr-Jun</div>
-        <div class="col text-center">
-          Total {{ atYears.at_year1 }}/{{ atYears.at_year2 }}
-        </div>
+        <div class="col text-center">Adult<br />Male</div>
+        <div class="col text-center">Adult<br />Female</div>
+        <div class="col text-center">Youth<br />Male</div>
+        <div class="col text-center">Youth<br />Female</div>
+        <div class="col text-center">Total</div>
       </div>
     </div>
     <div class="" style="width: 100%">
@@ -73,9 +70,9 @@
         type="table"
         flat
         style="max-height: 25vh"
-        :virtual-scroll-item-size="28"
-        :virtual-scroll-sticky-size-start="28"
-        :virtual-scroll-sticky-size-end="32"
+        :virtual-scroll-item-size="25"
+        :virtual-scroll-sticky-size-start="20"
+        :virtual-scroll-sticky-size-end="25"
         :items="tableData"
         v-slot="{ item: row, index }"
       >
@@ -91,19 +88,19 @@
           </div>
 
           <div class="col text-center">
-            {{ row.total_q1 }}
+            {{ row.adult_male }}
           </div>
           <div class="col text-center">
-            {{ row.total_q2 }}
+            {{ row.adult_female }}
           </div>
           <div class="col text-center">
-            {{ row.total_q3 }}
+            {{ row.youth_male }}
           </div>
           <div class="col text-center">
-            {{ row.total_q4 }}
+            {{ row.youth_female }}
           </div>
           <div class="col text-center">
-            {{ row.at }}
+            {{ row.total }}
           </div>
         </div>
       </q-virtual-scroll>
@@ -113,8 +110,8 @@
     <div class="q-pa-none" style="width: 100%">
       <div class="row q-px-md q-pt-sm text-grey-8" style="font-weight: 700">
         <div class="col-4">District</div>
-        <div class="col text-center">Adult Male<br />Male</div>
-        <div class="col text-center">Adult Female<br />Female</div>
+        <div class="col text-center">Adult<br />Male</div>
+        <div class="col text-center">Adult<br />Female</div>
         <div class="col text-center">Youth<br />Male</div>
         <div class="col text-center">Youth<br />Female</div>
         <div class="col text-center">Total</div>
@@ -195,7 +192,6 @@
           class="row q-px-none q-py-sm text-grey-8 items-center"
           :class="index % 2 === 0 ? 'even-row' : 'odd-row'"
           :key="index"
-
         >
           <!-- <div class="col-1 text-start q-px-md" style="font-weight: 700;">{{ index }}</div> -->
           <div class="col-2 q-ma-none q-px-none" style="font-weight: 400">
@@ -286,7 +282,7 @@ watch(
     if (val == "ct") {
       showTable.value = "ct";
     } else if (val == "at") {
-      showTable.value = "at";
+      showTable.value = "sums";
     } else {
       showTable.value = "sums";
     }

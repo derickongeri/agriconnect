@@ -42,17 +42,18 @@ export default function setSelectedVect() {
 
       // sumsData = response.data;
     } else if (tableType == "at" && sumsTab == "responses") {
-      tableName = `at_${userSelection.grantee}_${userSelection.year}`;
+      tableName = `dag_at_${userSelection.grantee}_${userSelection.year}`;
 
       const { data: tableData, error: sumsError } = await supabase.from(
         tableName
       ).select(`
             district,
-            total_q1: ${userSelection.code}->TotalQ1,
-            total_q2: ${userSelection.code}->TotalQ2,
-            total_q3: ${userSelection.code}->TotalQ3,
-            total_q4: ${userSelection.code}->TotalQ4,
-            at: ${userSelection.code}->AnnualTotal
+            adult_male: ${userSelection.code}->Adult_Male,
+            adult_female: ${userSelection.code}->Adult_Female,
+            youth_male: ${userSelection.code}->Youth_Male,
+            youth_female: ${userSelection.code}->Youth_Female,
+            reference: ${userSelection.code}->Reference,
+            total: ${userSelection.code}->Total
           `);
 
       sumsData = tableData;

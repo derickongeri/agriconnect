@@ -3,8 +3,8 @@
     <div class="q-pa-none" style="width: 100%">
       <div class="row q-px-md q-pt-sm text-grey-8" style="font-weight: 700">
         <div class="col-4">District</div>
-        <div class="col text-center">Adult Male<br />Male</div>
-        <div class="col text-center">Adult Female<br />Female</div>
+        <div class="col text-center">Adult<br />Male</div>
+        <div class="col text-center">Adult<br />Female</div>
         <div class="col text-center">Youth<br />Male</div>
         <div class="col text-center">Youth<br />Female</div>
         <div class="col text-center">Total</div>

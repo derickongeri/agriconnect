@@ -245,7 +245,7 @@
       style=""
       @mouseover="map.dragging.disable(), map.scrollWheelZoom.disable()"
       @mouseleave="map.dragging.enable(), map.scrollWheelZoom.enable()"
-      @mouseup = "map.dragging.enable(), map.scrollWheelZoom.enable()"
+      @mouseup="map.dragging.enable(), map.scrollWheelZoom.enable()"
     >
       <q-card
         @mouseover="map.dragging.disable(), map.scrollWheelZoom.disable()"
@@ -546,6 +546,7 @@ import {
   defineComponent,
   onBeforeMount,
   onMounted,
+  onActivated,
   ref,
   watch,
 } from "vue";
@@ -572,6 +573,7 @@ import selectAgreggate from "src/Reusable/selectAggregate.vue";
 import infrastructure from "src/Reusable/infrastructureChips.vue";
 import setSelectedInfrastructure from "src/components/Composables/Modals/fetchInfrustructure.js";
 import setSelectedRoads from "src/components/Composables/Modals/fetchRoads.js";
+import { onBeforeRouteLeave } from "vue-router";
 
 export default defineComponent({
   components: {
@@ -645,7 +647,7 @@ export default defineComponent({
     });
 
     const setLeafletMap = async function () {
-      const { osmTiles, darkMap, satellite } = baselayers;
+      const { osmTiles, darkMap, satellite, mapboxSatellite } = baselayers;
 
       // const counties = counties_2021
 
@@ -653,6 +655,7 @@ export default defineComponent({
         OSM: osmTiles,
         satellite: satellite,
         darkMap: darkMap,
+        mapbox: mapboxSatellite
       };
 
       const southWest = L.latLng(-12.259177022030556, 26.77604312031508),
@@ -676,15 +679,26 @@ export default defineComponent({
         //layers: [satellite],
       });
 
-      L.tileLayer(
-        "https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png",
-        {
-          attribution:
-            '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-          subdomains: "abcd",
-          maxZoom: 20,
-        }
-      ).addTo(map.value);
+      // L.tileLayer(
+      //   "https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png",
+      //   {
+      //     attribution:
+      //       '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+      //     subdomains: "abcd",
+      //     //maxZoom: 20,
+      //   }
+      // ).addTo(map.value);
+      // if (selectedTab.value == "infrastructure") {
+      //   baseMaps.value.mapbox.addTo(map.value);
+      // } else {
+        L.tileLayer(
+          "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}",
+          {
+            attribution: "Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ",
+            //maxZoom: 16,
+          }
+        ).addTo(map.value);
+      // }
 
       L.control.layers(baseMaps.value).addTo(map.value);
       L.control.scale({ position: "bottomright" }).addTo(map.value);
@@ -692,7 +706,6 @@ export default defineComponent({
         "leaflet-control-layers"
       );
       layerControl[0].style.visibility = "hidden";
-
     };
 
     const zoom_in = function () {
@@ -746,7 +759,7 @@ export default defineComponent({
             opacity: 1,
             color: "lightgrey",
             dashArray: "2",
-            fillOpacity: 0.25,
+            fillOpacity: 0,
           },
         });
 
@@ -782,6 +795,8 @@ export default defineComponent({
           let jsonLayerJoined = await createChoroplethSums();
 
           let choroplethValues = jsonLayerJoined.layervalues;
+
+          console.log(choroplethValues)
 
           const maxVal = Math.max(...choroplethValues);
           const minVal = Math.min(...choroplethValues);
@@ -844,13 +859,13 @@ export default defineComponent({
                   "Total:" +
                   `<b>${feature.properties["total"]}</b><br/>` +
                   "Adult Male:" +
-                  `<b>${feature.properties["adult_female"]}</b><br/>` +
-                  "Youth Female:" +
                   `<b>${feature.properties["adult_male"]}</b><br/>` +
-                  "Youth Male:" +
-                  `<b>${feature.properties["youth_female"]}</b><br/>` +
+                  "Adult Female:" +
+                  `<b>${feature.properties["adult_female"]}</b><br/>` +
                   "Youth Male:" +
                   `<b>${feature.properties["youth_male"]}</b><br/>` +
+                  "Youth Female:" +
+                  `<b>${feature.properties["youth_female"]}</b><br/>` +
                   "<button id='pop-up-selector' class='pop-up-btn'>Analyze</button>"
               );
             }
@@ -1220,6 +1235,7 @@ export default defineComponent({
       });
     });
 
+
     watch(
       roadFilterStatus,
       () => {
@@ -1255,6 +1271,7 @@ export default defineComponent({
     watch(sumsTab, () => {
       setVector();
     });
+
 
     return {
       map,

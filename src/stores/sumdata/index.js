@@ -17,8 +17,8 @@ export const useSumStore = defineStore({
       aggregate: "total",
     },
     atYears: {
-      at_year1: "2022",
-      at_year2: "2023",
+      at_year1: "2023",
+      at_year2: "2024",
     },
     tableType: "ct",
     currentTab: "pirs",
