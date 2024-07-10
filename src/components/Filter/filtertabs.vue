@@ -202,7 +202,7 @@
 
     <div
       class="row mobile-element bg-white mobile-tabs"
-      style="width: 100vw;max-height: 55vh;"
+      style="width: 100vw;max-height: 60vh; border-radius: 20px 20px 0px 0px;"
     >
       <div v-if="tabPannel" class="row">
         <q-space />

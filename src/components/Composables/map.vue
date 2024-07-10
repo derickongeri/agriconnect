@@ -533,10 +533,19 @@
       </div>
     </div>
 
-    <div class="radio-rect">
-      <selectAgreggate />
-      <infrastructure />
+    <div
+      class="radio-rect"
+      @mousedown="map.dragging.disable(), map.scrollWheelZoom.disable()"
+      @mouseover="map.dragging.disable(), map.scrollWheelZoom.disable()"
+      @mouseleave="map.dragging.enable(), map.scrollWheelZoom.enable()"
+      @mouseup="map.dragging.enable(), map.scrollWheelZoom.enable()"
+    >
+      <q-scroll-area visible="false" class="" style="height: 50px; min-width: 100vw">
+        <div class="row items-center chip-rect no-wrap"><selectAgreggate /> <infrastructure /></div
+      ></q-scroll-area>
     </div>
+
+    <!-- <div class="radio-rect"></div> -->
   </div>
 </template>
 
@@ -655,7 +664,7 @@ export default defineComponent({
         OSM: osmTiles,
         satellite: satellite,
         darkMap: darkMap,
-        mapbox: mapboxSatellite
+        mapbox: mapboxSatellite,
       };
 
       const southWest = L.latLng(-12.259177022030556, 26.77604312031508),
@@ -691,13 +700,13 @@ export default defineComponent({
       // if (selectedTab.value == "infrastructure") {
       //   baseMaps.value.mapbox.addTo(map.value);
       // } else {
-        L.tileLayer(
-          "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}",
-          {
-            attribution: "Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ",
-            //maxZoom: 16,
-          }
-        ).addTo(map.value);
+      L.tileLayer(
+        "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}",
+        {
+          attribution: "Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ",
+          //maxZoom: 16,
+        }
+      ).addTo(map.value);
       // }
 
       L.control.layers(baseMaps.value).addTo(map.value);
@@ -796,7 +805,7 @@ export default defineComponent({
 
           let choroplethValues = jsonLayerJoined.layervalues;
 
-          console.log(choroplethValues)
+          console.log(choroplethValues);
 
           const maxVal = Math.max(...choroplethValues);
           const minVal = Math.min(...choroplethValues);
@@ -1221,7 +1230,7 @@ export default defineComponent({
     });
 
     const infFilterStatus = computed(() => {
-      return infStore.getInfFilters.filterStatus
+      return infStore.getInfFilters.filterStatus;
     });
 
     onBeforeMount(() => {
@@ -1234,7 +1243,6 @@ export default defineComponent({
         setVector();
       });
     });
-
 
     watch(
       roadFilterStatus,
@@ -1271,7 +1279,6 @@ export default defineComponent({
     watch(sumsTab, () => {
       setVector();
     });
-
 
     return {
       map,
@@ -1332,8 +1339,6 @@ export default defineComponent({
   left: 1%;
   border-radius: 20px;
 }
-
-
 
 .attribute-card {
   position: absolute;

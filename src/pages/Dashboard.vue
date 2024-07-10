@@ -1,5 +1,6 @@
 <template>
   <q-drawer
+    class="tablet-element"
     v-model="drawer"
     :width="400"
     :breakpoint="500"
@@ -107,7 +108,7 @@
           </div>
         </div>
         <div
-          class="column dash-column q-px-sm"
+          class="column dash-column"
           v-if="selectedTab === 'infrastructure'"
         >
           <div
