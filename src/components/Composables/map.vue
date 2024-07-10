@@ -171,9 +171,19 @@
       </div>
     </div>
 
-    <div v-if="showAttributeCard" class="attribute-card" style="min-width: 50%">
+    <div
+      v-if="showAttributeCard"
+      class="attribute-card"
+      @touchstart="map.dragging.disable(), map.scrollWheelZoom.disable()"
+      @touchend="map.dragging.enable(), map.scrollWheelZoom.enable()"
+      @mousedown="map.dragging.disable(), map.scrollWheelZoom.disable()"
+      @mouseover="map.dragging.disable(), map.scrollWheelZoom.disable()"
+      @mouseenter="map.dragging.disable(), map.scrollWheelZoom.disable()"
+      @mouseleave="map.dragging.enable(), map.scrollWheelZoom.enable()"
+      @mouseup="map.dragging.enable(), map.scrollWheelZoom.enable()"
+    >
       <div class="q-pa-none row items-start q-gutter-md">
-        <q-card class="my-card" flat bordered style="min-width: 650px">
+        <q-card class="my-card-md" flat bordered>
           <q-card-section horizontal>
             <div class="col-5">
               <div class="column q-pa-md justify-center">
@@ -235,6 +245,73 @@
 
           </q-card-section> -->
         </q-card>
+        <q-scroll-area
+          :thumb-style="thumbStyle"
+          visible
+          class=""
+          style="height: 50vh; width: 100vw"
+        >
+          <div>
+            <q-card class="my-card-sm" flat bordered>
+              <div class="row">
+                <q-space />
+                <q-btn
+                  icon="close"
+                  size="md"
+                  flat
+                  round
+                  dense
+                  @click="closeCard()"
+                />
+              </div>
+
+              <q-card-section class="col-7 q-pt-xs">
+                <div class="text-h6 q-mt-sm q-mb-xs">
+                  {{ featureAtributes.name }}
+                </div>
+                <div class="text-overline">
+                  by {{ featureAtributes.grantee }}
+                </div>
+                <div class="text-caption text-grey q-mb-xs">
+                  {{ featureAtributes.Function }}
+                </div>
+                <div class="row">
+                  <q-img
+                    class="rounded-borders"
+                    src="https://agri-connect-tz.com/wp-content/uploads/2023/09/PARTOF1-1024x683.jpg"
+                    style="max-height: 150px"
+                  />
+                </div>
+                <q-separator />
+                <div class="text-subtitle1 q-mt-sm q-mb-xs">
+                  <q-icon color="grey-7" name="mdi-sprout" />
+                  <span class="text-caption"
+                    >{{ featureAtributes.grantee }} ・</span
+                  >
+                  <q-icon color="grey-7" name="mdi-cash-multiple" />
+                  <span class="text-caption"
+                    >{{ featureAtributes.costTZ }}TZS ・</span
+                  >
+                  <q-icon color="grey-7" name="mdi-map-marker-radius-outline" />
+                  <span class="text-caption">{{
+                    featureAtributes.District
+                  }}</span>
+                </div>
+              </q-card-section>
+
+              <!-- <q-separator />
+
+          <q-card-section class="q-pt-none">
+            <div class="text-subtitle1">
+              <q-icon color="grey-7" name="mdi-sprout" /> <span class="text-caption">value chain ・</span>
+              <q-icon color="grey-7" name="mdi-cash-multiple" /> <span class="text-caption">TZS ・</span>
+              <q-icon color="grey-7" name="mdi-map-marker-radius-outline" /> <span class="text-caption">District,Ward</span>
+            </div>
+
+          </q-card-section> -->
+            </q-card>
+          </div>
+        </q-scroll-area>
       </div>
     </div>
 
@@ -536,6 +613,7 @@
     <div
       class="radio-rect"
       @touchstart="map.dragging.disable(), map.scrollWheelZoom.disable()"
+      @touchend="map.dragging.enable(), map.scrollWheelZoom.enable()"
       @mousedown="map.dragging.disable(), map.scrollWheelZoom.disable()"
       @mouseover="map.dragging.disable(), map.scrollWheelZoom.disable()"
       @mouseleave="map.dragging.enable(), map.scrollWheelZoom.enable()"
@@ -1373,10 +1451,6 @@ export default defineComponent({
 }
 
 .attribute-card {
-  position: absolute;
-  z-index: 800;
-  left: 2%;
-  bottom: 2%;
 }
 
 .road-attribute-card {

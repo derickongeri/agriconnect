@@ -433,3 +433,34 @@
     min-width: 1600px;
   }
 }
+
+.attribute-card {
+  max-height: 40%;
+  min-width: 50%;
+  position: absolute;
+  z-index: 1500;
+  left: 2%;
+  bottom: 2%;
+
+  @media screen and (max-width: $breakpoint-sm-max) {
+    min-width: 100vw;
+    left: 0%;
+    bottom: 0%;
+  }
+}
+
+.my-card-md {
+  min-width: 650px;
+
+  @media screen and (max-width: $breakpoint-sm-max) {
+    display: none;
+  }
+}
+
+.my-card-sm {
+  min-width: 650px;
+
+  @media screen and (max-width: $breakpoint-sm-max) {
+    min-width: 100vw;
+  }
+}
