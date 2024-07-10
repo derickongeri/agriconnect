@@ -7,13 +7,8 @@
     >
       <div class="column q-mx-xl" style="max-width: 55%">
         <div
-          class="q-my-xl tag-line text-h1 text-green-9 text-weight-medium"
-          style="
-            position: relative;
-            width: 90%;
-            line-height: 1.2em;
-            margin-top: 10%;
-          "
+          class="q-my-lg tag-line head-tag text-h1 text-green-9 text-weight-medium"
+          style=""
         >
           Transforming the livelihoods of rural communities
         </div>
@@ -157,98 +152,129 @@
           </q-card>
         </div>
 
-        <div class="bg-grey-6 my-font" style="overflow: auto ;min-width: 25em; max-width: 15%">
+        <div
+          class="bg-grey-6 my-font"
+          style="overflow: auto; min-width: 25em; max-width: 15%"
+        >
           <q-card class="no-border-radius">
             <q-card-section>
               <div class="column items-center q-gutter-y-md">
                 <div class="row">
-                  <img src="~src/assets/icon_1.png" style=""/>
+                  <img src="~src/assets/icon_1.png" style="" />
                 </div>
-                <div class="row text-center text-weight-bold" style="font-size: 21px;">
-                1. Behaviour change for good nutrition practices
+                <div
+                  class="row text-center text-weight-bold"
+                  style="font-size: 21px"
+                >
+                  1. Behaviour change for good nutrition practices
+                </div>
               </div>
-              </div>
-
             </q-card-section>
           </q-card>
         </div>
 
-        <div class="bg-grey-6 my-font" style="overflow: auto ;min-width: 25em; max-width: 15%">
+        <div
+          class="bg-grey-6 my-font"
+          style="overflow: auto; min-width: 25em; max-width: 15%"
+        >
           <q-card class="no-border-radius">
             <q-card-section>
               <div class="column items-center q-gutter-y-md">
                 <div class="row">
-                  <img src="~src/assets/icon_2.png" style=""/>
+                  <img src="~src/assets/icon_2.png" style="" />
                 </div>
-                <div class="row text-center text-weight-bold" style="font-size: 21px;">
-                2. Improving production, processing and marketing
+                <div
+                  class="row text-center text-weight-bold"
+                  style="font-size: 21px"
+                >
+                  2. Improving production, processing and marketing
+                </div>
               </div>
-              </div>
-
             </q-card-section>
           </q-card>
         </div>
 
-        <div class="bg-grey-6 my-font" style="overflow: auto ;min-width: 25em; max-width: 15%">
+        <div
+          class="bg-grey-6 my-font"
+          style="overflow: auto; min-width: 25em; max-width: 15%"
+        >
           <q-card class="no-border-radius">
             <q-card-section>
               <div class="column items-center q-gutter-y-md">
                 <div class="row">
-                  <img src="~src/assets/icon_3.png" style=""/>
+                  <img src="~src/assets/icon_3.png" style="" />
                 </div>
-                <div class="row text-center text-weight-bold" style="font-size: 21px;">
-                3. Promoting women and youth employment and climate smart agriculture
+                <div
+                  class="row text-center text-weight-bold"
+                  style="font-size: 21px"
+                >
+                  3. Promoting women and youth employment and climate smart
+                  agriculture
+                </div>
               </div>
-              </div>
-
             </q-card-section>
           </q-card>
         </div>
 
-        <div class="bg-grey-6 my-font" style="overflow: auto ;min-width: 25em; max-width: 15%">
+        <div
+          class="bg-grey-6 my-font"
+          style="overflow: auto; min-width: 25em; max-width: 15%"
+        >
           <q-card class="no-border-radius">
             <q-card-section>
               <div class="column items-center q-gutter-y-md">
                 <div class="row">
-                  <img src="~src/assets/icon_4.png" style=""/>
+                  <img src="~src/assets/icon_4.png" style="" />
                 </div>
-                <div class="row text-center text-weight-bold" style="font-size: 21px;">
-                4. Supporting better policies for an enabling environment
+                <div
+                  class="row text-center text-weight-bold"
+                  style="font-size: 21px"
+                >
+                  4. Supporting better policies for an enabling environment
+                </div>
               </div>
-              </div>
-
             </q-card-section>
           </q-card>
         </div>
 
-        <div class="bg-grey-6 my-font" style="overflow: auto ;min-width: 25em; max-width: 15%">
+        <div
+          class="bg-grey-6 my-font"
+          style="overflow: auto; min-width: 25em; max-width: 15%"
+        >
           <q-card class="no-border-radius">
             <q-card-section>
               <div class="column items-center q-gutter-y-md">
                 <div class="row">
-                  <img src="~src/assets/icon_5.png" style=""/>
+                  <img src="~src/assets/icon_5.png" style="" />
                 </div>
-                <div class="row text-center text-weight-bold" style="font-size: 21px;">
-               5. Connecting farmers to markets
+                <div
+                  class="row text-center text-weight-bold"
+                  style="font-size: 21px"
+                >
+                  5. Connecting farmers to markets
+                </div>
               </div>
-              </div>
-
             </q-card-section>
           </q-card>
         </div>
 
-        <div class="bg-grey-6 my-font" style="overflow: auto ;min-width: 25em; max-width: 15%">
+        <div
+          class="bg-grey-6 my-font"
+          style="overflow: auto; min-width: 25em; max-width: 15%"
+        >
           <q-card class="no-border-radius">
             <q-card-section>
               <div class="column items-center q-gutter-y-md">
                 <div class="row">
-                  <img src="~src/assets/icon_6.png" style=""/>
+                  <img src="~src/assets/icon_6.png" style="" />
                 </div>
-                <div class="row text-center text-weight-bold" style="font-size: 21px;">
-               6. More investment by SMEs
+                <div
+                  class="row text-center text-weight-bold"
+                  style="font-size: 21px"
+                >
+                  6. More investment by SMEs
+                </div>
               </div>
-              </div>
-
             </q-card-section>
           </q-card>
         </div>
@@ -283,8 +309,13 @@
                         caption
                         lines="2"
                       >
-                        P.O.Box 2182<br />Dodoma, Tanzania<br/> agriconnect@locateit.co.ke <br/>
-                        <a class="text-primary" href="https://agri-connect-tz.com/">https://agri-connect-tz.com/</a>
+                        P.O.Box 2182<br />Dodoma, Tanzania<br />
+                        agriconnect@locateit.co.ke <br />
+                        <a
+                          class="text-primary"
+                          href="https://agri-connect-tz.com/"
+                          >https://agri-connect-tz.com/</a
+                        >
                       </div>
                     </q-item-section>
                   </q-item>
