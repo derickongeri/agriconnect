@@ -202,7 +202,7 @@
 
     <div
       class="row mobile-element bg-white mobile-tabs"
-      style="width: 100vw"
+      style="width: 100vw;max-height: 55vh;"
     >
       <div v-if="tabPannel" class="row">
         <q-space />
@@ -287,7 +287,7 @@
         no-caps
         active-color="white"
         active-bg-color="primary"
-        class="row justify-between text-grey-9"
+        class="row  q-px-sm justify-between text-grey-9"
         style="min-width: 100vw"
       >
         <q-item
