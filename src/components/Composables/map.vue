@@ -535,13 +535,30 @@
 
     <div
       class="radio-rect"
+      @touchstart="map.dragging.disable(), map.scrollWheelZoom.disable()"
       @mousedown="map.dragging.disable(), map.scrollWheelZoom.disable()"
       @mouseover="map.dragging.disable(), map.scrollWheelZoom.disable()"
       @mouseleave="map.dragging.enable(), map.scrollWheelZoom.enable()"
       @mouseup="map.dragging.enable(), map.scrollWheelZoom.enable()"
     >
-      <q-scroll-area visible="false" class="" style="height: 50px; min-width: 100vw">
-        <div class="row items-center chip-rect no-wrap"><selectAgreggate /> <infrastructure /></div
+      <!-- <q-btn
+        round
+        dense
+        unelevated
+        square
+        color="white"
+        text-color="grey"
+        icon="mdi-chevron-right"
+        style="position: absolute; z-index: 2500; right: 2%"
+        @click="scroll"
+      ></q-btn> -->
+      <q-scroll-area
+        visible="false"
+        class=""
+        style="height: 50px; width: 94vw"
+      >
+        <div class="row items-center chip-rect no-wrap">
+          <selectAgreggate /> <infrastructure /></div
       ></q-scroll-area>
     </div>
 
@@ -601,6 +618,9 @@ export default defineComponent({
 
     const { selectedRoadVect, setRoadSymbol, roadOutlineSymbol } =
       setSelectedRoads();
+
+    const position = ref(300);
+    const scrollAreaRef = ref(null);
 
     const map = ref(null),
       center = ref([-5.7, 34]),
@@ -1298,6 +1318,12 @@ export default defineComponent({
       featureAtributes,
       selectedTab,
       roadFeatureAttributes,
+      position,
+      scrollAreaRef,
+      scroll() {
+        scrollAreaRef.value.setScrollPosition("vertical", position.value);
+        position.value = position.value + 300;
+      },
     };
   },
 });
