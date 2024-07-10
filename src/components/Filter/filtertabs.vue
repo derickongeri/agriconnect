@@ -200,7 +200,10 @@
       </template>
     </q-splitter>
 
-    <div @touchstart.stop @mousedown.stop class="row mobile-element bg-white mobile-tabs" style="width: 100vw">
+    <div
+      class="row mobile-element bg-white mobile-tabs"
+      style="width: 100vw"
+    >
       <div v-if="tabPannel" class="row">
         <q-space />
         <q-btn
@@ -211,10 +214,11 @@
         />
       </div>
       <div v-if="!tabPannel" class="column items-center">
-        <q-list dense style="width: 40%; max-height: 16px; border-top: 4px solid grey">
-          <q-item clickable v-ripple @click="tabPannel = !tabPannel">
-
-          </q-item>
+        <q-list
+          dense
+          style="width: 40%; max-height: 16px; border-top: 4px solid grey"
+        >
+          <q-item clickable v-ripple @click="tabPannel = !tabPannel"> </q-item>
         </q-list>
       </div>
       <q-scroll-area
@@ -227,7 +231,7 @@
           class=""
           v-model="tab"
           animated
-          swipeable
+          no-swipe
           vertical
           transition-prev="jump-up"
           transition-next="jump-up"
@@ -248,7 +252,11 @@
       </q-scroll-area>
     </div>
 
-    <q-footer class="mobile-element q-py-sm bg-white" style="border-radius: 10px ;" bordered>
+    <q-footer
+      class="mobile-element q-py-sm bg-white"
+      style="border-radius: 10px"
+      bordered
+    >
       <!-- <q-tab-panels
         class=""
         v-model="tab"
@@ -272,6 +280,7 @@
         </q-tab-panel>
       </q-tab-panels> -->
       <q-tabs
+        no-swipe
         switch-indicator
         indicator-color="transparent"
         inline-label
