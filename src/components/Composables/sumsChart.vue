@@ -1,6 +1,6 @@
 <template>
   <div class="row bg-grey-1" style="width: 100%; min-height: 25vh">
-    <div class="col-3 q-pa-md">
+    <div class="col-2 q-pa-md">
       <q-card flat class="my-card">
         <q-card-section class="text-black">
           <div class="row q-gutter-md items-center">
@@ -29,13 +29,13 @@
     <div v-else class="col-6 q-py-md">
       <pieChart :data="districtData.peichartData.data" :options="districtData.peichartData.options" />
     </div>
-    <div class="col-3 q-py-md">
+    <div class="col-4 q-py-md rank-card">
       <div class="column">
         <q-virtual-scroll
           class="scroll-area q-pt-md"
           type="table"
           flat
-          style="max-height: 25vh"
+          style="max-height: 30vh"
           :thumb-style="thumbStyle"
           :bar-style="barStyle"
           :virtual-scroll-item-size="25"
@@ -75,7 +75,7 @@
             </div>
           </div>
         </q-virtual-scroll>
-        <div class="row bg-white q-py-md justify-center">
+        <div class="row bg-white q-py- justify-center">
           <q-btn
             class="q-ma-xs"
             size="xs"

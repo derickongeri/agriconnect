@@ -1333,26 +1333,7 @@ export default defineComponent({
   border-radius: 20px;
 }
 
-.gradient-rect {
-  width: 15px;
-  height: 200px;
-  background: linear-gradient(to top, #c9e4ca, #364958);
-  position: absolute;
-  z-index: 800;
-  color: white;
-  text-align: center;
-  line-height: 40px;
-  font-size: 16px;
-}
 
-.legend-rect {
-  width: 70px;
-  height: 200px;
-  position: absolute;
-  z-index: 800;
-  left: 2%;
-  bottom: 2%;
-}
 
 .attribute-card {
   position: absolute;
@@ -1373,6 +1354,9 @@ export default defineComponent({
   z-index: 800;
   right: 1%;
   bottom: 7%;
+  @media (max-width: $breakpoint-lg-min) {
+    bottom: 12%;
+  }
 }
 
 .radio-rect {

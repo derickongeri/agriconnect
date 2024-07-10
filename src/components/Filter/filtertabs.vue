@@ -164,7 +164,7 @@
                     :name="tabItem.icon"
                   /> -->
                 <!-- {{ tabItem.label }} -->
-                <q-tooltip anchor="center right" self="center right">
+                <q-tooltip anchor="center right" self="center start">
                   {{ tabItem.label }}
                 </q-tooltip>
                 </q-btn>

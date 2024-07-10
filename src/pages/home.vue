@@ -383,7 +383,7 @@
                 <div class="q-px-md q-pb-md">
                   <img
                     style="width: 150%"
-                    src="https://agri-connect-tz.com/wp-content/uploads/2015/12/Agri-connect-LOGO.png"
+                    src="http://agri-connect-tz.com/wp-content/uploads/2015/12/Agri-connect-LOGO.png"
                   />
                 </div>
               </div>

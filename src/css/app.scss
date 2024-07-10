@@ -168,6 +168,43 @@
   @media (max-width: $breakpoint-lg-min) {
     min-width: 30%;
   }
+  @media (max-width: $breakpoint-sm-max) {
+    // position: absolute;
+    // z-index: 1000;
+    // background-color: #fff;
+    // min-width: 50%;
+    display: none;
+  }
+}
+
+.toggle-side {
+  @media (max-width: $breakpoint-sm-max) {
+    position: absolute;
+    right: -5%;
+    top: 40%;
+    z-index: 1000;
+  }
+}
+
+.toggle-side-open {
+  @media (min-width: $breakpoint-sm-max) {
+    display: none;
+  }
+  @media (max-width: $breakpoint-sm-max) {
+    position: absolute;
+    left: 1%;
+    top: 15%;
+    z-index: 1000;
+  }
+}
+
+.dash-row-top {
+  width: 100%;
+  height: 8%;
+
+  @media (max-width: $breakpoint-sm-max) {
+    display: none;
+  }
 }
 
 .dash-column {
@@ -180,6 +217,9 @@
   @media (max-width: $breakpoint-lg-min) {
     min-width: 70%;
     padding-right: 8px;
+  }
+  @media (max-width: $breakpoint-sm-max) {
+    min-width: 100%;
   }
 }
 
@@ -221,6 +261,21 @@
   @media (max-width: $breakpoint-lg-min) {
     height: 42%;
   }
+
+  @media (max-width: $breakpoint-sm-max) {
+    min-width: 100%;
+    height: 55%;
+  }
+}
+
+.full-map {
+  width: 100%;
+  height: 79%;
+
+  @media (max-width: $breakpoint-sm-max) {
+    min-width: 100%;
+    height: 100%;
+  }
 }
 
 .pirs-table-tab {
@@ -229,7 +284,13 @@
   overflow: hidden;
 
   @media (max-width: $breakpoint-lg-min) {
-    height: 42%;
+    height: 45%;
+  }
+
+  @media (max-width: $breakpoint-sm-max) {
+    position: absolute;
+    bottom: 0;
+    min-width: 100%;
   }
 }
 
@@ -260,6 +321,47 @@
 
   @media (max-width: $breakpoint-lg-min) {
     line-height: 1.2em;
-    font-size: 64px;
+    font-size: 72px;
+  }
+}
+
+.legend-rect {
+  width: 70px;
+  height: 200px;
+  position: absolute;
+  z-index: 800;
+  left: 2%;
+  bottom: 2%;
+
+  @media (max-width: $breakpoint-lg-min) {
+    max-height: 150px;
+  }
+}
+
+.gradient-rect {
+  width: 15px;
+  height: 200px;
+  background: linear-gradient(to top, #c9e4ca, #364958);
+  position: absolute;
+  z-index: 800;
+  color: white;
+  text-align: center;
+  line-height: 40px;
+  font-size: 16px;
+
+  @media (max-width: $breakpoint-lg-min) {
+    max-height: 150px;
+  }
+}
+
+.rank-card {
+  @media (max-width: $breakpoint-lg-min) {
+    font-size: small;
+  }
+}
+
+.dash-desktop {
+  @media (max-width: $breakpoint-sm-max) {
+    // display: none;
   }
 }

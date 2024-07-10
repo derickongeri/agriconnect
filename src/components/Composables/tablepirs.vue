@@ -161,7 +161,7 @@
   </div>
   <div v-if="sumsTab == 'faindicators'">
     <div class="q-pa-none" style="width: 100%">
-      <div class="table-head row q-px-none q-pt-sm text-grey-8" style="">
+      <div class="table-head row q-px-none q-pt-sm text-grey-8" style="min-width: 600px;">
         <!-- <div class="col-1 ">Code</div> -->
         <div class="col-2">District</div>
         <div class="col text-center">Helvetas</div>
@@ -178,7 +178,7 @@
     </div>
     <div class="" style="width: 100%">
       <q-virtual-scroll
-        class="scroll-area table-content"
+        class="scroll-area table-content my-sticky-column-table"
         type="table"
         flat
         style="max-height: 25vh"
@@ -194,7 +194,7 @@
           :key="index"
         >
           <!-- <div class="col-1 text-start q-px-md" style="font-weight: 700;">{{ index }}</div> -->
-          <div class="col-2 q-ma-none q-px-none" style="font-weight: 400">
+          <div class="col-2 q-ma-none q-px-none" style="font-weight: 400; position: sticky;">
             {{ row.district }}
           </div>
           <div class="col text-center">
@@ -319,4 +319,31 @@ watch(
 .odd-row {
   background-color: #ffffff; /* change the background color as per your requirement */
 }
+
+.my-sticky-column-table {
+  // specifying max-width so the example can
+  // highlight the sticky column on any browser window
+  min-width: 600px;
+
+}
 </style>
+
+<!-- <style lang="sass">
+.my-sticky-column-table
+  /* specifying max-width so the example can
+    highlight the sticky column on any browser window */
+  max-width: 600px
+
+  thead tr:first-child th:first-child
+    /* bg color is important for th; just specify one */
+    background-color: #00b4ff
+
+  td:first-child
+    background-color: #00b4ff
+
+  th:first-child,
+  td:first-child
+    position: sticky
+    left: 0
+    z-index: 1
+</style> -->
