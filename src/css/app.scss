@@ -426,8 +426,9 @@
 }
 
 .chip-rect {
+  height: 40px;
+  flex: 1;
   @media screen and (max-width: $breakpoint-sm-max) {
-    height: 40px;
     overflow: hidden;
     min-width: 1600px;
   }

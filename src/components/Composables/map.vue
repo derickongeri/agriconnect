@@ -545,17 +545,16 @@
         round
         dense
         unelevated
-        square
-        color="white"
         text-color="grey"
         icon="mdi-chevron-right"
-        style="position: absolute; z-index: 2500; right: 2%"
+        style="position: absolute; z-index: 2500; right: -6%;background-color: #ffffff70;"
         @click="scroll"
       ></q-btn> -->
       <q-scroll-area
+        :thumb-style="thumbStyle"
         visible="false"
         class=""
-        style="height: 50px; width: 94vw"
+        style="height: 60px; width: 94vw"
       >
         <div class="row items-center chip-rect no-wrap">
           <selectAgreggate /> <infrastructure /></div
@@ -1323,6 +1322,13 @@ export default defineComponent({
       scroll() {
         scrollAreaRef.value.setScrollPosition("vertical", position.value);
         position.value = position.value + 300;
+      },
+      thumbStyle: {
+        right: "2px",
+        borderRadius: "5px",
+        backgroundColor: "#027be300",
+        width: "5px",
+        opacity: "0.75",
       },
     };
   },
