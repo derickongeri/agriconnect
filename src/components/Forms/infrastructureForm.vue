@@ -30,7 +30,7 @@
         <div class="filter-text text-label q-mx-sm q-py-sm" style="">
           District
         </div>
-        <selectDistrict />
+        <selectDistrict style="min-width: 96%;"/>
 
         <div v-if="showValueChain">
           <q-separator class="q-my-md" inset />

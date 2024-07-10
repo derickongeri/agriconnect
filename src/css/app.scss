@@ -196,6 +196,9 @@
     top: 15%;
     z-index: 1000;
   }
+    @media screen and (max-width: $breakpoint-sm-max) {
+    display: none;
+  }
 }
 
 .dash-row-top {
@@ -244,6 +247,10 @@
     padding-top: 8px;
     padding-bottom: 8px;
   }
+  @media (max-width: $breakpoint-sm-max) {
+    padding-top: 4px;
+    padding-bottom: 0px;
+  }
 }
 
 .toolbar-img {
@@ -251,6 +258,10 @@
 
   @media (max-width: $breakpoint-lg-min) {
     width: 25%;
+  }
+
+  @media (max-width: $breakpoint-sm-max) {
+    min-width: 50%;
   }
 }
 
@@ -302,6 +313,9 @@
 
 .filters-md {
   @media screen and (min-width: 1441px) {
+    display: none;
+  }
+  @media screen and (max-width: $breakpoint-sm-max) {
     display: none;
   }
 }
@@ -365,3 +379,33 @@
     // display: none;
   }
 }
+
+.header-desktop {
+  @media (max-width: $breakpoint-sm-max) {
+    display: none;
+  }
+}
+
+.header-mobile {
+  display: none;
+
+  @media (max-width: $breakpoint-sm-max) {
+    display: block;
+  }
+}
+
+.mobile-element {
+  display: none;
+
+  @media screen and (max-width: $breakpoint-sm-max) {
+    display: block;
+  }
+}
+
+.mobile-tabs {
+  position: absolute;
+  bottom: 0%;
+  z-index: 2000;
+}
+
+

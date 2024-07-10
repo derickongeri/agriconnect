@@ -1,6 +1,9 @@
 <template>
   <q-layout view="hHh lpR fFf">
-    <q-header elevated class="bg-white my-font text-white main-header">
+    <q-header
+      elevated
+      class="header-desktop bg-white my-font text-white main-header"
+    >
       <q-toolbar>
         <q-toolbar-title>
           <img
@@ -84,6 +87,126 @@
       </q-toolbar>
     </q-header>
 
+    <q-header
+      elevated
+      class="header-mobile bg-white my-font text-white main-header"
+    >
+      <q-toolbar>
+        <q-toolbar-title>
+          <img
+            class="q-pl-none toolbar-img"
+            src="~src/assets/LOGO-AGRI-CONNECT.png"
+          />
+        </q-toolbar-title>
+        <!-- <q-btn
+          flat
+          @click="drawer = !drawer"
+          text-color="grey-9"
+          round
+          dense
+          icon="menu"
+        /> -->
+        <q-btn flat text-color="grey-9" round dense icon="menu">
+          <q-menu>
+            <q-list style="min-width: 100px">
+              <q-tabs
+                class="text-grey-9"
+                vertical
+                switch-indicator
+                no-caps
+                dense
+                active-color="primary"
+              >
+                <q-route-tab to="/">
+                  <div
+                    class="row q-gutter-md q-py-sm items-center"
+                    style="width: 150px"
+                  >
+                    <div class="">
+                      <q-icon name="home" size="sm" />
+                    </div>
+                    <div class="col text-left">Home</div>
+                  </div>
+                </q-route-tab>
+                <q-route-tab to="/dashboard">
+                  <div
+                    class="row q-gutter-md q-py-sm items-center"
+                    style="width: 150px"
+                  >
+                    <div class="">
+                      <q-icon name="dashboard" size="sm" />
+                    </div>
+                    <div class="col text-left">Dashboard</div>
+                  </div>
+                </q-route-tab>
+              </q-tabs>
+              <q-separator />
+              <q-btn
+                v-if="user"
+                class="q-mr-xl"
+                unelevated
+                round
+                color="primary"
+                :label="getInitials(user.firstName, user.lastName)"
+              >
+                <q-menu anchor="bottom end" self="top right" :offset="[0, 12]">
+                  <q-list>
+                    <q-item
+                      v-if="user.grantee"
+                      clickable
+                      v-close-popup
+                      to="/user/upload"
+                    >
+                      <q-item-section>
+                        <q-item-label>Upload Data</q-item-label>
+                      </q-item-section>
+                      <q-item-section avatar>
+                        <q-icon color="grey-7" name="mdi-cloud-upload" />
+                      </q-item-section>
+                    </q-item>
+                    <q-item clickable v-close-popup @click="handleLogout">
+                      <q-item-section>
+                        <q-item-label>Logout</q-item-label>
+                      </q-item-section>
+                      <q-item-section avatar>
+                        <q-icon color="grey-7" name="mdi-logout" />
+                      </q-item-section>
+                    </q-item>
+                  </q-list>
+                </q-menu>
+              </q-btn>
+
+              <q-btn
+                v-else
+                no-caps
+                class="full-width q-mr-xl"
+                unelevated
+                align="between"
+                flat
+                color="primary"
+                icon="mdi-account"
+                label="Account"
+              >
+                <q-menu style="min-width: 150px;"  cover anchor="top start">
+                  <q-list>
+                    <q-item clickable v-close-popup to="/User/login">
+                      <q-item-section>
+                        <q-item-label>Login</q-item-label>
+                      </q-item-section>
+                    </q-item>
+                    <q-item clickable v-close-popup to="/User/signup">
+                      <q-item-section>
+                        <q-item-label>Sign Up</q-item-label>
+                      </q-item-section>
+                    </q-item>
+                  </q-list>
+                </q-menu>
+              </q-btn>
+            </q-list>
+          </q-menu>
+        </q-btn>
+      </q-toolbar>
+    </q-header>
     <q-page-container class="my-font">
       <router-view />
     </q-page-container>
@@ -173,6 +296,7 @@ export default {
       matchMediaDesktop,
       matchMediaMobile,
       getInitials,
+      drawer: ref(true),
     };
   },
 };

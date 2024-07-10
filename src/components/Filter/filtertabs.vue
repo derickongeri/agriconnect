@@ -158,15 +158,15 @@
                   :color="tab === tabItem.name ? 'white' : 'grey-8'"
                   :icon="tabItem.icon"
                 >
-                <!-- <q-icon
+                  <!-- <q-icon
                     class="q-ma-xs"
                     :color="tab === tabItem.name ? 'white' : 'grey-8'"
                     :name="tabItem.icon"
                   /> -->
-                <!-- {{ tabItem.label }} -->
-                <q-tooltip anchor="center right" self="center start">
-                  {{ tabItem.label }}
-                </q-tooltip>
+                  <!-- {{ tabItem.label }} -->
+                  <q-tooltip anchor="center right" self="center start">
+                    {{ tabItem.label }}
+                  </q-tooltip>
                 </q-btn>
               </q-item-section>
             </q-item>
@@ -199,6 +199,118 @@
         </q-tab-panels>
       </template>
     </q-splitter>
+
+    <div class="row mobile-element bg-white mobile-tabs" style="width: 100vw">
+      <div v-if="tabPannel" class="row">
+        <q-space />
+        <q-btn
+          flat
+          round
+          icon="mdi-chevron-down"
+          @click="tabPannel = !tabPannel"
+        />
+      </div>
+      <div v-if="!tabPannel" class="column items-center">
+        <q-list dense style="width: 40%; max-height: 16px; border-top: 4px solid grey">
+          <q-item clickable v-ripple @click="tabPannel = !tabPannel">
+
+          </q-item>
+        </q-list>
+      </div>
+      <q-scroll-area
+        v-if="tabPannel"
+        :thumb-style="thumbStyle"
+        :bar-style="barStyle"
+        style="height: 500px; min-width: 300px"
+      >
+        <q-tab-panels
+          class=""
+          v-model="tab"
+          animated
+          swipeable
+          vertical
+          transition-prev="jump-up"
+          transition-next="jump-up"
+          style="background-color: #ffffff00"
+        >
+          <q-tab-panel style="background-color: #ffffff00" name="pirs">
+            <sumsPannel />
+          </q-tab-panel>
+
+          <q-tab-panel class="" name="infrastructure">
+            <infrustructurePannel />
+          </q-tab-panel>
+
+          <q-tab-panel name="tarura">
+            <taruraPannel />
+          </q-tab-panel>
+        </q-tab-panels>
+      </q-scroll-area>
+    </div>
+
+    <q-footer class="mobile-element q-py-sm bg-white" style="border-radius: 10px ;" bordered>
+      <!-- <q-tab-panels
+        class=""
+        v-model="tab"
+        animated
+        swipeable
+        vertical
+        transition-prev="jump-up"
+        transition-next="jump-up"
+        style="background-color: #ffffff00; margin-top: 12%"
+      >
+        <q-tab-panel style="background-color: #ffffff00" name="pirs">
+          <sumsPannel />
+        </q-tab-panel>
+
+        <q-tab-panel class="" name="infrastructure">
+          <infrustructurePannel />
+        </q-tab-panel>
+
+        <q-tab-panel name="tarura">
+          <taruraPannel />
+        </q-tab-panel>
+      </q-tab-panels> -->
+      <q-tabs
+        switch-indicator
+        indicator-color="transparent"
+        inline-label
+        no-caps
+        active-color="white"
+        active-bg-color="primary"
+        class="row justify-between text-grey-9"
+        style="min-width: 100vw"
+      >
+        <q-item
+          v-for="tabItem in tabs"
+          :key="tabItem.name"
+          :clickable="true"
+          v-ripple
+          class="col"
+          :class="{ 'q-tab-active-mobile': tab === tabItem.name }"
+          @click="
+            setActiveTab(tabItem.name);
+            tabPannel = true;
+          "
+          style="border-radius: 0px"
+        >
+          <q-item-section class="">
+            <q-btn
+              dense
+              flat
+              :color="tab === tabItem.name ? 'primary' : 'grey-8'"
+            >
+              <q-icon
+                class="q-ma-xs"
+                :color="tab === tabItem.name ? 'primary' : 'grey-8'"
+                :name="tabItem.icon"
+              />
+              <!-- {{ tabItem.label }} -->
+            </q-btn>
+          </q-item-section>
+        </q-item>
+      </q-tabs>
+    </q-footer>
   </div>
 </template>
 
@@ -254,6 +366,7 @@ export default {
       splitterModel,
       splitterModellg,
       setActiveTab,
+      tabPannel: ref(true),
     };
   },
 };
@@ -268,5 +381,11 @@ export default {
 .q-tab-active {
   background-color: #8bcc00;
   color: white;
+}
+
+.q-tab-active-mobile {
+  background-color: #8bcc0046;
+  color: rgb(73, 73, 73);
+  padding: 4px;
 }
 </style>

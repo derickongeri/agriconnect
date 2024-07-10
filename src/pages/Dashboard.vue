@@ -5,12 +5,11 @@
     :breakpoint="500"
     overlay
     :class="$q.dark.isActive ? 'bg-grey-9' : 'bg-grey-1'"
-    style="overflow: hidden;"
+    style="overflow: hidden"
   >
     <filtertabs />
     <div class="toggle-side">
       <q-btn
-
         round
         color="grey-1"
         text-color="primary"
@@ -33,6 +32,9 @@
     <div class="dash-desktop row" style="flex: 1">
       <div class="content" style="flex: 1; display: flex">
         <div class="column filters-column q-mt-none">
+          <filtertabs />
+        </div>
+        <div class="mobile-element">
           <filtertabs />
         </div>
         <div class="column dash-column" v-if="selectedTab === 'pirs'">
