@@ -200,7 +200,7 @@
       </template>
     </q-splitter>
 
-    <div class="row mobile-element bg-white mobile-tabs" style="width: 100vw">
+    <div @touchstart.stop @mousedown.stop class="row mobile-element bg-white mobile-tabs" style="width: 100vw">
       <div v-if="tabPannel" class="row">
         <q-space />
         <q-btn
