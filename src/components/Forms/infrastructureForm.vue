@@ -1,5 +1,5 @@
 <template>
-  <div class="text-subtitle2 q-mb-md">AGRICONNECT INFRASTRUCTURE</div>
+  <div class="text-subtitle2 q-mb-md">INFRASTRUCTURE</div>
   <!-- <div class="text-bold q-my-md q-px-sm q-mt-sm">Select Grantee</div> -->
   <selectGrantee />
 
@@ -24,7 +24,7 @@
     <q-scroll-area
       class="filter-form"
       :thumb-style="thumbStyle"
-      style="height: 50vh"
+      style="height: 45vh"
     >
       <div class="column">
         <div class="filter-text text-label q-mx-sm q-py-sm" style="">

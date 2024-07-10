@@ -1,17 +1,15 @@
 <template>
   <q-layout view="hHh lpR fFf">
-    <q-header elevated class="bg-white my-font text-white q-py-md">
+    <q-header elevated class="bg-white my-font text-white main-header">
       <q-toolbar>
         <q-toolbar-title>
           <img
-            class="q-pl-md"
+            class="q-pl-md toolbar-img"
             src="~src/assets/LOGO-AGRI-CONNECT.png"
-            style="width: 20%"
           />
           <img
             src="~src/assets/sponsors.svg"
-            class="q-pl-md q-pb-xs"
-            style="width: 20%"
+            class="q-pl-md q-pb-xs toolbar-img"
           />
         </q-toolbar-title>
 
@@ -31,11 +29,16 @@
           unelevated
           round
           color="primary"
-          :label="getInitials(user.firstName,user.lastName)"
+          :label="getInitials(user.firstName, user.lastName)"
         >
           <q-menu anchor="bottom end" self="top right" :offset="[0, 12]">
             <q-list>
-              <q-item v-if="user.grantee" clickable v-close-popup to="/user/upload">
+              <q-item
+                v-if="user.grantee"
+                clickable
+                v-close-popup
+                to="/user/upload"
+              >
                 <q-item-section>
                   <q-item-label>Upload Data</q-item-label>
                 </q-item-section>
@@ -169,7 +172,7 @@ export default {
       tab: ref("images"),
       matchMediaDesktop,
       matchMediaMobile,
-      getInitials
+      getInitials,
     };
   },
 };

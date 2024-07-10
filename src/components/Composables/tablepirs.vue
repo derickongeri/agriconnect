@@ -161,7 +161,7 @@
   </div>
   <div v-if="sumsTab == 'faindicators'">
     <div class="q-pa-none" style="width: 100%">
-      <div class="row q-px-none q-pt-sm text-grey-8" style="font-weight: 700">
+      <div class="table-head row q-px-none q-pt-sm text-grey-8" style="">
         <!-- <div class="col-1 ">Code</div> -->
         <div class="col-2">District</div>
         <div class="col text-center">Helvetas</div>
@@ -178,7 +178,7 @@
     </div>
     <div class="" style="width: 100%">
       <q-virtual-scroll
-        class="scroll-area"
+        class="scroll-area table-content"
         type="table"
         flat
         style="max-height: 25vh"

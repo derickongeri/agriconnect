@@ -1,5 +1,5 @@
 <template>
-  <q-list>
+  <q-list style="max-width: 96%;">
     <q-item tag="label" v-ripple>
       <q-item-section>Financial Agreement Indicators</q-item-section>
       <q-item-section avatar>

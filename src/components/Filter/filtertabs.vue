@@ -1,7 +1,8 @@
 <template>
   <div>
     <q-splitter
-      v-model="splitterModel"
+      class="filters-lg"
+      v-model="splitterModellg"
       reverse
       style="height: 100%"
       separator-class="bg-accent"
@@ -72,19 +73,13 @@
                 class="q-mb-sm"
                 :class="{ 'q-tab-active': tab === tabItem.name }"
                 @click="setActiveTab(tabItem.name)"
-                style="border-radius: 10px; min-width:30%"
+                style="border-radius: 10px; min-width: 30%"
               >
-                <!-- <q-item-section  avatar>
-                    <q-icon
-                      :color="tab === tabItem.name ? 'white' : 'grey-8'"
-                      :name="tabItem.icon"
-                    />
-                  </q-item-section> -->
                 <q-item-section class="text-subtitle2">
                   <div class="row items-center">
                     <q-icon
-                    class="q-mr-xs"
-                    :color="tab === tabItem.name ? 'white' : 'grey-8'"
+                      class="q-mr-xs"
+                      :color="tab === tabItem.name ? 'white' : 'grey-8'"
                       :name="tabItem.icon"
                     />
                     {{ tabItem.label }}
@@ -121,6 +116,89 @@
         </q-tab-panels>
       </template>
     </q-splitter>
+
+    <q-splitter
+      class="filters-md"
+      v-model="splitterModel"
+      reverse
+      style="height: 100%"
+      separator-class="bg-accent"
+      separator-style="width: 0px"
+      :limits="[80]"
+    >
+      <template v-slot:before>
+        <div
+          style="min-height: 100vh; min-width: 100%; background-color: #eff1f2"
+        >
+          <q-tabs
+            vertical
+            switch-indicator
+            indicator-color="transparent"
+            inline-label
+            no-caps
+            active-color="white"
+            active-bg-color="primary"
+            class="q-pt-xl text-grey-9"
+          >
+            <q-item
+              v-for="tabItem in tabs"
+              :key="tabItem.name"
+              :clickable="true"
+              v-ripple
+              class="q-mb-sm"
+              :class="{ 'q-tab-active': tab === tabItem.name }"
+              @click="setActiveTab(tabItem.name)"
+              style="border-radius: 0px"
+            >
+              <q-item-section class="">
+                <q-btn
+                  dense
+                  flat
+                  round
+                  :color="tab === tabItem.name ? 'white' : 'grey-8'"
+                  :icon="tabItem.icon"
+                >
+                <!-- <q-icon
+                    class="q-ma-xs"
+                    :color="tab === tabItem.name ? 'white' : 'grey-8'"
+                    :name="tabItem.icon"
+                  /> -->
+                <!-- {{ tabItem.label }} -->
+                <q-tooltip anchor="center right" self="center right">
+                  {{ tabItem.label }}
+                </q-tooltip>
+                </q-btn>
+              </q-item-section>
+            </q-item>
+          </q-tabs>
+        </div>
+      </template>
+
+      <template v-slot:after>
+        <q-tab-panels
+          class=""
+          v-model="tab"
+          animated
+          swipeable
+          vertical
+          transition-prev="jump-up"
+          transition-next="jump-up"
+          style="background-color: #ffffff00; margin-top: 12%"
+        >
+          <q-tab-panel style="background-color: #ffffff00" name="pirs">
+            <sumsPannel />
+          </q-tab-panel>
+
+          <q-tab-panel class="" name="infrastructure">
+            <infrustructurePannel />
+          </q-tab-panel>
+
+          <q-tab-panel name="tarura">
+            <taruraPannel />
+          </q-tab-panel>
+        </q-tab-panels>
+      </template>
+    </q-splitter>
   </div>
 </template>
 
@@ -144,7 +222,8 @@ export default {
     const store = useSumStore();
 
     const tab = ref(store.getCurrentTab),
-      splitterModel = ref(70),
+      splitterModel = ref(85),
+      splitterModellg = ref(70),
       tabs = ref([
         { name: "pirs", label: "SUMS", icon: "mdi-bullseye-arrow" },
         {
@@ -173,6 +252,7 @@ export default {
       tab,
       tabs,
       splitterModel,
+      splitterModellg,
       setActiveTab,
     };
   },

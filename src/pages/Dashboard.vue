@@ -2,12 +2,11 @@
   <q-page class="page-body">
     <div class="row" style="flex: 1">
       <div class="content" style="flex: 1; display: flex">
-        <div class="column q-mt-none" style="max-width: 35%; flex: 1">
+        <div class="column filters-column q-mt-none">
           <filtertabs />
         </div>
         <div
-          class="column bg-none q-mt-none q-mr-md"
-          style="max-width: 65%; flex: 1; border-radius: 2px; border-color: grey;"
+          class="column dash-column"
           v-if="selectedTab === 'pirs'"
         >
           <div
@@ -42,10 +41,9 @@
             </div>
           </div>
           <q-separator></q-separator>
-          <div class="row" style="width: 100%; height: 47%"><mappanel /></div>
+          <div class="row pirs-map" style=""><mappanel /></div>
           <div
-            class="bg-white"
-            style="width: 100%; height: 34%; overflow: hidden"
+            class="pirs-table-tab"
           >
             <q-tabs
               v-model="tab"
@@ -57,8 +55,8 @@
               narrow-indicator
               inline-label
             >
-              <q-tab name="mails" label="Table" icon="mdi-table"/>
-              <q-tab name="alarms" label="Charts" icon="mdi-chart-pie"/>
+              <q-tab no-caps name="mails" label="Table" icon="mdi-table"/>
+              <q-tab no-caps name="alarms" label="Charts" icon="mdi-chart-pie"/>
               <!-- <q-tab name="movies" label="Description" /> -->
             </q-tabs>
 
@@ -81,8 +79,7 @@
           </div>
         </div>
         <div
-          class="column q-mt-none q-mr-sm"
-          style="max-width: 65%; flex: 1"
+          class="column dash-column q-px-sm"
           v-if="selectedTab === 'infrastructure'"
         >
           <div
@@ -107,16 +104,10 @@
               />
             </div>
           </div>
-          <!-- <q-separator></q-separator> -->
           <div class="row" style="width: 100%; height: 79%"><mappanel/></div>
-          <!-- <div
-            class="absolute "
-            style="z-index:1000; bottom:3%; width: 100%; overflow: hidden"
-          ><infdialog/></div> -->
         </div>
         <div
-          class="column q-mt-none q-mr-md"
-          style="max-width: 65%; flex: 1"
+          class="column dash-column"
           v-if="selectedTab === 'tarura'"
         >
           <div
