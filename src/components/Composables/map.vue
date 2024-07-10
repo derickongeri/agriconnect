@@ -278,7 +278,7 @@
                 <div class="row">
                   <q-img
                     class="rounded-borders"
-                    src="https://agri-connect-tz.com/wp-content/uploads/2023/09/PARTOF1-1024x683.jpg"
+                    src="http://agri-connect-tz.com/wp-content/uploads/2023/09/PARTOF1-1024x683.jpg"
                     style="max-height: 150px"
                   />
                 </div>
