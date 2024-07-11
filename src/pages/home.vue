@@ -498,15 +498,15 @@
       class="row items-center mobile-element bg-grey-9"
       style="min-width: 100%"
     >
-      <div class="column items-center">
+      <div class="column q-py-lg items-center">
         <div class="column items-start q-gutter-none" style="">
           <q-list>
             <q-item>
               <q-item-section>
-                <q-item-label class="text-white" style="font-size: 20px"
+                <q-item-label class="text-white"
                   >Coordination Management Unit</q-item-label
                 >
-                <q-item-label class="text-white" style="font-size: 20px"
+                <q-item-label class="text-white"
                   >Department of Policy and Planning, Ministry of
                   Agriculture</q-item-label
                 >
