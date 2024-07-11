@@ -245,26 +245,27 @@
 
           </q-card-section> -->
         </q-card>
-        <q-scroll-area
-          :thumb-style="thumbStyle"
-          visible
-          class=""
-          style="height: 50vh; width: 100vw"
-        >
-          <div>
-            <q-card class="my-card-sm" flat bordered>
-              <div class="row">
-                <q-space />
-                <q-btn
-                  icon="close"
-                  size="md"
-                  flat
-                  round
-                  dense
-                  @click="closeCard()"
-                />
-              </div>
 
+        <div>
+          <q-card class="my-card-sm" flat bordered>
+            <div class="row">
+              <q-space />
+              <q-btn
+                icon="close"
+                size="md"
+                flat
+                round
+                dense
+                @click="closeCard()"
+              />
+            </div>
+
+            <q-scroll-area
+              :thumb-style="thumbStyle"
+              visible
+              class=""
+              style="height: 30vh; width: 100vw"
+            >
               <q-card-section class="col-7 q-pt-xs">
                 <div class="text-h6 q-mt-sm q-mb-xs">
                   {{ featureAtributes.name }}
@@ -278,7 +279,7 @@
                 <div class="row">
                   <q-img
                     class="rounded-borders"
-                    src="http://agri-connect-tz.com/wp-content/uploads/2023/09/PARTOF1-1024x683.jpg"
+                    src="https://d382rz2cea0pah.cloudfront.net/wp-content/uploads/2023/07/Haryana-to-Offer-Up-to-75-Subsidies-on-Solar-Pumps-Installed-Under-KUSUM.jpg"
                     style="max-height: 150px"
                   />
                 </div>
@@ -298,8 +299,9 @@
                   }}</span>
                 </div>
               </q-card-section>
+            </q-scroll-area>
 
-              <!-- <q-separator />
+            <!-- <q-separator />
 
           <q-card-section class="q-pt-none">
             <div class="text-subtitle1">
@@ -309,9 +311,8 @@
             </div>
 
           </q-card-section> -->
-            </q-card>
-          </div>
-        </q-scroll-area>
+          </q-card>
+        </div>
       </div>
     </div>
 
@@ -320,17 +321,18 @@
       class="road-attribute-card"
       id="map-card"
       style=""
+      @touchstart="map.dragging.disable(), map.scrollWheelZoom.disable()"
+      @touchend="map.dragging.enable(), map.scrollWheelZoom.enable()"
+      @mousedown="map.dragging.disable(), map.scrollWheelZoom.disable()"
       @mouseover="map.dragging.disable(), map.scrollWheelZoom.disable()"
+      @mouseenter="map.dragging.disable(), map.scrollWheelZoom.disable()"
       @mouseleave="map.dragging.enable(), map.scrollWheelZoom.enable()"
       @mouseup="map.dragging.enable(), map.scrollWheelZoom.enable()"
     >
       <q-card
-        @mouseover="map.dragging.disable(), map.scrollWheelZoom.disable()"
-        @mouseleave="map.dragging.enable(), map.scrollWheelZoom.enable()"
-        class="my-card"
+        class="my-road-card"
         flat
         bordered
-        style="width: 400px"
       >
         <q-card-section class="q-pa-xs">
           <div class="row items-center">
@@ -350,7 +352,7 @@
           </div>
         </q-card-section>
         <q-separator inset />
-        <q-scroll-area style="height: 50vh"
+        <q-scroll-area class="road-card-scroll" style=""
           ><q-card-section class="q-py-none">
             <q-item-label header class="text-weight-bold text-grey-9"
               >General Information</q-item-label
@@ -1450,15 +1452,6 @@ export default defineComponent({
   border-radius: 20px;
 }
 
-.attribute-card {
-}
-
-.road-attribute-card {
-  position: absolute;
-  z-index: 800;
-  right: 2%;
-  top: 2%;
-}
 
 .zoom-controls {
   position: absolute;

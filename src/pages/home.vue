@@ -1,11 +1,31 @@
 <template>
   <q-page class="page-body">
-    <div
-      class="jumbotron"
-      id="hero"
-      style="position: relative; min-width: 100vw; min-height: 95vh"
-    >
-      <div class="column q-mx-xl" style="max-width: 55%">
+    <div class="jumbotron" id="hero" style="">
+      <div
+        class="column mobile-element items-center tag-line-container-sm"
+        style=""
+      >
+        <div class="row items-center justify-center" style="width: 100%">
+          <div
+            class="q-my-lg head-tag text-center text-h6 text-green-9 text-weight-medium"
+            style=""
+          >
+            Transforming the livelihoods of rural communities
+          </div>
+        </div>
+
+        <div class="row items-center justify-center" style="width: 100%">
+          <q-btn
+            unelevated
+            size="lg"
+            color="green-9"
+            label="view dashboard"
+            style="border-radius: 10px"
+            to="/dashboard"
+          />
+        </div>
+      </div>
+      <div class="column tag-line-container q-mx-xl" style="">
         <div
           class="q-my-lg tag-line head-tag text-h1 text-green-9 text-weight-medium"
           style=""
@@ -24,19 +44,12 @@
           />
         </div>
       </div>
-      <div
-        class="column mockup-section"
-        style="
-          min-width: 50%;
-          min-height: 65%;
-          position: absolute;
-          right: 2%;
-          bottom: 25%;
-        "
-      ></div>
+      <div class="column mockup-section" style=""></div>
+
+      <div class="column mockup-section-sm" style=""></div>
 
       <div
-        class="bg-white q-py-lg"
+        class="bg-white desktop-element q-py-lg"
         style="position: absolute; bottom: 7%; width: 100vw"
       >
         <div
@@ -96,7 +109,7 @@
       </div>
     </div>
 
-    <div class="bg-white">
+    <div class="about-section bg-white">
       <div
         class="row bg-white items-center q-mx-auto q-px-xl justify-between"
         style="max-width: 80vw; min-height: 60vh"
@@ -123,13 +136,206 @@
       </div>
     </div>
 
+    <div class="mobile-element">
+      <div class="bg-white q-pa-md" style="width: 100vw">
+        <div
+          class="row items-center no-wrap justify-between q-gutter-md"
+          style="min-width: 100vw"
+        >
+          <q-scroll-area style="min-width: 100vw; height: 10vh">
+            <div class="row items-center" style="min-width: 1200px">
+              <div class="column q-pl-md">
+                <img
+                  src="~src/assets/PDF.jpg"
+                  style="
+                    position: relative;
+                    width: 100%;
+                    height: 70px;
+                    left: -1%;
+                  "
+                />
+              </div>
+              <div class="column q-pl-md">
+                <img
+                  src="~src/assets/TRIAS.jpg"
+                  style="
+                    position: relative;
+                    width: 120%;
+                    height: 70px;
+                    left: -1%;
+                  "
+                />
+              </div>
+              <div class="column q-pl-md">
+                <img
+                  src="~/src/assets/FAO.jpg"
+                  style="
+                    position: relative;
+                    width: 100%;
+                    height: 100px;
+                    left: -1%;
+                  "
+                />
+              </div>
+
+              <div class="column q-pl-md">
+                <img
+                  src="~src/assets/HELVETAS.jpg"
+                  style="
+                    position: relative;
+                    width: 100%;
+                    height: 70px;
+                    left: -1%;
+                  "
+                />
+              </div>
+              <div class="column q-pl-md">
+                <img
+                  src="~src/assets/RIKOLTO.jpg"
+                  style="
+                    position: relative;
+                    width: 100%;
+                    height: 70px;
+                    left: -1%;
+                  "
+                />
+              </div>
+              <div class="column q-pl-md">
+                <img
+                  src="~src/assets/IDHLogo.png"
+                  style="
+                    position: relative;
+                    width: 100%;
+                    height: 50px;
+                    left: -1%;
+                  "
+                />
+              </div>
+              <div class="column q-pl-md">
+                <img
+                  src="~src/assets/SOLIDARIDAD.jpg"
+                  style="
+                    position: relative;
+                    width: 100%;
+                    height: 70px;
+                    left: -1%;
+                  "
+                />
+              </div>
+              <div class="column q-pl-md">
+                <img
+                  src="~src/assets/Vi_Agroforestry.png"
+                  style="
+                    position: relative;
+                    width: 100%;
+                    height: 70px;
+                    left: -1%;
+                  "
+                />
+              </div>
+            </div>
+          </q-scroll-area>
+        </div>
+      </div>
+    </div>
+
+    <div class="about-section-sm bg-white">
+      <div
+        class="column bg-white items-center q-mx-auto q-px-xl justify-center"
+        style="max-width: 96vw; min-height: 40vh"
+      >
+        <div class="col-12 text-center">
+          <div class="q-my-md tag-line text-h6 text-green-9 text-weight-medium">
+            About the Project
+          </div>
+        </div>
+
+        <div
+          class="col-12 text-weight-normal text-grey-9 text-justify"
+          style=""
+        >
+          AGRI-CONNECT is a food security product which aims at increasing food
+          and nutrition security in Tanzania by supporting development of tea,
+          coffee, and horticulture value chains. The programme is implemented
+          mainly by the Ministry of Agriculture (MoA) in the mainland and the
+          Ministry of Agriculture, Irrigation, Natural Resources, and Livestock
+          (MAINL) of the Revolutionary Government of Zanzibar.
+        </div>
+      </div>
+    </div>
+
     <div
       class="bg-lime q-mx-auto"
       style="width: 65vw; border-top: solid greenyellow"
     ></div>
 
     <div
-      class="bg-white"
+      class="principle-section-sm mobile-element bg-white"
+      style="min-width: 100vw; min-height: 70vh; padding-top: 5%"
+    >
+      <div
+        class="fit q-mx-auto row wrap q-gutter-y-xl justify-between items-center content-start q-pa-md"
+        style="max-width: 100vw; min-height: 50vh"
+      >
+        <div
+          class="bg-grey-6 text-center"
+          style="overflow: auto; min-width: 25em; width: 35%"
+        >
+          <q-card class="no-border-radius">
+            <q-card-section>
+              <div
+                class="tag-line text-h5 text-weight-medium"
+                style="color: #8bcc00; font-size: 20px; line-height: 1.5"
+              >
+                AGRI-CONNECT is founded on 6 guiding principles
+              </div>
+            </q-card-section>
+          </q-card>
+        </div>
+
+        <div class="q-gutter-md">
+          <q-carousel
+            v-model="slide"
+            transition-prev="scale"
+            transition-next="scale"
+            swipeable
+            animated
+            control-color="primary"
+            navigation
+            padding
+            arrows
+            height="40vh"
+            class="text-grey-g rounded-borders"
+          >
+            <q-carousel-slide
+              v-for="(principle, index) in principlesList"
+              :key="principle.index"
+              :name="principle.name"
+              class="column no-wrap flex-center"
+            >
+              <q-card flat class="no-border-radius">
+                <q-card-section>
+                  <div class="column items-center q-gutter-y-md">
+                    <div class="row">
+                      <img :src="principle.icon" style="" />
+                    </div>
+                    <div
+                      class="row text-grey-9 text-center text-weight-bold"
+                      style="font-size: 21px"
+                    >
+                      {{ principle.text }}
+                    </div>
+                  </div>
+                </q-card-section>
+              </q-card>
+            </q-carousel-slide>
+          </q-carousel>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="bg-white desktop-element"
       style="min-width: 100vw; min-height: 70vh; padding-top: 5%"
     >
       <div
@@ -152,138 +358,34 @@
           </q-card>
         </div>
 
-        <div
-          class="bg-grey-6 my-font"
-          style="overflow: auto; min-width: 25em; max-width: 15%"
-        >
-          <q-card class="no-border-radius">
-            <q-card-section>
-              <div class="column items-center q-gutter-y-md">
-                <div class="row">
-                  <img src="~src/assets/icon_1.png" style="" />
+        <div v-for="principle in principlesList" class="">
+          <div
+            class="bg-grey-6 my-font"
+            style="overflow: auto; min-width: 25em; max-width: 15%"
+          >
+            <q-card class="no-border-radius">
+              <q-card-section>
+                <div class="column items-center q-gutter-y-md">
+                  <div class="row">
+                    <img :src="principle.icon" style="" />
+                  </div>
+                  <div
+                    class="row text-center text-weight-bold"
+                    style="font-size: 21px"
+                  >
+                    {{ principle.text }}
+                  </div>
                 </div>
-                <div
-                  class="row text-center text-weight-bold"
-                  style="font-size: 21px"
-                >
-                  1. Behaviour change for good nutrition practices
-                </div>
-              </div>
-            </q-card-section>
-          </q-card>
-        </div>
-
-        <div
-          class="bg-grey-6 my-font"
-          style="overflow: auto; min-width: 25em; max-width: 15%"
-        >
-          <q-card class="no-border-radius">
-            <q-card-section>
-              <div class="column items-center q-gutter-y-md">
-                <div class="row">
-                  <img src="~src/assets/icon_2.png" style="" />
-                </div>
-                <div
-                  class="row text-center text-weight-bold"
-                  style="font-size: 21px"
-                >
-                  2. Improving production, processing and marketing
-                </div>
-              </div>
-            </q-card-section>
-          </q-card>
-        </div>
-
-        <div
-          class="bg-grey-6 my-font"
-          style="overflow: auto; min-width: 25em; max-width: 15%"
-        >
-          <q-card class="no-border-radius">
-            <q-card-section>
-              <div class="column items-center q-gutter-y-md">
-                <div class="row">
-                  <img src="~src/assets/icon_3.png" style="" />
-                </div>
-                <div
-                  class="row text-center text-weight-bold"
-                  style="font-size: 21px"
-                >
-                  3. Promoting women and youth employment and climate smart
-                  agriculture
-                </div>
-              </div>
-            </q-card-section>
-          </q-card>
-        </div>
-
-        <div
-          class="bg-grey-6 my-font"
-          style="overflow: auto; min-width: 25em; max-width: 15%"
-        >
-          <q-card class="no-border-radius">
-            <q-card-section>
-              <div class="column items-center q-gutter-y-md">
-                <div class="row">
-                  <img src="~src/assets/icon_4.png" style="" />
-                </div>
-                <div
-                  class="row text-center text-weight-bold"
-                  style="font-size: 21px"
-                >
-                  4. Supporting better policies for an enabling environment
-                </div>
-              </div>
-            </q-card-section>
-          </q-card>
-        </div>
-
-        <div
-          class="bg-grey-6 my-font"
-          style="overflow: auto; min-width: 25em; max-width: 15%"
-        >
-          <q-card class="no-border-radius">
-            <q-card-section>
-              <div class="column items-center q-gutter-y-md">
-                <div class="row">
-                  <img src="~src/assets/icon_5.png" style="" />
-                </div>
-                <div
-                  class="row text-center text-weight-bold"
-                  style="font-size: 21px"
-                >
-                  5. Connecting farmers to markets
-                </div>
-              </div>
-            </q-card-section>
-          </q-card>
-        </div>
-
-        <div
-          class="bg-grey-6 my-font"
-          style="overflow: auto; min-width: 25em; max-width: 15%"
-        >
-          <q-card class="no-border-radius">
-            <q-card-section>
-              <div class="column items-center q-gutter-y-md">
-                <div class="row">
-                  <img src="~src/assets/icon_6.png" style="" />
-                </div>
-                <div
-                  class="row text-center text-weight-bold"
-                  style="font-size: 21px"
-                >
-                  6. More investment by SMEs
-                </div>
-              </div>
-            </q-card-section>
-          </q-card>
+              </q-card-section>
+            </q-card>
+          </div>
         </div>
       </div>
     </div>
 
     <div
       style="min-width: 100%; min-height: 30vh"
-      class="row bg-grey-9 justify-center q-pa-none q-ma-none"
+      class="row desktop-element bg-grey-9 justify-center q-pa-none q-ma-none"
     >
       <div
         class="column justify-center q-pa-none"
@@ -392,14 +494,89 @@
         </div>
       </div>
     </div>
+    <div
+      class="row items-center mobile-element bg-grey-9"
+      style="min-width: 100%"
+    >
+      <div class="column items-center">
+        <div class="column items-start q-gutter-none" style="">
+          <q-list>
+            <q-item>
+              <q-item-section>
+                <q-item-label class="text-white" style="font-size: 20px"
+                  >Coordination Management Unit</q-item-label
+                >
+                <q-item-label class="text-white" style="font-size: 20px"
+                  >Department of Policy and Planning, Ministry of
+                  Agriculture</q-item-label
+                >
+                <div
+                  class="col q-my-none q-py-none text-blue-2"
+                  style="font-size: 12px"
+                  caption
+                  lines="2"
+                >
+                  P.O.Box 2182<br />Dodoma, Tanzania<br />
+                  agriconnect@locateit.co.ke <br />
+                  <a class="text-primary" href="https://agri-connect-tz.com/"
+                    >https://agri-connect-tz.com/</a
+                  >
+                </div>
+              </q-item-section>
+            </q-item>
+          </q-list>
+        </div>
+      </div>
+    </div>
   </q-page>
 </template>
 
 <script setup>
 import { defineComponent, ref } from "vue";
+import icon_1 from "src/assets/icon_1.png";
+import icon_2 from "src/assets/icon_2.png";
+import icon_3 from "src/assets/icon_3.png";
+import icon_4 from "src/assets/icon_4.png";
+import icon_5 from "src/assets/icon_5.png";
+import icon_6 from "src/assets/icon_6.png";
 
-const slide = ref(1);
-const autoplay = ref(true);
+const slide = ref("slide3"),
+  lorem = ref(
+    "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Itaque voluptatem totam, architecto cupiditate officia rerum, error dignissimos praesentium libero ab nemo."
+  );
+
+const principlesList = ref([
+  {
+    icon: icon_1,
+    name: "slide1",
+    text: "Behaviour change for good nutrition practices",
+  },
+  {
+    icon: icon_2,
+    name: "slide2",
+    text: "Improving production, processing and marketing",
+  },
+  {
+    icon: icon_3,
+    name: "slide3",
+    text: "Promoting women and youth employment and climate smart agriculture",
+  },
+  {
+    icon: icon_4,
+    name: "slide4",
+    text: "Supporting better policies for an enabling environment",
+  },
+  {
+    icon: icon_5,
+    name: "slide5",
+    text: "Connecting farmers to markets",
+  },
+  {
+    icon: icon_6,
+    name: "slide6",
+    text: "More investment by SMEs",
+  },
+]);
 </script>
 
 <style scoped>
@@ -423,6 +600,13 @@ const autoplay = ref(true);
 }
 
 .mockup-section {
+  background-image: url("src/assets/mockup.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 85%;
+}
+
+.mockup-section-sm {
   background-image: url("src/assets/mockup.png");
   background-position: center;
   background-repeat: no-repeat;

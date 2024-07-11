@@ -213,14 +213,14 @@
           @click="tabPannel = !tabPannel"
         />
       </div>
-      <div v-if="!tabPannel" class="column items-center">
+      <!-- <div v-if="!tabPannel" class="column items-center">
         <q-list
           dense
           style="width: 40%; max-height: 16px; border-top: 4px solid grey"
         >
           <q-item clickable v-ripple @click="tabPannel = !tabPannel"> </q-item>
         </q-list>
-      </div>
+      </div> -->
       <q-scroll-area
         v-if="tabPannel"
         :thumb-style="thumbStyle"
