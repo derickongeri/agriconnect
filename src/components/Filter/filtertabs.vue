@@ -202,7 +202,7 @@
 
     <div
       class="row mobile-element bg-white mobile-tabs"
-      style="width: 100vw;max-height: 60vh; border-radius: 20px 20px 0px 0px;"
+      style="width: 100vw; max-height: 60vh; border-radius: 20px 20px 0px 0px"
     >
       <div v-if="tabPannel" class="row">
         <q-space />
@@ -225,7 +225,7 @@
         v-if="tabPannel"
         :thumb-style="thumbStyle"
         :bar-style="barStyle"
-        style="height: 500px; min-width: 300px"
+        style="height: 50vh; min-width: 300px"
       >
         <q-tab-panels
           class=""
@@ -287,7 +287,7 @@
         no-caps
         active-color="white"
         active-bg-color="primary"
-        class="row  q-px-sm justify-between text-grey-9"
+        class="row q-px-sm justify-between text-grey-9"
         style="min-width: 100vw"
       >
         <q-item
@@ -301,20 +301,24 @@
             setActiveTab(tabItem.name);
             tabPannel = true;
           "
-          style="border-radius: 0px"
+          style="border-radius: 15px"
         >
           <q-item-section class="">
             <q-btn
+              no-caps
               dense
+              stack
               flat
               :color="tab === tabItem.name ? 'primary' : 'grey-8'"
+              :label="tabItem.mobileLabel"
+              :icon="tabItem.icon"
             >
-              <q-icon
+              <!-- <q-icon
                 class="q-ma-xs"
                 :color="tab === tabItem.name ? 'primary' : 'grey-8'"
                 :name="tabItem.icon"
               />
-              <!-- {{ tabItem.label }} -->
+              {{ tabItem.label }} -->
             </q-btn>
           </q-item-section>
         </q-item>
@@ -346,14 +350,20 @@ export default {
       splitterModel = ref(85),
       splitterModellg = ref(70),
       tabs = ref([
-        { name: "pirs", label: "SUMS", icon: "mdi-bullseye-arrow" },
+        {
+          name: "pirs",
+          label: "SUMS",
+          mobileLabel: "Sums",
+          icon: "mdi-bullseye-arrow",
+        },
         {
           name: "infrastructure",
           label: "INFRASTRUCTURE",
+          mobileLabel: "Infrastruc",
           icon: "mdi-factory",
         },
-        { name: "tarura", label: "TARURA", icon: "mdi-road-variant" },
-        { name: "", label: "Nutrition", icon: "mdi-rice" },
+        { name: "tarura", label: "TARURA", mobileLabel: "Tarura", icon: "mdi-road-variant" },
+        { name: "", label: "Nutrition", mobileLabel: "Nutrition", icon: "mdi-rice" },
       ]);
 
     const currentTab = computed(() => {
@@ -375,7 +385,7 @@ export default {
       splitterModel,
       splitterModellg,
       setActiveTab,
-      tabPannel: ref(true),
+      tabPannel: ref(false),
     };
   },
 };
@@ -393,7 +403,7 @@ export default {
 }
 
 .q-tab-active-mobile {
-  background-color: #8bcc0046;
+  background-color: #8bcc0018;
   color: rgb(73, 73, 73);
   padding: 4px;
 }

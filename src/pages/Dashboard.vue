@@ -43,7 +43,7 @@
             <div
               v-if="sumsTab === 'responses'"
               class="bg-white indicator-selection q-pa-none q-ma-sm"
-              style="position: absolute; width: 35%; z-index: 1000"
+              style=""
             >
               <indicatorSelection />
             </div>
@@ -51,14 +51,13 @@
             <div
               v-if="sumsTab === 'faindicators'"
               class="bg-white indicator-selection q-pa-none q-ma-sm"
-              style="position: absolute; width: 35%; z-index: 1000"
             >
               <faIndicatorSelection />
             </div>
             <q-space></q-space>
             <div class="q-pa-md">
               <q-btn
-                class="q-px-lg"
+                class="q-px-lg desktop-element"
                 outline
                 icon-right="mdi-cloud-download"
                 color="grey-6"
@@ -107,12 +106,9 @@
             </q-tab-panels>
           </div>
         </div>
-        <div
-          class="column dash-column"
-          v-if="selectedTab === 'infrastructure'"
-        >
+        <div class="column dash-column" v-if="selectedTab === 'infrastructure'">
           <div
-            class="row dash-row-top bg-white items-center"
+            class="row desktop-element dash-row-top bg-white items-center"
             style="width: 100%; height: 10%"
           >
             <div
@@ -137,7 +133,7 @@
         </div>
         <div class="column dash-column" v-if="selectedTab === 'tarura'">
           <div
-            class="row dash-row-top bg-white items-center"
+            class="row desktop-element dash-row-top bg-white items-center"
             style="width: 100%; height: 10%"
           >
             <div

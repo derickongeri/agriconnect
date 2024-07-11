@@ -44,9 +44,9 @@
           />
         </div>
       </div>
-      <div class="column mockup-section" style=""></div>
+      <div class="column desktop-element mockup-section" style=""></div>
 
-      <div class="column mockup-section-sm" style=""></div>
+      <div class="column mobile-element mockup-section-sm" style=""></div>
 
       <div
         class="bg-white desktop-element q-py-lg"
@@ -124,7 +124,7 @@
         </div>
         <div
           class="col-6 text-weight-normal text-grey-9"
-          style="font-size: 24px; line-height: 1.75"
+          style="font-size: 20px; line-height: 1.75"
         >
           AGRI-CONNECT is a food security product which aims at increasing food
           and nutrition security in Tanzania by supporting development of tea,
@@ -239,7 +239,7 @@
       </div>
     </div>
 
-    <div class="about-section-sm bg-white">
+    <div class="about-section-sm mobile-element bg-white">
       <div
         class="column bg-white items-center q-mx-auto q-px-xl justify-center"
         style="max-width: 96vw; min-height: 40vh"
@@ -339,26 +339,50 @@
       style="min-width: 100vw; min-height: 70vh; padding-top: 5%"
     >
       <div
-        class="fit q-mx-auto row wrap q-gutter-y-xl justify-between items-center content-start q-pa-md"
-        style="max-width: 80vw; min-height: 50vh"
+        class="row"
+        style="width: 90vw; min-height: 60vh; margin: auto"
       >
-        <div
-          class="bg-grey-6 text-center"
-          style="overflow: auto; min-width: 25em; width: 35%"
-        >
-          <q-card class="no-border-radius">
-            <q-card-section>
-              <div
-                class="tag-line text-h5 text-weight-medium"
-                style="color: #8bcc00; font-size: 42px; line-height: 1.5"
-              >
-                AGRI-CONNECT is founded on 6 guiding principles
-              </div>
-            </q-card-section>
-          </q-card>
+        <div class="column justify-center items-center" style="width: 30%">
+          <div
+            class="text-center"
+            style="overflow: auto; min-width: 25em; width: 30%"
+          >
+            <q-card class="no-border-radius">
+              <q-card-section>
+                <div
+                  class="tag-line text-h5 text-weight-medium"
+                  style="color: #8bcc00; font-size: 42px; line-height: 1.5"
+                >
+                  AGRI-CONNECT is founded on 6 guiding principles
+                </div>
+              </q-card-section>
+            </q-card>
+          </div>
         </div>
+        <div class="column justify-center items-center" style="width: 70%">
+          <div class="full-width row wrap justify-between items-enter">
+            <div class="col-4" v-for="principle in principlesList">
+              <q-card flat class="no-border-radius">
+                <q-card-section>
+                  <div class="column items-center q-gutter-y-md">
+                    <div class="row">
+                      <img :src="principle.icon" style="" />
+                    </div>
+                    <div
+                      class="row text-center text-weight-bold"
+                      style="font-size: 20px"
+                    >
+                      {{ principle.text }}
+                    </div>
+                  </div>
+                </q-card-section>
+              </q-card>
+            </div>
+          </div>
+        </div>
+      </div>
 
-        <div v-for="principle in principlesList" class="">
+      <!-- <div v-for="principle in principlesList">
           <div
             class="bg-grey-6 my-font"
             style="overflow: auto; min-width: 25em; max-width: 15%"
@@ -371,7 +395,7 @@
                   </div>
                   <div
                     class="row text-center text-weight-bold"
-                    style="font-size: 21px"
+                    style="font-size: 20px"
                   >
                     {{ principle.text }}
                   </div>
@@ -379,8 +403,7 @@
               </q-card-section>
             </q-card>
           </div>
-        </div>
-      </div>
+        </div> -->
     </div>
 
     <div
@@ -388,8 +411,8 @@
       class="row desktop-element bg-grey-9 justify-center q-pa-none q-ma-none"
     >
       <div
-        class="column justify-center q-pa-none"
-        style="max-width: 90vw; min-height: 100%"
+        class="column justify-center items-center q-pa-none"
+        style="max-width: 100vw; min-height: 100%"
       >
         <div class="row q-my-lg">
           <div class="col q-ma-md" style="min-width: 25vw">

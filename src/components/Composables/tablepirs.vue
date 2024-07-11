@@ -161,7 +161,10 @@
   </div>
   <div v-if="sumsTab == 'faindicators'">
     <div class="q-pa-none" style="width: 100%">
-      <div class="table-head row q-px-none q-pt-sm text-grey-8" style="min-width: 600px;">
+      <div
+        class="table-head row q-px-none q-pt-sm text-grey-8"
+
+      >
         <!-- <div class="col-1 ">Code</div> -->
         <div class="col-2">District</div>
         <div class="col text-center">Helvetas</div>
@@ -181,7 +184,7 @@
         class="scroll-area table-content my-sticky-column-table"
         type="table"
         flat
-        style="max-height: 25vh"
+        style="max-height: 25vh;"
         :virtual-scroll-item-size="25"
         :virtual-scroll-sticky-size-start="20"
         :virtual-scroll-sticky-size-end="25"
@@ -194,7 +197,10 @@
           :key="index"
         >
           <!-- <div class="col-1 text-start q-px-md" style="font-weight: 700;">{{ index }}</div> -->
-          <div class="col-2 q-ma-none q-px-none" style="font-weight: 400; position: sticky;">
+          <div
+            class="col-2 q-ma-none q-px-none"
+            style="font-weight: 400; position: sticky"
+          >
             {{ row.district }}
           </div>
           <div class="col text-center">
@@ -323,8 +329,7 @@ watch(
 .my-sticky-column-table {
   // specifying max-width so the example can
   // highlight the sticky column on any browser window
-  min-width: 600px;
-
+  // min-width: 600px;
 }
 </style>
 

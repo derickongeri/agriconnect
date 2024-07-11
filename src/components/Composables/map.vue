@@ -245,63 +245,72 @@
 
           </q-card-section> -->
         </q-card>
+      </div>
+    </div>
 
-        <div>
-          <q-card class="my-card-sm" flat bordered>
-            <div class="row">
-              <q-space />
-              <q-btn
-                icon="close"
-                size="md"
-                flat
-                round
-                dense
-                @click="closeCard()"
-              />
-            </div>
+    <q-dialog
+      class="mobile-element"
+      seamless
+      v-model="dialog"
+      :position="positionDialog"
+    >
+      <div class="mobile-element" style="border-radius: 20px 20px 0px 0px">
+        <q-card class="my-card-sm" flat bordered>
+          <div class="row">
+            <q-space />
+            <q-btn
+              icon="close"
+              size="md"
+              flat
+              round
+              dense
+              @click="
+                dialog = !dialog;
+                closeCard();
+              "
+            />
+          </div>
 
-            <q-scroll-area
-              :thumb-style="thumbStyle"
-              visible
-              class=""
-              style="height: 30vh; width: 100vw"
-            >
-              <q-card-section class="col-7 q-pt-xs">
-                <div class="text-h6 q-mt-sm q-mb-xs">
-                  {{ featureAtributes.name }}
-                </div>
-                <div class="text-overline">
-                  by {{ featureAtributes.grantee }}
-                </div>
-                <div class="text-caption text-grey q-mb-xs">
-                  {{ featureAtributes.Function }}
-                </div>
-                <div class="row">
-                  <q-img
-                    class="rounded-borders"
-                    src="https://d382rz2cea0pah.cloudfront.net/wp-content/uploads/2023/07/Haryana-to-Offer-Up-to-75-Subsidies-on-Solar-Pumps-Installed-Under-KUSUM.jpg"
-                    style="max-height: 150px"
-                  />
-                </div>
-                <q-separator />
-                <div class="text-subtitle1 q-mt-sm q-mb-xs">
-                  <q-icon color="grey-7" name="mdi-sprout" />
-                  <span class="text-caption"
-                    >{{ featureAtributes.grantee }} ・</span
-                  >
-                  <q-icon color="grey-7" name="mdi-cash-multiple" />
-                  <span class="text-caption"
-                    >{{ featureAtributes.costTZ }}TZS ・</span
-                  >
-                  <q-icon color="grey-7" name="mdi-map-marker-radius-outline" />
-                  <span class="text-caption">{{
-                    featureAtributes.District
-                  }}</span>
-                </div>
-              </q-card-section>
-            </q-scroll-area>
+          <q-scroll-area
+            :thumb-style="thumbStyle"
+            visible
+            class=""
+            style="height: 30vh; width: 100vw"
+          >
+            <q-card-section class="col-7 q-pt-xs">
+              <div class="text-h6 q-mt-sm q-mb-xs">
+                {{ featureAtributes.name }}
+              </div>
+              <div class="text-overline">by {{ featureAtributes.grantee }}</div>
+              <div class="text-caption text-grey q-mb-xs">
+                {{ featureAtributes.Function }}
+              </div>
+              <div class="row">
+                <q-img
+                  class="rounded-borders"
+                  src="https://d382rz2cea0pah.cloudfront.net/wp-content/uploads/2023/07/Haryana-to-Offer-Up-to-75-Subsidies-on-Solar-Pumps-Installed-Under-KUSUM.jpg"
+                  style="max-height: 150px"
+                />
+              </div>
+              <q-separator />
+              <div class="text-subtitle1 q-mt-sm q-mb-xs">
+                <q-icon color="grey-7" name="mdi-sprout" />
+                <span class="text-caption"
+                  >{{ featureAtributes.grantee }} ・</span
+                >
+                <q-icon color="grey-7" name="mdi-cash-multiple" />
+                <span class="text-caption"
+                  >{{ featureAtributes.costTZ }}TZS ・</span
+                >
+                <q-icon color="grey-7" name="mdi-map-marker-radius-outline" />
+                <span class="text-caption">{{
+                  featureAtributes.District
+                }}</span>
+              </div>
+            </q-card-section>
+          </q-scroll-area>
 
-            <!-- <q-separator />
+          <!-- <q-separator />
 
           <q-card-section class="q-pt-none">
             <div class="text-subtitle1">
@@ -311,14 +320,13 @@
             </div>
 
           </q-card-section> -->
-          </q-card>
-        </div>
+        </q-card>
       </div>
-    </div>
+    </q-dialog>
 
     <div
       v-if="showRoadAttributeCard"
-      class="road-attribute-card"
+      class="road-attribute-card desktop-element"
       id="map-card"
       style=""
       @touchstart="map.dragging.disable(), map.scrollWheelZoom.disable()"
@@ -329,11 +337,7 @@
       @mouseleave="map.dragging.enable(), map.scrollWheelZoom.enable()"
       @mouseup="map.dragging.enable(), map.scrollWheelZoom.enable()"
     >
-      <q-card
-        class="my-road-card"
-        flat
-        bordered
-      >
+      <q-card class="my-road-card" flat bordered>
         <q-card-section class="q-pa-xs">
           <div class="row items-center">
             <q-item-label header class="text-weight-bold text-grey-9"
@@ -545,12 +549,233 @@
       </q-card>
     </div>
 
+    <q-dialog
+      class="mobile-element"
+      seamless
+      v-model="roadDialog"
+      :position="positionDialog"
+    >
+    <div class="mobile-element" style="border-radius: 20px 20px 0px 0px">
+       <q-card class="my-road-card" flat bordered>
+        <q-card-section class="q-pa-xs">
+          <div class="row items-center">
+            <q-item-label header class="text-weight-bold text-grey-9"
+              >Road Attributes</q-item-label
+            >
+            <q-space />
+            <q-btn
+              class="q-mx-md"
+              icon="close"
+              size="sm"
+              flat
+              round
+              dense
+              @click="closeCard()"
+            />
+          </div>
+        </q-card-section>
+        <q-separator inset />
+        <q-scroll-area class="road-card-scroll" style=""
+          ><q-card-section class="q-py-none">
+            <q-item-label header class="text-weight-bold text-grey-9"
+              >General Information</q-item-label
+            >
+            <q-item>
+              <q-item-section avatar top>
+                <q-avatar
+                  size="32px"
+                  icon="mdi-road"
+                  color="primary"
+                  text-color="white"
+                />
+              </q-item-section>
+
+              <q-item-section>
+                <div class="row items-center">
+                  <div class="q-pr-sm">
+                    <q-item-label caption>Road Class:</q-item-label>
+                  </div>
+
+                  <q-item-label lines="1">{{
+                    roadFeatureAttributes.roadclass
+                  }}</q-item-label>
+                </div>
+              </q-item-section>
+            </q-item>
+            <q-item>
+              <q-item-section avatar top>
+                <q-avatar
+                  size="32px"
+                  icon="mdi-cash"
+                  color="secondary"
+                  text-color="white"
+                />
+              </q-item-section>
+
+              <q-item-section>
+                <div class="row items-center">
+                  <div class="q-pr-sm">
+                    <q-item-label caption>Funds:</q-item-label>
+                  </div>
+
+                  <q-item-label lines="1">{{
+                    roadFeatureAttributes.program
+                  }}</q-item-label>
+                </div>
+              </q-item-section>
+            </q-item>
+            <!-- <q-separator class="q-ma-sm" inset /> -->
+            <div class="row items-center q-my-sm">
+              <div class="column q-gutter-sm q-mx-md">
+                <div class="col">
+                  <q-icon
+                    size="xs"
+                    name="mdi-circle-outline"
+                    color="secondary"
+                  ></q-icon>
+                </div>
+                <div class="col">
+                  <q-icon size="xs" name="mdi-dots-vertical"></q-icon>
+                </div>
+                <div class="col">
+                  <q-icon
+                    size="xs"
+                    name="mdi-map-marker-outline"
+                    color="primary"
+                  ></q-icon>
+                </div>
+              </div>
+              <div class="col">
+                <div class="q-px-sm" style="max-width: 350px">
+                  <q-list class="q-gutter-y-sm">
+                    <q-item>
+                      <q-item-section>
+                        <q-item-label>Start</q-item-label>
+                        <q-item-label caption
+                          >[{{ roadFeatureAttributes.from_lat }},
+                          {{ roadFeatureAttributes.from_long }}]</q-item-label
+                        >
+                      </q-item-section>
+                    </q-item>
+
+                    <q-item>
+                      <q-item-section>
+                        <q-item-label>end</q-item-label>
+                        <q-item-label caption
+                          >[{{ roadFeatureAttributes.to_lat }},
+                          {{ roadFeatureAttributes.to_long }}]</q-item-label
+                        >
+                      </q-item-section>
+                    </q-item>
+                  </q-list>
+                </div>
+              </div>
+              <div class="column">
+                <q-icon size="md" name="mdi-compare-vertical"></q-icon>
+              </div>
+            </div>
+            <q-separator inset />
+            <q-item-label header class="text-weight-bold text-grey-9"
+              >Surface Information</q-item-label
+            >
+            <div class="row justify-between q-mx-md q-gutter-x-sm">
+              <div class="column items-center">
+                <q-avatar
+                  size="32px"
+                  class="q-mb-sm"
+                  color="secondary"
+                  text-color="grey-9"
+                  icon="mdi-arrow-expand-left"
+                />
+                <q-item-label lines="1">Left Shoulder</q-item-label>
+                <q-item-label caption
+                  >Type:
+                  <span class="text-grey-10" style="font-weight: 700">{{
+                    roadFeatureAttributes.lshoulder_surface
+                  }}</span></q-item-label
+                >
+                <q-item-label caption
+                  >Width:
+                  <span class="text-grey-10" style="font-weight: 700"
+                    >{{ roadFeatureAttributes.lshoulder_width }}m</span
+                  ></q-item-label
+                >
+              </div>
+              <div class="column items-center">
+                <q-avatar
+                  size="32px"
+                  class="q-mb-sm"
+                  color="primary"
+                  text-color="grey-9"
+                  icon="mdi-road-variant"
+                />
+                <q-item-label lines="1">Pavement</q-item-label>
+                <q-item-label caption>
+                  <span class="text-grey-10" style="font-weight: 700">{{
+                    roadFeatureAttributes.pavementType
+                  }}</span></q-item-label
+                >
+                <q-item-label caption>Subgrade: </q-item-label>
+                <span class="text-grey-10 q-mb-xs" style="font-weight: 700">{{
+                  roadFeatureAttributes.subsurfaceType
+                }}</span>
+                <q-item-label caption
+                  >Width:
+                  <span class="text-grey-10" style="font-weight: 700"
+                    >{{ roadFeatureAttributes.pave_width }}m</span
+                  ></q-item-label
+                >
+                <q-item-label caption
+                  >Lanes:
+                  <span class="text-grey-10" style="font-weight: 700">{{
+                    roadFeatureAttributes.lanes
+                  }}</span></q-item-label
+                >
+                <q-item-label caption
+                  >Depth:
+                  <span class="text-grey-10" style="font-weight: 700"
+                    >{{ roadFeatureAttributes.pave_depth }}mm</span
+                  ></q-item-label
+                >
+              </div>
+              <div class="column items-center">
+                <q-avatar
+                  size="32px"
+                  class="q-mb-sm"
+                  color="secondary"
+                  text-color="grey-9"
+                  icon="mdi-arrow-expand-right"
+                />
+                <q-item-label lines="1">Right Shoulder</q-item-label>
+                <q-item-label caption
+                  >Type:
+                  <span class="text-grey-10" style="font-weight: 700">{{
+                    roadFeatureAttributes.rshoulder_surface
+                  }}</span></q-item-label
+                >
+                <q-item-label caption
+                  >Width:
+                  <span class="text-grey-10" style="font-weight: 700"
+                    >{{ roadFeatureAttributes.rshoulder_width }}m</span
+                  ></q-item-label
+                >
+              </div>
+            </div>
+          </q-card-section>
+
+          <q-card-section> </q-card-section
+        ></q-scroll-area>
+      </q-card>
+    </div>
+
+    </q-dialog>
+
     <div
       v-if="selectedTab === 'tarura'"
       class="roads-legend bg-white q-pa-sm"
       style="min-width: 15%"
     >
-      <div class="row">
+      <div class="row desktop-element">
         <q-item>
           <q-item-section avatar>
             <div class="row items-center q-gutter-x-sm">
@@ -609,6 +834,72 @@
             </div>
           </q-item-section>
         </q-item>
+      </div>
+
+      <div class="">
+        <q-list dense>
+          <q-item>
+            <q-item-section avatar>
+              <div class="row items-center q-gutter-x-sm">
+                <div class="road-symbol bg-red"></div>
+                <q-item-label>Concrete</q-item-label>
+              </div>
+            </q-item-section>
+          </q-item>
+          <q-item>
+            <q-item-section avatar>
+              <div class="row items-center q-gutter-x-sm">
+                <div
+                  class="road-symbol"
+                  style="background-color: #f2ccd2"
+                ></div>
+                <q-item-label>DBST</q-item-label>
+              </div>
+            </q-item-section>
+          </q-item>
+          <q-item>
+            <q-item-section avatar>
+              <div class="row items-center q-gutter-x-sm">
+                <div
+                  class="road-symbol"
+                  style="
+                    background-color: #c0ca34;
+                    height: 6px;
+                    border-top: solid 1px;
+                    border-bottom: solid 1px;
+                  "
+                ></div>
+                <q-item-label>Gravel</q-item-label>
+              </div>
+            </q-item-section>
+          </q-item>
+          <q-item>
+            <q-item-section avatar>
+              <div class="row items-center q-gutter-x-sm">
+                <div
+                  class="road-symbol"
+                  style="
+                    background-color: #607d8b;
+                    border-top: 0px;
+                    border-bottom: 0px;
+                    height: 6px;
+                    width: 35px;
+                  "
+                ></div>
+                <q-item-label>Earthened</q-item-label>
+              </div>
+            </q-item-section>
+          </q-item>
+
+          <q-item>
+            <q-item-section avatar>
+              <div class="row items-center q-gutter-x-sm">
+                <div class="dotted-line"></div>
+                <q-item-label>Non Engineered</q-item-label>
+              </div>
+            </q-item-section>
+          </q-item>
+        </q-list>
       </div>
     </div>
 
@@ -700,6 +991,10 @@ export default defineComponent({
 
     const position = ref(300);
     const scrollAreaRef = ref(null);
+
+    const dialog = ref(false);
+    const roadDialog = ref(false);
+    const positionDialog = ref("bottom");
 
     const map = ref(null),
       center = ref([-5.7, 34]),
@@ -991,6 +1286,7 @@ export default defineComponent({
           map.value.flyToBounds(currentMapLayer.value.getBounds());
         } else if (selectedTab.value === "tarura") {
           showRoadAttributeCard.value = false;
+          roadDialog.value = false
           if (currentMapLayer.value && roadOutline.value) {
             map.value.removeLayer(currentMapLayer.value);
             map.value.removeLayer(roadOutline.value);
@@ -1015,6 +1311,7 @@ export default defineComponent({
                 // Add click event listener to each GeoJSON line feature
                 layer.on("click", function (event) {
                   showRoadAttributeCard.value = true;
+                  roadDialog.value = true;
                   if (clickedRoad.value) {
                     clickedRoadStart.value.removeFrom(map.value);
                     clickedRoadEnd.value.removeFrom(map.value);
@@ -1148,6 +1445,7 @@ export default defineComponent({
         } else {
           if (currentMapLayer.value) {
             showAttributeCard.value = false;
+            dialog.value = false;
             map.value.removeLayer(currentMapLayer.value);
           }
 
@@ -1181,6 +1479,7 @@ export default defineComponent({
             // Add click event listener to each GeoJSON point feature
             geoJsonLayer.on("click", function (event) {
               showAttributeCard.value = !showAttributeCard.value;
+              dialog.value = true;
 
               // Get the clicked feature
               // Store the reference to the clicked marker
@@ -1264,6 +1563,7 @@ export default defineComponent({
     const closeCard = () => {
       if (selectedTab.value === "tarura") {
         showRoadAttributeCard.value = false;
+        roadDialog.value = false;
         clickedRoadStart.value.removeFrom(map.value);
         clickedRoadEnd.value.removeFrom(map.value);
 
@@ -1282,7 +1582,10 @@ export default defineComponent({
           spinnerSize: "xl",
           message: "Creating Map layer...",
         });
-        showAttributeCard.value = false;
+        if (showAttributeCard.value) {
+          showAttributeCard.value = false;
+        }
+
         var marker = clickedMarker.value;
         if (!marker) return; // Check if a marker was clicked
 
@@ -1410,6 +1713,9 @@ export default defineComponent({
         width: "5px",
         opacity: "0.75",
       },
+      dialog,
+      roadDialog,
+      positionDialog,
     };
   },
 });
@@ -1451,7 +1757,6 @@ export default defineComponent({
   left: 1%;
   border-radius: 20px;
 }
-
 
 .zoom-controls {
   position: absolute;
