@@ -201,26 +201,21 @@
     </q-splitter>
 
     <q-dialog v-model="tabPannel" seamless position="bottom">
-
-        <div
-          class="row mobile-element bg-white mobile-tabs"
-          style="
-            width: 100vw;
-            min-height: 60vh;
-            border-radius: 20px 20px 0px 0px;
-          "
-        >
-          <div v-if="tabPannel" class="row">
-            <q-space />
-            <q-btn
-              flat
-              round
-              icon="mdi-chevron-down"
-              @click="tabPannel = !tabPannel"
-            />
-          </div>
+      <div
+        class="row mobile-element bg-white mobile-tabs"
+        style="width: 100vw; min-height: 60vh; border-radius: 20px 20px 0px 0px"
+      >
+        <div v-if="tabPannel" class="row">
+          <q-space />
+          <q-btn
+            flat
+            round
+            icon="mdi-chevron-down"
+            @click="tabPannel = !tabPannel"
+          />
+        </div>
+        <q-scroll-area class="" :thumb-style="thumbStyle" style="height: 65vh">
           <q-tab-panels
-            
             v-model="tab"
             animated
             no-swipe
@@ -241,7 +236,8 @@
               <taruraPannel />
             </q-tab-panel>
           </q-tab-panels>
-        </div>
+        </q-scroll-area>
+      </div>
     </q-dialog>
 
     <q-footer
