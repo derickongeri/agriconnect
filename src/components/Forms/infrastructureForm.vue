@@ -21,8 +21,66 @@
 
     <q-separator class="q-mb-sm" />
 
+    <div class="mobile-element">
+      <div class="column">
+        <div class="filter-text text-label q-mx-sm q-py-sm" style="">
+          District
+        </div>
+        <selectDistrict style="min-width: 96%" />
+
+        <div v-if="showValueChain">
+          <q-separator class="q-my-md" inset />
+          <div class="filter-text text-label q-mx-sm q-pb-sm" style="">
+            Value Chain
+          </div>
+          <selectValueChain />
+        </div>
+
+        <q-separator class="q-my-md" inset />
+
+        <!-- <div class="filter-text text-label q-mx-sm" style="">Cost in TZS</div> -->
+        <costFilter />
+
+        <q-separator class="q-my-md" inset />
+
+        <div class="row justify-end q-gutter-x-xs q-px-sm">
+          <div v-if="showClearBtn" class="col">
+            <q-btn
+              unelevated
+              outline
+              dense
+              no-caps
+              @click="clearFilters"
+              label="Clear"
+              class="full-width q-mb-md q-mx-sm q-px-lg"
+              color="primary"
+            >
+              <template v-slot:loading>
+                <q-spinner-facebook />
+              </template>
+            </q-btn>
+          </div>
+          <div class="col-6">
+            <q-btn
+              unelevated
+              dense
+              no-caps
+              @click="submitForm"
+              label="Apply"
+              class="full-width q-mb-md q-mx-sm q-px-lg"
+              color="primary"
+            >
+              <template v-slot:loading>
+                <q-spinner-facebook />
+              </template>
+            </q-btn>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <q-scroll-area
-      class="filter-form"
+      class="filter-form desktop-element"
       :thumb-style="thumbStyle"
       style="height: 45vh"
     >
@@ -30,7 +88,7 @@
         <div class="filter-text text-label q-mx-sm q-py-sm" style="">
           District
         </div>
-        <selectDistrict style="min-width: 96%;"/>
+        <selectDistrict style="min-width: 96%" />
 
         <div v-if="showValueChain">
           <q-separator class="q-my-md" inset />
@@ -115,7 +173,7 @@ const submitted = ref(false),
 const showValueChain = computed(() => {
   if (grantee.value !== "total") {
     store.clearAllFilters();
-    return false
+    return false;
   } else {
     return true;
   }

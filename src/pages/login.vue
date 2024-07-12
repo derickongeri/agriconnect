@@ -4,10 +4,7 @@
       class="page-bg"
       style="position: absolute; min-width: 100vw; min-height: 100vh"
     >
-      <div
-        class="login-outer absolute-center"
-        style="width: 40vw; height: 55vh; border-radius: 20px"
-      >
+      <div class="login-outer absolute-center" style="">
         <div
           class="text-center absolute-center"
           style="position: absolute; width: 65%"
@@ -84,18 +81,20 @@
               </router-link>
             </div>
 
-            <q-btn
-              style="width: 300px"
-              no-caps
-              color="primary"
-              label="Log In"
-              @click="handleLogin"
-            />
+            <div class="row items-center justify-center">
+              <q-btn
+                style="width: 300px"
+                no-caps
+                color="primary"
+                label="Log In"
+                @click="handleLogin"
+              />
+            </div>
 
             <div class="text-caption text-center text-white q-my-xs">
-              Not yet registered?
+              Don't have an account?
               <router-link to="signup" style="text-decoration: none">
-                <span class="text-primary">Create an account</span>
+                <span class="text-primary">Register</span>
               </router-link>
             </div>
           </div>
@@ -113,35 +112,35 @@ import { useRouter } from "vue-router";
 
 const router = useRouter();
 const { login } = userAuthUser();
-    const { notifyError, notifySuccess } = useNotify();
+const { notifyError, notifySuccess } = useNotify();
 
-    //Object to hold the form data
-    const form = ref({
-      email: "",
-      password: "",
+//Object to hold the form data
+const form = ref({
+  email: "",
+  password: "",
+});
+
+const rememberMe = ref(false);
+const isPwd = ref(true);
+
+// onMounted(() => {
+//   if (isLoggedIn) {
+//     router.push({ name: "me" });
+//   }
+// });
+
+//method to handle login and redirect to dashboard
+const handleLogin = async () => {
+  try {
+    await login(form.value);
+    notifySuccess("Login successfully!");
+    router.push({
+      name: "home",
     });
-
-    const rememberMe = ref(false);
-    const isPwd = ref(true);
-
-    // onMounted(() => {
-    //   if (isLoggedIn) {
-    //     router.push({ name: "me" });
-    //   }
-    // });
-
-    //method to handle login and redirect to dashboard
-    const handleLogin = async () => {
-      try {
-        await login(form.value);
-        notifySuccess("Login successfully!");
-        router.push({
-          name: "home",
-        });
-      } catch (error) {
-        notifyError(error);
-      }
-    };
+  } catch (error) {
+    notifyError(error);
+  }
+};
 </script>
 
 <style scoped></style>

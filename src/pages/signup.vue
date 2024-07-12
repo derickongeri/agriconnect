@@ -9,8 +9,8 @@
         style="min-width: 40vw; min-height: 65vh; border-radius: 20px"
       >
         <div
-          class="text-center"
-          style="position: relative; width: 65%; margin: auto"
+          class="text-center login-inner"
+          style=""
         >
           <img
             class="q-mt-xl q-pt-md"

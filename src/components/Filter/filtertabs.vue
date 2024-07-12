@@ -200,57 +200,49 @@
       </template>
     </q-splitter>
 
-    <div
-      class="row mobile-element bg-white mobile-tabs"
-      style="width: 100vw; max-height: 60vh; border-radius: 20px 20px 0px 0px"
-    >
-      <div v-if="tabPannel" class="row">
-        <q-space />
-        <q-btn
-          flat
-          round
-          icon="mdi-chevron-down"
-          @click="tabPannel = !tabPannel"
-        />
-      </div>
-      <!-- <div v-if="!tabPannel" class="column items-center">
-        <q-list
-          dense
-          style="width: 40%; max-height: 16px; border-top: 4px solid grey"
-        >
-          <q-item clickable v-ripple @click="tabPannel = !tabPannel"> </q-item>
-        </q-list>
-      </div> -->
-      <q-scroll-area
-        v-if="tabPannel"
-        :thumb-style="thumbStyle"
-        :bar-style="barStyle"
-        style="height: 50vh; min-width: 300px"
-      >
-        <q-tab-panels
-          class=""
-          v-model="tab"
-          animated
-          no-swipe
-          vertical
-          transition-prev="jump-up"
-          transition-next="jump-up"
-          style="background-color: #ffffff00"
-        >
-          <q-tab-panel style="background-color: #ffffff00" name="pirs">
-            <sumsPannel />
-          </q-tab-panel>
+    <q-dialog v-model="tabPannel" seamless position="bottom">
 
-          <q-tab-panel class="" name="infrastructure">
-            <infrustructurePannel />
-          </q-tab-panel>
+        <div
+          class="row mobile-element bg-white mobile-tabs"
+          style="
+            width: 100vw;
+            min-height: 60vh;
+            border-radius: 20px 20px 0px 0px;
+          "
+        >
+          <div v-if="tabPannel" class="row">
+            <q-space />
+            <q-btn
+              flat
+              round
+              icon="mdi-chevron-down"
+              @click="tabPannel = !tabPannel"
+            />
+          </div>
+          <q-tab-panels
+            
+            v-model="tab"
+            animated
+            no-swipe
+            vertical
+            transition-prev="jump-up"
+            transition-next="jump-up"
+            style="background-color: #ffffff00"
+          >
+            <q-tab-panel style="background-color: #ffffff00" name="pirs">
+              <sumsPannel />
+            </q-tab-panel>
 
-          <q-tab-panel name="tarura">
-            <taruraPannel />
-          </q-tab-panel>
-        </q-tab-panels>
-      </q-scroll-area>
-    </div>
+            <q-tab-panel class="" name="infrastructure">
+              <infrustructurePannel />
+            </q-tab-panel>
+
+            <q-tab-panel name="tarura">
+              <taruraPannel />
+            </q-tab-panel>
+          </q-tab-panels>
+        </div>
+    </q-dialog>
 
     <q-footer
       class="mobile-element q-py-sm bg-white"
@@ -333,6 +325,7 @@ import selectGrantee from "src/Reusable/selectGrantee.vue";
 import sumsForm from "src/components/Forms/sumsForm.vue";
 import infrustructureForm from "src/components/Forms/infrastructureForm.vue";
 import taruraForm from "src/components/Forms/Tarura.vue";
+import VueDraggableResizable from "vue-draggable-resizable";
 
 import { useSumStore } from "src/stores/sumdata/index.js";
 
@@ -342,6 +335,7 @@ export default {
     sumsPannel: sumsForm,
     infrustructurePannel: infrustructureForm,
     taruraPannel: taruraForm,
+    VueDraggableResizable,
   },
   setup() {
     const store = useSumStore();
@@ -362,8 +356,18 @@ export default {
           mobileLabel: "Infrastruc",
           icon: "mdi-factory",
         },
-        { name: "tarura", label: "TARURA", mobileLabel: "Tarura", icon: "mdi-road-variant" },
-        { name: "", label: "Nutrition", mobileLabel: "Nutrition", icon: "mdi-rice" },
+        {
+          name: "tarura",
+          label: "TARURA",
+          mobileLabel: "Tarura",
+          icon: "mdi-road-variant",
+        },
+        {
+          name: "",
+          label: "Nutrition",
+          mobileLabel: "Nutrition",
+          icon: "mdi-rice",
+        },
       ]);
 
     const currentTab = computed(() => {
@@ -406,5 +410,18 @@ export default {
   background-color: #8bcc0018;
   color: rgb(73, 73, 73);
   padding: 4px;
+}
+</style>
+
+<style scoped>
+/* Add necessary styles for the dialog */
+.dialog-content {
+  height: 30vh; /* Initial height to display 30% of content */
+  overflow: hidden;
+  transition: height 0.3s ease-out;
+}
+
+.full-content {
+  height: auto; /* Height to expand to when dragged up */
 }
 </style>

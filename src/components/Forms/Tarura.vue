@@ -9,10 +9,68 @@
     <div class="text-weight-medium q-my-sm">Filter Attributes</div>
 
     <q-separator class="q-my-sm" />
+    <div class="mobile-element">
+
+        <div class="filter-text text-label q-mx-sm q-py-sm" style="">
+          Road Funding
+        </div>
+        <iprogram />
+
+        <q-separator inset class="q-my-md" />
+
+        <div class="filter-text text-label q-mx-sm q-py-sm" style="">
+          Road Class
+        </div>
+        <roadClass />
+
+        <q-separator inset class="q-my-md" />
+
+        <div class="filter-text text-label q-mx-sm q-pb-sm" style="">
+          Road Status
+        </div>
+        <roadStatus />
+
+        <q-separator class="q-mb-md" />
+
+        <div class="row justify-between q-gutter-x-xs q-px-sm">
+          <div class="col">
+            <q-btn
+              unelevated
+              outline
+              dense
+              no-caps
+              @click="clearFilters"
+              :label="filteredFeatures"
+              class="full-width q-mb-md q-mx-sm q-px-lg"
+              color="primary"
+            >
+              <template v-slot:loading>
+                <q-spinner-facebook />
+              </template>
+            </q-btn>
+          </div>
+          <div class="col">
+            <q-btn
+              unelevated
+              dense
+              no-caps
+              @click="submitForm"
+              label="Apply"
+              class="full-width q-mb-md q-mx-sm q-px-lg"
+              color="primary"
+            >
+              <template v-slot:loading>
+                <q-spinner-facebook />
+              </template>
+            </q-btn>
+          </div>
+        </div>
+
+    </div>
     <q-scroll-area
       :thumb-style="thumbStyle"
-      class="filter-form"
-      style="height: 50vh;"
+      class="filter-form desktop-element"
+      style="height: 50vh"
     >
       <div class="filter-text text-label q-mx-sm q-py-sm" style="">
         Road Funding

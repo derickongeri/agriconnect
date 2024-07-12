@@ -162,6 +162,27 @@
   }
 }
 
+.login-outer {
+  width: 40vw;
+  min-height: 55vh;
+  border-radius: 20px;
+  background-color: #026a37;
+
+  @media (max-width: $breakpoint-sm-max) {
+    width: 90vw;
+  }
+}
+
+.login-inner {
+  position: relative;
+  width: 65%;
+  margin: auto;
+
+  @media (max-width: $breakpoint-sm-max) {
+    width: 90vw;
+  }
+}
+
 .filters-column {
   flex: 1;
   max-width: 35%;
@@ -244,7 +265,7 @@
 
 .table-head {
   font-weight: 700;
-  min-width: 600PX;
+  min-width: 600px;
 
   @media (max-width: $breakpoint-lg-min) {
     font-size: smaller;
@@ -354,7 +375,6 @@
 }
 
 .tag-line {
-
   @media (max-width: $breakpoint-lg-min) {
     line-height: 1em;
   }
@@ -365,7 +385,6 @@
 .tag-line-container {
   max-width: 55%;
   padding-top: 4%;
-
 
   @media screen and (max-width: $breakpoint-sm-max) {
     display: none;

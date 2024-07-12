@@ -106,102 +106,106 @@
           dense
           icon="menu"
         /> -->
-        <q-btn flat text-color="grey-9" round dense icon="menu">
-          <q-menu>
-            <q-list style="min-width: 100px">
-              <q-tabs
-                class="text-grey-9"
-                vertical
-                switch-indicator
-                no-caps
-                dense
-                active-color="primary"
+        <q-btn
+          v-if="user"
+          class="q-mr-sm"
+          unelevated
+          round
+          dense
+          color="primary"
+          :label="getInitials(user.firstName, user.lastName)"
+        >
+          <q-menu anchor="bottom end" self="top right" :offset="[0, 12]">
+            <q-list>
+              <q-item
+                class="desktop-element"
+                v-if="user.grantee"
+                clickable
+                v-close-popup
+                to="/user/upload"
               >
-                <q-route-tab to="/">
-                  <div
-                    class="row q-gutter-md q-py-sm items-center"
-                    style="width: 150px"
-                  >
-                    <div class="">
-                      <q-icon name="home" size="sm" />
-                    </div>
-                    <div class="col text-left">Home</div>
-                  </div>
-                </q-route-tab>
-                <q-route-tab to="/dashboard">
-                  <div
-                    class="row q-gutter-md q-py-sm items-center"
-                    style="width: 150px"
-                  >
-                    <div class="">
-                      <q-icon name="dashboard" size="sm" />
-                    </div>
-                    <div class="col text-left">Dashboard</div>
-                  </div>
-                </q-route-tab>
-              </q-tabs>
-              <q-separator />
-              <q-btn
-                v-if="user"
-                class="q-mr-xl"
-                unelevated
-                round
-                color="primary"
-                :label="getInitials(user.firstName, user.lastName)"
-              >
-                <q-menu anchor="bottom end" self="top right" :offset="[0, 12]">
-                  <q-list>
-                    <q-item
-                      v-if="user.grantee"
-                      clickable
-                      v-close-popup
-                      to="/user/upload"
-                    >
-                      <q-item-section>
-                        <q-item-label>Upload Data</q-item-label>
-                      </q-item-section>
-                      <q-item-section avatar>
-                        <q-icon color="grey-7" name="mdi-cloud-upload" />
-                      </q-item-section>
-                    </q-item>
-                    <q-item clickable v-close-popup @click="handleLogout">
-                      <q-item-section>
-                        <q-item-label>Logout</q-item-label>
-                      </q-item-section>
-                      <q-item-section avatar>
-                        <q-icon color="grey-7" name="mdi-logout" />
-                      </q-item-section>
-                    </q-item>
-                  </q-list>
-                </q-menu>
-              </q-btn>
+                <q-item-section>
+                  <q-item-label>Upload Data</q-item-label>
+                </q-item-section>
+                <q-item-section avatar>
+                  <q-icon color="grey-7" name="mdi-cloud-upload" />
+                </q-item-section>
+              </q-item>
+              <q-item clickable v-close-popup @click="handleLogout">
+                <q-item-section>
+                  <q-item-label>Logout</q-item-label>
+                </q-item-section>
+                <q-item-section avatar>
+                  <q-icon color="grey-7" name="mdi-logout" />
+                </q-item-section>
+              </q-item>
+            </q-list>
+          </q-menu>
+        </q-btn>
 
-              <q-btn
-                v-else
-                no-caps
-                class="full-width q-mr-xl"
-                unelevated
-                align="between"
-                flat
-                color="primary"
-                icon="mdi-account"
-                label="Account"
-              >
-                <q-menu style="min-width: 150px;"  cover anchor="top start">
-                  <q-list>
-                    <q-item clickable v-close-popup to="/User/login">
-                      <q-item-section>
-                        <q-item-label>Login</q-item-label>
-                      </q-item-section>
-                    </q-item>
-                    <q-item clickable v-close-popup to="/User/signup">
-                      <q-item-section>
-                        <q-item-label>Sign Up</q-item-label>
-                      </q-item-section>
-                    </q-item>
-                  </q-list>
-                </q-menu>
-              </q-btn>
+        <q-btn
+          v-else
+          no-caps
+          class="q-mr-sm"
+          unelevated
+          align="between"
+          flat
+          color="primary"
+          icon="mdi-account"
+        >
+          <q-menu style="min-width: 150px" anchor="bottom left" self="top left">
+            <q-list>
+              <q-item clickable v-close-popup to="/User/login">
+                <q-item-section>
+                  <q-item-label>Login</q-item-label>
+                </q-item-section>
+              </q-item>
+              <q-item clickable v-close-popup to="/User/signup">
+                <q-item-section>
+                  <q-item-label>Sign Up</q-item-label>
+                </q-item-section>
+              </q-item>
+            </q-list>
+          </q-menu>
+        </q-btn>
+        <q-btn flat text-color="grey-9" round dense icon="menu">
+          <q-menu anchor="bottom end" self="top end" :offset="[10, 10]">
+            <q-list class="text-right justify-right" style="min-width: 100vw">
+              <q-item clickable to="/">
+                <q-space />
+                <q-item-section class="justify-right" side>
+                  <div class="justify-right">Home</div>
+                </q-item-section>
+              </q-item>
+              <q-item clickable to="/dashboard">
+                <q-space />
+                <q-item-section class="justify-right" side>
+                  <div class="justify-right">Dashboard</div>
+                </q-item-section>
+              </q-item>
+
+              <!-- <q-route-tab to="/">
+                <div
+                  class="row q-gutter-md q-py-sm items-center"
+                  style="width: 150px"
+                >
+                  <div class="">
+                    <q-icon name="home" size="sm" />
+                  </div>
+                  <div class="col text-left">Home</div>
+                </div>
+              </q-route-tab>
+              <q-route-tab to="/dashboard">
+                <div
+                  class="row q-gutter-md q-py-sm items-center"
+                  style="width: 150px"
+                >
+                  <div class="">
+                    <q-icon name="dashboard" size="sm" />
+                  </div>
+                  <div class="col text-left">Dashboard</div>
+                </div>
+              </q-route-tab> -->
             </q-list>
           </q-menu>
         </q-btn>
