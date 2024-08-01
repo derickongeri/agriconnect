@@ -170,17 +170,15 @@
         </q-btn>
         <q-btn flat text-color="grey-9" round dense icon="menu">
           <q-menu anchor="bottom end" self="top end" :offset="[10, 10]">
-            <q-list class="text-right justify-right" style="min-width: 100vw">
+            <q-list class="">
               <q-item clickable to="/">
-                <q-space />
-                <q-item-section class="justify-right" side>
-                  <div class="justify-right">Home</div>
+                <q-item-section class="" side>
+                  <div class="">Home</div>
                 </q-item-section>
               </q-item>
               <q-item clickable to="/dashboard">
-                <q-space />
-                <q-item-section class="justify-right" side>
-                  <div class="justify-right">Dashboard</div>
+                <q-item-section class="" side>
+                  <div class="">Dashboard</div>
                 </q-item-section>
               </q-item>
 

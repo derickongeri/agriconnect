@@ -338,10 +338,7 @@
       class="bg-white desktop-element"
       style="min-width: 100vw; min-height: 70vh; padding-top: 5%"
     >
-      <div
-        class="row"
-        style="width: 90vw; min-height: 60vh; margin: auto"
-      >
+      <div class="row" style="width: 90vw; min-height: 60vh; margin: auto">
         <div class="column justify-center items-center" style="width: 30%">
           <div
             class="text-center"
@@ -508,7 +505,8 @@
                 <div class="q-px-md q-pb-md">
                   <img
                     style="width: 150%"
-                    src="http://agri-connect-tz.com/wp-content/uploads/2015/12/Agri-connect-LOGO.png"
+                    src="~src/assets/sponsors.svg"
+                    class="q-pl-md q-pb-xs toolbar-img"
                   />
                 </div>
               </div>
